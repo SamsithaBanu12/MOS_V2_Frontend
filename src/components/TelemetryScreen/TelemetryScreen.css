@@ -1,0 +1,38 @@
+.grafana-app-wrapper {
+    width: 100%;
+    height: 88vh;
+    position: relative;
+    margin-top: 12px;
+}
+
+.grafana-app-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--compo-bg);
+    z-index: 10;
+    font-size:14px;
+}
+.grafana-app-error{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--compo-bg);
+    z-index: 10;
+    font-size:14px;
+}
+.grafana-iframe{
+    width:100%;
+    height:100%;
+    border:0;
+}

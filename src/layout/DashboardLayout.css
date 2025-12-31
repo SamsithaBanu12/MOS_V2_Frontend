@@ -1,0 +1,12 @@
+.appShell {
+  min-height: 99vh;
+  max-height: 99vh;
+  display: flex;
+  background: #000; /* to match your screenshot’s dark right side */
+}
+
+.mainContent {
+  flex: 1;
+  padding: 12px 7px;
+  color: #e2e8f0;
+}

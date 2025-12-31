@@ -1,0 +1,31 @@
+.leaflet-map {
+  height: 90vh;
+  width: 81.5vw;
+  border-radius: 14px;
+  box-shadow: 0 0 25px rgba(0, 140, 255, 0.3);
+  border: 1px solid rgba(0, 140, 255, 0.4);
+  background: #0b0f1a;
+}
+
+/* Popup styling */
+.leaflet-popup-content-wrapper {
+  background: #0b0f1a;
+  color: #ffffff;
+  border-radius: 8px;
+}
+
+.leaflet-popup-tip {
+  background: #0b0f1a;
+}
+.custom-satellite-marker {
+  background: transparent;
+}
+
+.satellite-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #00bfff;
+  box-shadow: 0 0 10px rgba(0, 191, 255, 0.9);
+  border: 2px solid rgba(255, 255, 255, 0.9);
+}

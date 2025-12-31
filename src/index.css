@@ -1,0 +1,35 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
+
+body {
+  font-family: "Inter", sans-serif;
+}
+
+:root {
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  --bg: #000;
+  --compo-bg: #1c1c1c;
+  --font: "Inter", sans-serif;
+  --title-color:#2e96b8;
+  --highlight-bg:#2D2928;
+  --card-shadow: 0 8px 24px rgba(0,0,0,0.35);
+  --radius: 14px;
+  --gap: 12px;
+  --pad: 12px;
+  --select-focus:rgba(255,255,255,0.18);
+  --highlight-bg2: rgba(255,255,255,0.05);
+  --table-thead:rgba(69, 66, 66, 0.95);
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  font-family: var(--font);
+  font-size: 14px;
+}

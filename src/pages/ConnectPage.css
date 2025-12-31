@@ -1,0 +1,150 @@
+.app-root {
+    /* height: 100vh;
+    width: 100vw; */
+    overflow: hidden;
+}
+
+.app-grid {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    height: 100%;
+    gap: var(--gap);
+    padding: 10px 0px;
+    min-height: 0;
+}
+
+.header,
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.footer {
+    height: 4vh;
+    margin-top: 10px;
+}
+
+.title {
+    font-weight: 900;
+    letter-spacing: 0.3px;
+}
+
+.ws-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: 440px minmax(0, 1fr);
+    grid-template-rows: 1fr;
+    gap: 15px;
+    min-height: 0;
+    max-height: 88vh !important;
+    min-height: 88vh;
+}
+
+.content-grid>* {
+    min-width: 0;
+    min-height: 0;
+}
+
+.left-rail,
+.right-rail {
+    min-width: 0;
+    min-height: 0;
+}
+
+.left-rail {
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+    grid-template-columns: auto;
+    gap: 20px;
+    min-height: 91vh;
+}
+
+.right-rail {
+    display: flex;
+    flex-direction: row;
+    gap: var(--gap);
+    height: 92vh; /* 👈 THIS fixes it */
+}
+.space-card{
+    display: flex;
+    flex-direction: column;
+    gap:var(--gap);
+}
+
+.item-1 {
+    grid-row: span 2;
+}
+
+
+.right-rail>.panel {
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    width:29vw;
+    max-height: 88.8vh;
+}
+.space-card>.panel{
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    width:29vw;
+    max-height: 42.6vh;
+}
+
+.panel {
+    border: 2px solid var(--compo-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--card-shadow);
+    padding: var(--pad);
+    min-height: 0;
+    max-width: 100%;
+    overflow: hidden;
+    background-color: var(--compo-bg);
+}
+
+.panel-title-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.panel-title {
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    color: var(--fg);
+    margin-bottom: 8px;
+}
+
+.scroll {
+    overflow: auto;
+    height: 100%;
+    border-radius: calc(var(--radius) - 6px);
+}
+
+.status-badge {
+    font-size: 12px;
+    font-weight: 500;
+    align-self: center;
+    justify-self: end;
+}
+
+.status-badge.ok {
+    color: green;
+}
+
+.status-badge.off {
+    color: #ff3864;
+}
+
+.btn-connect{
+    color: #fff !important;
+    background-color: var(--highlight-bg) !important;
+    border: none !important;
+}

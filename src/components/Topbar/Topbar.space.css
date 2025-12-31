@@ -1,0 +1,36 @@
+.topbar-wrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap:10px;
+}
+.utc-time-wrapper{
+    display: flex;
+    flex-direction: row;
+    gap:8px;
+    align-items: center;
+    padding:10px 20px;
+    border-radius: 25px;
+    background-color:  var(--compo-bg);
+}
+.utc-time{
+    font-size: 18px;
+}
+.ground-station-icon{
+    padding:12px 12px 7px;
+    border-radius: 25px;
+    background-color:  var(--compo-bg);
+}
+.sign-up img{
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    /* border:3px solid white; */
+    background-color:  var(--compo-bg);
+    object-fit:fill;
+}
+.sign-up{
+    width:55px;
+    height: 55px;
+}
