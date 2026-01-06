@@ -1,8 +1,12 @@
-import { useRef, useState, useMemo } from "react";
+import { useRef, useState, useMemo, useEffect } from "react";
 import { useSatelliteTrack } from "../../utils/hooks";
 import CesiumMap from './CesiumMap';
 import TelemetryOverlay from './TelemetryOverlay';
 import "./GroundTrackComponent.css";
+import { GROUND_STATIONS } from "../../data";
+import { calculateContactStatus } from "../../utils/utils";
+
+const MIN_ELEVATION = 5;
 
 export function GroundTrackComponent() {
     const { data, loading, error } = useSatelliteTrack(500, 15);
@@ -10,7 +14,8 @@ export function GroundTrackComponent() {
     const [is3D, setIs3D] = useState(false);
     const [isFollowing, setIsFollowing] = useState(false);
     const [visibleOrbits, setVisibleOrbits] = useState(3);
-    const [simulatedTime, setSimulatedTime] = useState(null); 
+    const [simulatedTime, setSimulatedTime] = useState(null);
+    const [accumulatedPasses, setAccumulatedPasses] = useState([]);
 
     // Calculate total orbits and time bounds from data
     const orbitInfo = useMemo(() => {
@@ -32,6 +37,82 @@ export function GroundTrackComponent() {
             endTime: new Date(data.positions[data.positions.length - 1].timestamp)
         };
     }, [data]);
+
+    // Calculate station passes from current data slice
+    const currentPasses = useMemo(() => {
+        if (!data || !data.positions || !data.positions.length) return [];
+
+        const allPasses = [];
+
+        GROUND_STATIONS.forEach(station => {
+            let inPass = false;
+            let aos = null;
+
+            data.positions.forEach((pos) => {
+                const status = calculateContactStatus(
+                    station.id,
+                    station,
+                    pos,
+                    MIN_ELEVATION
+                );
+
+                if (status.inContact && !inPass) {
+                    inPass = true;
+                    aos = new Date(pos.timestamp);
+                } else if (!status.inContact && inPass) {
+                    inPass = false;
+                    const los = new Date(pos.timestamp);
+                    allPasses.push({
+                        stationId: station.id,
+                        aos,
+                        los,
+                        duration: (los - aos) / 1000 // seconds
+                    });
+                }
+            });
+
+            // Close open pass at end of data window
+            if (inPass) {
+                const los = new Date(data.positions[data.positions.length - 1].timestamp);
+                allPasses.push({
+                    stationId: station.id,
+                    aos,
+                    los,
+                    duration: (los - aos) / 1000
+                });
+            }
+        });
+
+        return allPasses;
+    }, [data]);
+
+    // Merge current passes into accumulated history
+    useEffect(() => {
+        if (currentPasses.length === 0) return;
+
+        setAccumulatedPasses(prev => {
+            const merged = [...prev];
+
+            currentPasses.forEach(newP => {
+                // Deduplicate: Check if pass exists (same station, AOS within 15min)
+                // This handles slight time shifts in data refreshes
+                const existingIndex = merged.findIndex(p =>
+                    p.stationId === newP.stationId &&
+                    Math.abs(p.aos.getTime() - newP.aos.getTime()) < 15 * 60 * 1000
+                );
+
+                if (existingIndex >= 0) {
+                    // Update existing with fresh data (optional, improves accuracy)
+                    merged[existingIndex] = newP;
+                } else {
+                    merged.push(newP);
+                }
+            });
+
+            // Sort by AOS
+            return merged.sort((a, b) => a.aos - b.aos);
+        });
+    }, [currentPasses]);
 
     // Calculate time scrubber value (0-100)
     const timeSliderValue = useMemo(() => {
@@ -166,6 +247,7 @@ export function GroundTrackComponent() {
                 loading={loading}
                 error={error}
                 simulatedTime={simulatedTime}
+                passes={accumulatedPasses}
             />
 
             <div className="ui-attribution">

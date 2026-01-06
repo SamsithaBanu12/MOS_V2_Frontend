@@ -591,7 +591,7 @@ export const commandTelemetryEmulator = [
         command: 'THRUSTER_1024_TC_EXOTRAIL_GET_HK_FLUIDIC_INFO',
         telemetry: 'THRUSTER_1024_TM_EXOTRAIL_GET_HK_FLUIDIC_INFO',
         target: 'EMULATOR',
-       parameters: ['PPU_OUTPUT_TEMPERATURE', 'PPU_INPUT_VOLTAGE', 'PPU_INPUT_CURRENT', 'PPU_INPUT_TEMPERATURE']
+        parameters: ['PPU_OUTPUT_TEMPERATURE', 'PPU_INPUT_VOLTAGE', 'PPU_INPUT_CURRENT', 'PPU_INPUT_TEMPERATURE']
 
     },
     {
@@ -599,7 +599,7 @@ export const commandTelemetryEmulator = [
         command: 'THRUSTER_1025_TC_EXOTRAIL_GET_HK_THERMIC_INFO',
         telemetry: 'THRUSTER_1025_TM_EXOTRAIL_GET_HK_THERMIC_INFO',
         target: 'EMULATOR',
-         parameters: ['TEMPERATURE_OF_THD_SUPPORT_1',
+        parameters: ['TEMPERATURE_OF_THD_SUPPORT_1',
             'TEMPERATURE_OF_THD_RADIATOR_1',
             'TEMPERATURE_OF_THD_RADIATOR_2',
             'TEMPERATURE_OF_TCU_OBC_1',
@@ -614,7 +614,7 @@ export const commandTelemetryEmulator = [
         command: 'OBC_581_TC_GET_CUR_TIME',
         telemetry: 'OBC_581_TM_GET_CUR_TIME',
         target: 'EMULATOR',
-        parameters: ['Year', 'Month', 'Date', 'Hours', 'Minute', 'Milliseconds','Responce']
+        parameters: ['Year', 'Month', 'Date', 'Hours', 'Minute', 'Milliseconds', 'Responce']
     },
     {
         id: 7,
@@ -622,16 +622,16 @@ export const commandTelemetryEmulator = [
         telemetry: 'THRUSTER_1026_TM_EXOTRAIL_GET_HK_POWER_INFO',
         target: 'EMULATOR',
         parameters: ['Thruster_input_voltage_15v',
- 'Thruster_2v5_ref_volt',
- 'Thruster_input_volt_5v',
-'Thruster_input_volt_3v3']
+            'Thruster_2v5_ref_volt',
+            'Thruster_input_volt_5v',
+            'Thruster_input_volt_3v3']
     },
     {
         id: 8,
         command: 'THRUSTER_1027_TC_EXOTRAIL_GET_SAFE_LIMIT',
         telemetry: 'THRUSTER_1027_TM_EXOTRAIL_GET_HK_FLUIDIC_INFO',
         target: 'EMULATOR',
-                parameters: ['Maximum_temperature_limit_for_Thruster_Head_Radiator_1',
+        parameters: ['Maximum_temperature_limit_for_Thruster_Head_Radiator_1',
             'Minimum_temperature_limit_for_Thruster_Head_Radiator_1',
             'Maximum_temperature_limit_for_Thruster_PMS_Anode_1',
             'Minimum_temperature_limit_for_Thruster_PMS_Anode_1',
@@ -664,10 +664,10 @@ export const commandTelemetryEmulator = [
         command: 'THRUSTER_1029_TC_EXOTRAIL_GET_HEATER_CFG',
         telemetry: 'THRUSTER_1029_TM_EXOTRAIL_GET_HEATER_CFG',
         target: 'EMULATOR',
-           parameters: ['RADIATOR_LOW_TEMPERATURE',
+        parameters: ['RADIATOR_LOW_TEMPERATURE',
             'RADIATOR_HIGH_TEMPERATURE',
             'RADIATOR_HEATING_DURATIONS_IN_MINUTES',
-           ]
+        ]
     },
     {
         id: 11,
@@ -709,7 +709,7 @@ export const commandTelemetryEmulator = [
         command: 'THRUSTER_1038_TC_OBC_EXOTRIAL_THRUSTER_TM_DECODE_DATA',
         telemetry: 'THRUSTER_1038_TM_OBC_EXOTRIAL_THRUSTER_TM_DECODE_DATA',
         target: 'EMULATOR',
-        parameters :['SOFTWARE_VERSION',
+        parameters: ['SOFTWARE_VERSION',
             'CURRENT_MODE_OF_OBC_IN_THRUSTER',
             'SAFETY_IDENTIFIER',
             'HEATER_ACTIVITY_STATUS',
@@ -795,7 +795,7 @@ export const commandTelemetryEmulator = [
         command: 'OBC_550_TC_SET_CUR_TIME',
         telemetry: 'OBC_550_TM_SET_CUR_TIME',
         target: 'EMULATOR',
-        parameters: ['Year', 'Month', 'Date', 'Hours', 'Minute', 'Milliseconds','Responce']
+        parameters: ['Year', 'Month', 'Date', 'Hours', 'Minute', 'Milliseconds', 'Responce']
 
     },
     {
@@ -810,14 +810,14 @@ export const commandTelemetryEmulator = [
         command: 'TC_547',
         telemetry: 'TM_547',
         target: 'EMULATOR',
-        parameters: ['SEGMENT_ID','LUT_ID']
+        parameters: ['SEGMENT_ID', 'LUT_ID']
     },
     {
         id: 21,
         command: 'TC_549',
         telemetry: '549_TM',
         target: 'EMULATOR',
-         parameters: ['Response_type','UL_STATUS_1',
+        parameters: ['Response_type', 'UL_STATUS_1',
             'TOTAL_SEGMENTS_IN_LUT_1',
             'TOTAL_EVENTS_IN_LUT_1',
             'CURRENT_SEGMENT_ID',
@@ -833,23 +833,23 @@ export const commandTelemetryEmulator = [
             'ID_OF_SEGMENTS_EXPECTED_0',
             'ID_OF_SEGMENTS_RECEIVED',
             'ID_OF_SEGMENTS_RECEIVED_7',
-'ID_OF_SEGMENTS_RECEIVED_6',
-'ID_OF_SEGMENTS_RECEIVED_5',
-'ID_OF_SEGMENTS_RECEIVED_4',
-'ID_OF_SEGMENTS_RECEIVED_3',
-'ID_OF_SEGMENTS_RECEIVED_2',
-'ID_OF_SEGMENTS_RECEIVED_1',
-'ID_OF_SEGMENTS_RECEIVED_0',
-'ID_OF_SEGMENTS_EXECUTED',
-'ID_OF_SEGMENTS_EXECUTED_7',
-'ID_OF_SEGMENTS_EXECUTED_6',
-'ID_OF_SEGMENTS_EXECUTED_5',
-'ID_OF_SEGMENTS_EXECUTED_4',
-'ID_OF_SEGMENTS_EXECUTED_3',
-'ID_OF_SEGMENTS_EXECUTED_2',
-'ID_OF_SEGMENTS_EXECUTED_1',
-'ID_OF_SEGMENTS_EXECUTED_0',
-'RESERVED_1']
+            'ID_OF_SEGMENTS_RECEIVED_6',
+            'ID_OF_SEGMENTS_RECEIVED_5',
+            'ID_OF_SEGMENTS_RECEIVED_4',
+            'ID_OF_SEGMENTS_RECEIVED_3',
+            'ID_OF_SEGMENTS_RECEIVED_2',
+            'ID_OF_SEGMENTS_RECEIVED_1',
+            'ID_OF_SEGMENTS_RECEIVED_0',
+            'ID_OF_SEGMENTS_EXECUTED',
+            'ID_OF_SEGMENTS_EXECUTED_7',
+            'ID_OF_SEGMENTS_EXECUTED_6',
+            'ID_OF_SEGMENTS_EXECUTED_5',
+            'ID_OF_SEGMENTS_EXECUTED_4',
+            'ID_OF_SEGMENTS_EXECUTED_3',
+            'ID_OF_SEGMENTS_EXECUTED_2',
+            'ID_OF_SEGMENTS_EXECUTED_1',
+            'ID_OF_SEGMENTS_EXECUTED_0',
+            'RESERVED_1']
     },
     {
         id: 22,
@@ -1103,6 +1103,27 @@ export const commandTelemetryEmulator = [
         telemetry: 'TM_PLD_VM_PWR_OFF',
         target: 'EMULATOR',
         parameters: ['VALUE', 'BOOL']
+    },
+    {
+        id: 54,
+        command: 'ADCS_129_TC_GET_ADCS_STATE_INFO',
+        telemetry: 'ADCS_129_TM_GET_ADCS_STATE_INFO',
+        target: 'EMULATOR',
+        parameters: ['ATTITUDE_ESTIMATION_MODE', 'CONTROL_MODE']
+    },
+    {
+        id: 56,
+        command: 'ADCS_129_TC_GET_ADCS_STATE_INFO',
+        telemetry: 'ADCS_129_TM_GET_ADCS_STATE_INFO',
+        target: 'EMULATOR',
+        parameters: ['ATTITUDE_ESTIMATION_MODE', 'CONTROL_MODE']
+    },
+    {
+        id: 57,
+        command: 'ADCS_129_TC_GET_ADCS_STATE_INFO',
+        telemetry: 'ADCS_129_TM_GET_ADCS_STATE_INFO',
+        target: 'EMULATOR',
+        parameters: ['ATTITUDE_ESTIMATION_MODE', 'CONTROL_MODE']
     },
 ]
 
@@ -1536,76 +1557,76 @@ export const commandStateMapping = [
     },
 ]
 export const BeaconDataValues = [
-  {
-    id: 1,
-    parameter: 'Satellite Mode',
-    value: 'Nominal'
-  },
-  {
-    id: 2,
-    parameter: 'Battery Voltage',
-    value: '7.8 V'
-  },
-  {
-    id: 3,
-    parameter: 'Battery Current',
-    value: '1.2 A'
-  },
-  {
-    id: 4,
-    parameter: 'Battery Temperature',
-    value: '32 °C'
-  },
-  {
-    id: 5,
-    parameter: 'Solar Panel Voltage',
-    value: '18.4 V'
-  },
-  {
-    id: 6,
-    parameter: 'Solar Panel Current',
-    value: '2.1 A'
-  },
-  {
-    id: 7,
-    parameter: 'OBC Status',
-    value: 'Active'
-  },
-  {
-    id: 8,
-    parameter: 'ADCS Mode',
-    value: 'Sun Pointing'
-  },
-  {
-    id: 9,
-    parameter: 'Gyro Status',
-    value: 'OK'
-  },
-  {
-    id: 10,
-    parameter: 'Magnetometer Status',
-    value: 'OK'
-  },
-  {
-    id: 11,
-    parameter: 'UHF Communication',
-    value: 'Healthy'
-  },
-  {
-    id: 12,
-    parameter: 'S-Band Communication',
-    value: 'Standby'
-  },
-  {
-    id: 13,
-    parameter: 'Last Contact',
-    value: '2025-12-24 10:42 UTC'
-  },
-  {
-    id: 14,
-    parameter: 'Uptime',
-    value: '124 Days'
-  }
+    {
+        id: 1,
+        parameter: 'Satellite Mode',
+        value: 'Nominal'
+    },
+    {
+        id: 2,
+        parameter: 'Battery Voltage',
+        value: '7.8 V'
+    },
+    {
+        id: 3,
+        parameter: 'Battery Current',
+        value: '1.2 A'
+    },
+    {
+        id: 4,
+        parameter: 'Battery Temperature',
+        value: '32 °C'
+    },
+    {
+        id: 5,
+        parameter: 'Solar Panel Voltage',
+        value: '18.4 V'
+    },
+    {
+        id: 6,
+        parameter: 'Solar Panel Current',
+        value: '2.1 A'
+    },
+    {
+        id: 7,
+        parameter: 'OBC Status',
+        value: 'Active'
+    },
+    {
+        id: 8,
+        parameter: 'ADCS Mode',
+        value: 'Sun Pointing'
+    },
+    {
+        id: 9,
+        parameter: 'Gyro Status',
+        value: 'OK'
+    },
+    {
+        id: 10,
+        parameter: 'Magnetometer Status',
+        value: 'OK'
+    },
+    {
+        id: 11,
+        parameter: 'UHF Communication',
+        value: 'Healthy'
+    },
+    {
+        id: 12,
+        parameter: 'S-Band Communication',
+        value: 'Standby'
+    },
+    {
+        id: 13,
+        parameter: 'Last Contact',
+        value: '2025-12-24 10:42 UTC'
+    },
+    {
+        id: 14,
+        parameter: 'Uptime',
+        value: '124 Days'
+    }
 ];
 
 // Chile, Iceland, Sri Lanka, New Zealand, UK, South Africa

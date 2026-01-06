@@ -59,7 +59,16 @@ const CesiumMap = forwardRef(({ data, isFollowing = false, visibleOrbits, simula
             sceneModePicker: false,
             fullscreenButton: false,
             infoBox: false,
-            selectionIndicator: false
+            selectionIndicator: false,
+            contextOptions: {
+                webgl: {
+                    failIfMajorPerformanceCaveat: false,
+                    alpha: false,
+                    antialias: true,
+                    depth: true,
+                    stencil: false,
+                }
+            }
         });
 
         // --- MISSION-CRITICAL IMAGERY INITIALIZATION (ORDERED) ---

@@ -7,7 +7,7 @@ import ConnectionPanel from '../components/ConnectionPanel/ConnectionPanel'
 import StatsPanel from '../components/StatsPanel/StatsPanel'
 
 // Health overlay
-import HealthDrawer from '../Components/HealthDrawer/HealthDrawer'
+import HealthDrawer from "../components/HealthDrawer/HealthDrawer";
 import { useGettingConnectionStatus } from '../utils/hooks'
 import BeaconData from '../components/BeaconData/BeaconData'
 import { useStation } from '../context/StationContext'
@@ -46,7 +46,7 @@ function ConnectionPage() {
           msg?.station === stationId &&
           msg.type === 'status'
         ) {
-          getStatus(stationId).then(setStatus).catch(() => {});
+          getStatus(stationId).then(setStatus).catch(() => { });
         }
       },
     });
@@ -76,7 +76,7 @@ function ConnectionPage() {
     );
   }, [status, setConnected]);
 
-  console.log('station meta',stationMeta);
+  console.log('station meta', stationMeta);
 
   return (
     <div className="app-root">

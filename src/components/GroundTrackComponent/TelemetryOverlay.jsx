@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
+import { formatClock } from "../../utils/utils";
 
-const TelemetryOverlay = ({ data, loading, error, simulatedTime }) => {
+const TelemetryOverlay = ({ data, loading, error, simulatedTime, passes }) => {
     const [currentPos, setCurrentPos] = useState(null);
+    const [currentTime, setCurrentTime] = useState(new Date());
     const [isVisible, setIsVisible] = useState(true);
     const [isDragging, setIsDragging] = useState(false);
     const [position, setPosition] = useState(null); // null = use CSS default (right corner)
@@ -13,7 +15,10 @@ const TelemetryOverlay = ({ data, loading, error, simulatedTime }) => {
         if (!data || !data.positions.length) return;
 
         const updatePosition = () => {
-            const now = (simulatedTime ?? new Date()).getTime();
+            const now = simulatedTime ?? new Date();
+            setCurrentTime(now); // Update local time state
+            const nowMs = now.getTime();
+
             let closest = data.positions[0];
             let minDiff = Math.abs(new Date(closest.timestamp).getTime() - now);
 
@@ -87,6 +92,19 @@ const TelemetryOverlay = ({ data, loading, error, simulatedTime }) => {
         Math.pow(currentPos.velocity_km_s.z, 2)
     ).toFixed(2);
 
+    // Calculate station status based on current time
+    const stationStatus = (() => {
+        if (!passes) return { active: null, upcoming: null, last: null };
+        const nowMs = currentTime.getTime();
+
+        const active = passes.find(p => nowMs >= p.aos.getTime() && nowMs <= p.los.getTime());
+        const upcoming = passes.find(p => p.aos.getTime() > nowMs);
+        const pastPasses = passes.filter(p => p.los.getTime() < nowMs);
+        const last = pastPasses.length > 0 ? pastPasses[pastPasses.length - 1] : null;
+
+        return { active, upcoming, last };
+    })();
+
     return (
         <>
             <button
@@ -128,10 +146,47 @@ const TelemetryOverlay = ({ data, loading, error, simulatedTime }) => {
                         </div>
                     </div>
 
-                    <div className="dashboard-footer">
-                        <div className="timestamp">{new Date(currentPos.timestamp).toLocaleTimeString()}</div>
-                        <div className="source">SRC: {data.source.toUpperCase()}</div>
+                    {/* Ground Station Info */}
+                    <div style={{ marginTop: '16px', borderTop: '1px solid rgba(255, 255, 255, 0.1)', paddingTop: '12px' }}>
+                        <div style={{ fontSize: '10px', color: '#444', marginBottom: '8px', letterSpacing: '1px', fontWeight: '800' }}>GROUND STATIONS</div>
+
+                        <div style={{ marginBottom: '6px', fontSize: '11px', fontFamily: 'monospace' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', color: '#888' }}>ACTIVE</div>
+                            {stationStatus.active ? (
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <span style={{ color: '#0f0', fontWeight: 'bold' }}>{stationStatus.active.stationId}</span>
+                                    <span style={{ color: '#0f0' }}>-{formatClock((stationStatus.active.los - currentTime) / 1000)}</span>
+                                </div>
+                            ) : (
+                                <span style={{ color: '#555' }}>--</span>
+                            )}
+                        </div>
+
+                        <div style={{ marginBottom: '6px', fontSize: '11px', fontFamily: 'monospace' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', color: '#888' }}>UPCOMING</div>
+                            {stationStatus.upcoming ? (
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <span style={{ color: '#0ff', fontWeight: 'bold' }}>{stationStatus.upcoming.stationId}</span>
+                                    <span style={{ color: '#0ff' }}>+{formatClock((stationStatus.upcoming.aos - currentTime) / 1000)}</span>
+                                </div>
+                            ) : (
+                                <span style={{ color: '#555' }}>--</span>
+                            )}
+                        </div>
+
+                        <div style={{ fontSize: '11px', fontFamily: 'monospace' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', color: '#888' }}>LAST</div>
+                            {stationStatus.last ? (
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <span style={{ color: '#ccc', fontWeight: 'bold' }}>{stationStatus.last.stationId}</span>
+                                    <span style={{ color: '#888' }}>{stationStatus.last.los.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}</span>
+                                </div>
+                            ) : (
+                                <span style={{ color: '#555' }}>--</span>
+                            )}
+                        </div>
                     </div>
+
                 </div>
             )}
         </>

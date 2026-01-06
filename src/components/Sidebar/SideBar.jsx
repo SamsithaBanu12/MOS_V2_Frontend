@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import "./Sidebar.space.css";
+import "./SideBar.space.css";
 import galaxeye_logo from '../../assets/galaxeye-white.png';
 
 import { PiChartBarHorizontalFill } from "react-icons/pi";

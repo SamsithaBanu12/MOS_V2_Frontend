@@ -1,4 +1,4 @@
-import FileUpload from "../Components/FileUpload/FileUpload";
+import FileUpload from "../components/FileUpload/FileUpload";
 import UploadPage from "./UploadPage";
 
 const FileUploadPage = () => {

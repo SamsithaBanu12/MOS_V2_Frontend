@@ -1,4 +1,4 @@
-import ScheduleUpload from "../Components/ScheduleUpload/ScheduleUpload";
+import ScheduleUpload from "../components/ScheduleUpload/ScheduleUpload";
 import UploadPage from "./UploadPage";
 
 const ScheduleUploadPage = () => {

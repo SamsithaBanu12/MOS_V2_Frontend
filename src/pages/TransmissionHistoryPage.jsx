@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import TransmissionHistory from "../Components/TransmissionHistory/TransmissionHistory";
+import TransmissionHistory from "../components/TransmissionHistory/TransmissionHistory";
 
 function TransmissionHistoryPage() {
     const [transmissionData, setTransmissionData] = useState([]);
