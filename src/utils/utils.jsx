@@ -3,8 +3,17 @@ import { FaRegClock } from "react-icons/fa6";
 import { IoReloadOutline } from "react-icons/io5";
 import { SiTicktick } from "react-icons/si";
 import { IoCloseCircleOutline } from "react-icons/io5";
-import { BASE, DERIVED_HIDE, HEADER_NAMES, HTTP_HEADERS, OC3, ROUTING_NAMES, SCOPE, SEVERITY_ORDER } from "../constants/contants";
-import moment from 'moment';
+import {
+  BASE,
+  DERIVED_HIDE,
+  HEADER_NAMES,
+  HTTP_HEADERS,
+  OC3,
+  ROUTING_NAMES,
+  SCOPE,
+  SEVERITY_ORDER,
+} from "../constants/contants";
+import moment from "moment";
 
 export const getDisplayValue = (isHex, value) => {
   if (value == null) return "";
@@ -28,9 +37,7 @@ export const getDisplayValue = (isHex, value) => {
 
   // --- Handle plain numbers ---
   if (typeof value === "number") {
-    return isHex
-      ? "0x" + value.toString(16).toUpperCase()
-      : String(value);
+    return isHex ? "0x" + value.toString(16).toUpperCase() : String(value);
   }
 
   // --- Handle strings (could be "0x..." already) ---
@@ -48,7 +55,6 @@ export const getDisplayValue = (isHex, value) => {
   return String(value);
 };
 
-
 export const filterPacketDetails = (packetDetails) => {
   return packetDetails?.[0]?.items.filter(
     (item) =>
@@ -60,11 +66,11 @@ export const filterPacketDetails = (packetDetails) => {
   );
 };
 export const getHex = (name) => {
-  if (name === "DA_ID" || name === "TC_ID" || name === 'RM_ID') {
+  if (name === "DA_ID" || name === "TC_ID" || name === "RM_ID") {
     return true;
   }
   return false;
-}
+};
 
 export const getToastMessage = (message) => {
   if (message?.error) {
@@ -74,33 +80,47 @@ export const getToastMessage = (message) => {
   } else {
     toast.warn("Unknown response");
   }
-}
+};
 
 export const getParamsString = (packetDetails) => {
   return packetDetails
-    .map((row) => `${row.name} ${getDisplayValue(getHex(row.name), row.default) ?? 0}`)
+    .map(
+      (row) =>
+        `${row.name} ${getDisplayValue(getHex(row.name), row.default) ?? 0}`
+    )
     .join(", ");
-}
+};
 
 export const getStoreParamsString = (packetDetails) => {
   return packetDetails
     .map((row) => `${getDisplayValue(true, row.default) ?? 0}`)
     .join(" ");
-}
+};
 
 export const ecefToLla = (x, y, z) => {
-  const a = 6378137.0, f = 1 / 298.257223563, b = a * (1 - f);
-  const e2 = 1 - (b * b) / (a * a), ep2 = (a * a) / (b * b) - 1;
+  const a = 6378137.0,
+    f = 1 / 298.257223563,
+    b = a * (1 - f);
+  const e2 = 1 - (b * b) / (a * a),
+    ep2 = (a * a) / (b * b) - 1;
   const p = Math.hypot(x, y);
   const th = Math.atan2(a * z, b * p);
   const lon = Math.atan2(y, x);
-  const sinTh = Math.sin(th), cosTh = Math.cos(th);
-  const lat = Math.atan2(z + ep2 * b * sinTh * sinTh * sinTh, p - e2 * a * cosTh * cosTh * cosTh);
+  const sinTh = Math.sin(th),
+    cosTh = Math.cos(th);
+  const lat = Math.atan2(
+    z + ep2 * b * sinTh * sinTh * sinTh,
+    p - e2 * a * cosTh * cosTh * cosTh
+  );
   const sinLat = Math.sin(lat);
   const N = a / Math.sqrt(1 - e2 * sinLat * sinLat);
   const alt = p / Math.cos(lat) - N;
-  return { lat: (lat * 180) / Math.PI, lon: ((lon * 180) / Math.PI + 540) % 360 - 180, alt };
-}
+  return {
+    lat: (lat * 180) / Math.PI,
+    lon: (((lon * 180) / Math.PI + 540) % 360) - 180,
+    alt,
+  };
+};
 
 export function fmtTime(ts) {
   if (!ts) return "—";
@@ -116,74 +136,77 @@ export function formatClock(totalSeconds) {
   const mins = Math.floor((s % 3600) / 60);
   const secs = s % 60;
   return hrs > 0
-    ? `${String(hrs).padStart(2, "0")}:${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`
+    ? `${String(hrs).padStart(2, "0")}:${String(mins).padStart(
+        2,
+        "0"
+      )}:${String(secs).padStart(2, "0")}`
     : `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
 }
 
 export function getStatusIcon(status) {
-  if (status === 'Success') {
-    return <SiTicktick color="#1b8f41ff" size={25} />
-  } else if (status === 'In-progress') {
-    return <IoReloadOutline color="#bb7e3cff" size={27} />
-  } else if (status === 'error') {
-    return <IoCloseCircleOutline color="#c72d3aff" size={27} />
-  } else if (status === 'Waiting') {
-    return <FaRegClock color="gray" size={25} />
+  if (status === "Success") {
+    return <SiTicktick color="#1b8f41ff" size={25} />;
+  } else if (status === "In-progress") {
+    return <IoReloadOutline color="#bb7e3cff" size={27} />;
+  } else if (status === "error") {
+    return <IoCloseCircleOutline color="#c72d3aff" size={27} />;
+  } else if (status === "Waiting") {
+    return <FaRegClock color="gray" size={25} />;
   } else {
-    return <FaRegClock color="gray" size={25} />
+    return <FaRegClock color="gray" size={25} />;
   }
 }
 
-//script runner helpers function 
+//script runner helpers function
 
 export const getProcedureStatusIcon = (status) => {
-  if (status === 'queued') {
-    return <FaRegClock color="gray" size={22} />
-  } else if (status === 'running' || status === 'in-progress') {
-    return <IoReloadOutline color="#bb7e3cff" size={22} />
-  } else if (status === 'ready') {
-    return <SiTicktick color="#1b8f41ff" size={22} />
-  } else if (status === 'error') {
-    return <IoCloseCircleOutline color="#c72d3aff" size={22} />
+  if (status === "queued") {
+    return <FaRegClock color="gray" size={22} />;
+  } else if (status === "running" || status === "in-progress") {
+    return <IoReloadOutline color="#bb7e3cff" size={22} />;
+  } else if (status === "ready") {
+    return <SiTicktick color="#1b8f41ff" size={22} />;
+  } else if (status === "error") {
+    return <IoCloseCircleOutline color="#c72d3aff" size={22} />;
   } else {
-    return <FaRegClock color="gray" size={22} />
+    return <FaRegClock color="gray" size={22} />;
   }
-}
+};
 
 export const getStatusName = (status) => {
-  if (status === 'idle') {
-    return 'Queued';
-  } else if (status === 'running' || status === 'in-progress') {
-    return 'In-progress';
-  } else if (status === 'ready') {
-    return 'Completed';
+  if (status === "idle") {
+    return "Queued";
+  } else if (status === "running" || status === "in-progress") {
+    return "In-progress";
+  } else if (status === "ready") {
+    return "Completed";
   } else {
     return status;
   }
-}
+};
 
 export const getFileInputName = (file) => {
-  if (file === 'Beacon Data Check') {
-    return '__TEMP__/BeaconCheckLoopTest.rb';
-  } else if (file === 'Time Synchronization') {
-    return '__TEMP__/TimeSync.rb';
-  } else if (file === 'Schedule Upload') {
-    return '__TEMP__/ScheduleUpload.rb';
-  } else if ((file === 'DTC File Upload') || (file === 'File Upload')) {
-    return '__TEMP__/FileUpload.rb';
+  if (file === "Beacon Data Check") {
+    return "__TEMP__/BeaconCheckLoopTest.rb";
+  } else if (file === "Time Synchronization") {
+    return "__TEMP__/TimeSync.rb";
+  } else if (file === "Schedule Upload") {
+    return "__TEMP__/ScheduleUpload.rb";
+  } else if (file === "DTC File Upload" || file === "File Upload") {
+    return "__TEMP__/FileUpload.rb";
   }
-}
+};
 export const getFileOutputname = (file) => {
-  if (file === '__TEMP__/BeaconCheckLoopTest.rb') {
-    return 'Beacon Data Check'
-  } else if (file === '__TEMP__/TimeSync.rb') {
-    return 'Time Synchronization';
-  } else if (file === '__TEMP__/ScheduleUpload.rb') {
-    return 'Schedule Upload'
-  } else if (file === '__TEMP__/FileUpload.rb') {
-    return 'DTC File Upload'
+  if (file === "__TEMP__/BeaconCheckLoopTest.rb") {
+    return "Beacon Data Check";
+  } else if (file === "__TEMP__/TimeSync.rb") {
+    return "Time Synchronization";
+  } else if (file === "__TEMP__/ScheduleUpload.rb") {
+    return "Schedule Upload";
+  } else if (file === "__TEMP__/FileUpload.rb") {
+    return "DTC File Upload";
   }
-}
+};
 export const injectStyle = (css) => {
   const id = "mission-console-css";
   if (document.getElementById(id)) return;
@@ -191,20 +214,19 @@ export const injectStyle = (css) => {
   el.id = id;
   el.textContent = css;
   document.head.appendChild(el);
-}
+};
 
 export const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 export const fmtTimeScript = (ts) => {
   const d = new Date(ts * 1000);
   return d.toLocaleTimeString([], { hour12: false });
-}
+};
 export const jsonl = (e) => JSON.stringify(e);
 
 export const eventSeverity = (e) => e.severity || "info";
 export const escalate = (seg, sev) => {
-  if (SEVERITY_ORDER[sev] > SEVERITY_ORDER[seg.severity])
-    seg.severity = sev;
+  if (SEVERITY_ORDER[sev] > SEVERITY_ORDER[seg.severity]) seg.severity = sev;
 };
 export const downloadText = (filename, text) => {
   const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
@@ -216,9 +238,13 @@ export const downloadText = (filename, text) => {
   a.click();
   a.remove();
   URL.revokeObjectURL(url);
-}
+};
 export async function httpPost(path, payload) {
-  const res = await fetch(`${BASE}${path}`, { method: "POST", headers: HTTP_HEADERS, body: payload === undefined ? undefined : JSON.stringify(payload) });
+  const res = await fetch(`${BASE}${path}`, {
+    method: "POST",
+    headers: HTTP_HEADERS,
+    body: payload === undefined ? undefined : JSON.stringify(payload),
+  });
   if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
   return res.text();
 }
@@ -229,7 +255,7 @@ const parseUTC = (s) => moment.utc(s, "YYYY-MM-DD HH:mm:ss", true); // strict
 const formatHMS = (dur) => {
   const sign = dur.asMilliseconds() < 0 ? "-" : "";
   const abs = moment.duration(Math.abs(dur.asMilliseconds()));
-  const h = String(Math.floor(abs.asHours())).padStart(2, "0");   // keeps >24h
+  const h = String(Math.floor(abs.asHours())).padStart(2, "0"); // keeps >24h
   const m = String(abs.minutes()).padStart(2, "0");
   const s = String(abs.seconds()).padStart(2, "0");
   return `${sign}${h}:${m}:${s}`;
@@ -253,9 +279,10 @@ export function passDurationUTC(aosStr, losStr) {
 
 export function toUTCYmdHms(input) {
   // input can be: Date | number (ms or seconds) | ISO string
-  const d = input instanceof Date
-    ? input
-    : typeof input === "number"
+  const d =
+    input instanceof Date
+      ? input
+      : typeof input === "number"
       ? new Date(input < 1e12 ? input * 1000 : input) // seconds vs ms
       : new Date(input);
 
@@ -276,11 +303,13 @@ export function formatMmSs(ms) {
   const seconds = totalSec % 60;
   return `${minutes}:${String(seconds).padStart(2, "0")}`;
 }
-export const mmss = (a, b) => moment.utc(Math.abs(a - b) * 1000).format("mm:ss");
+export const mmss = (a, b) =>
+  moment.utc(Math.abs(a - b) * 1000).format("mm:ss");
 
 export function detectSeverity(line) {
   const low = String(line ?? "").toLowerCase();
-  if (/(exception|fatal|stacktrace|traceback|unhandled)/i.test(low)) return "error";
+  if (/(exception|fatal|stacktrace|traceback|unhandled)/i.test(low))
+    return "error";
   if (/\bfailed\b|\bfailure\b|\berror\b/i.test(low)) return "error";
   if (/(httpclientexception|http\s*error)/i.test(low)) return "error";
   if (/\b[45]\d{2}\b/.test(low)) return "error";
@@ -299,8 +328,8 @@ export function tagFor(e) {
     return e.severity === "warn"
       ? "output_warn"
       : e.severity === "error"
-        ? detectSeverity(e.text)
-        : "output_info";
+      ? detectSeverity(e.text)
+      : "output_info";
   }
   if (e.type === "http") return "http";
   if (e.type === "ws") return "ws";
@@ -309,21 +338,24 @@ export function tagFor(e) {
 }
 
 export const aosTargetUtc = (activePassDetails) => {
-  if (activePassDetails?.status === 'waiting') {
-    return toUTCYmdHms(activePassDetails.startTime)
-  }
-  else {
-    return null;
-  }
-}
-export const losTargetUtc = (activePassDetails) => {
-  if (activePassDetails?.status === 'active') {
-    return toUTCYmdHms(activePassDetails.endTime)
+  if (activePassDetails?.status === "waiting") {
+    return toUTCYmdHms(activePassDetails.startTime);
   } else {
     return null;
   }
-}
-export const editProcedureApplicable = ['schedule upload', 'file upload', 'dtc file upload'];
+};
+export const losTargetUtc = (activePassDetails) => {
+  if (activePassDetails?.status === "active") {
+    return toUTCYmdHms(activePassDetails.endTime);
+  } else {
+    return null;
+  }
+};
+export const editProcedureApplicable = [
+  "schedule upload",
+  "file upload",
+  "dtc file upload",
+];
 
 //command-sender
 
@@ -334,20 +366,31 @@ export function partitionItems(items) {
   const tcLenIdx = filtered.findIndex((i) => i.name === "TC_LEN");
   const payloadItems =
     tcLenIdx >= 0
-      ? filtered.slice(tcLenIdx + 1).filter((i) => !HEADER_NAMES.has(i.name) && !ROUTING_NAMES.has(i.name))
+      ? filtered
+          .slice(tcLenIdx + 1)
+          .filter(
+            (i) => !HEADER_NAMES.has(i.name) && !ROUTING_NAMES.has(i.name)
+          )
       : [];
   return { headerItems, routingItems, payloadItems };
 }
 
 export function toHexByte(b) {
-  return Number(b & 0xff).toString(16).padStart(2, "0").toUpperCase();
+  return Number(b & 0xff)
+    .toString(16)
+    .padStart(2, "0")
+    .toUpperCase();
 }
 
 export function fmtNumHex(value, bitSize = 8) {
   if (value == null || isNaN(Number(value))) return "—";
   const bytes = Math.max(1, Math.ceil(bitSize / 8));
   const v32 = Number(value) >>> 0;
-  let hex = v32.toString(16).toUpperCase().padStart(bytes * 2, "0").slice(-bytes * 2);
+  let hex = v32
+    .toString(16)
+    .toUpperCase()
+    .padStart(bytes * 2, "0")
+    .slice(-bytes * 2);
   return "0x" + hex;
 }
 
@@ -381,32 +424,36 @@ export function getStatesInfo(item) {
 
 export function getHighlightClass(timeString) {
   if (!timeString || typeof timeString !== "string") return "";
+
   const parsedUTC = moment.utc(timeString, "YYYY/MM/DD HH:mm:ss.SSS");
   if (!parsedUTC.isValid()) return "";
+
   const nowUTC = moment.utc();
 
-  const diffMinutes = nowUTC.diff(parsedUTC, "minutes", true);
-  let value = diffMinutes < 2 ? "white" : "pinky";
-  return value;
+  const diffSeconds = nowUTC.diff(parsedUTC, "seconds", true);
+
+  return diffSeconds < 15 ? "white" : "pinky";
 }
 
 export const payloadForTemplate = (payloadItems, payload) => {
-  return payloadItems?.map((it) =>
-    it.states
-      ? {
-        name: it.name,
-        kind: "state",
-        value:
-          getStatesInfo(it)?.options.find(
-            (o) => o.label === payload[it.name]
-          )?.value ?? null,
-      }
-      : {
-        name: it.name,
-        kind: "hex",
-        value: payload[it.name],
-      }
-  ) ?? [];
+  return (
+    payloadItems?.map((it) =>
+      it.states
+        ? {
+            name: it.name,
+            kind: "state",
+            value:
+              getStatesInfo(it)?.options.find(
+                (o) => o.label === payload[it.name]
+              )?.value ?? null,
+          }
+        : {
+            name: it.name,
+            kind: "hex",
+            value: payload[it.name],
+          }
+    ) ?? []
+  );
 };
 
 export function normalizeToHex(input) {
@@ -449,7 +496,7 @@ export function displayValue(hex, isHex) {
   if (!hex.startsWith("0x") && !hex.startsWith("0X")) return "—";
 
   if (isHex) {
-    return hex.toUpperCase();  // show hex as-is
+    return hex.toUpperCase(); // show hex as-is
   }
 
   // Convert HEX -> Decimal
@@ -465,8 +512,7 @@ export function toUTCYmdHmsnn(input) {
 
   if (input instanceof Date) {
     d = input;
-  }
-  else if (typeof input === "number") {
+  } else if (typeof input === "number") {
     // Detect nanoseconds, microseconds, milliseconds, seconds
     let ns = input;
 
@@ -482,8 +528,7 @@ export function toUTCYmdHmsnn(input) {
     }
 
     d = new Date(ns);
-  }
-  else {
+  } else {
     d = new Date(input);
   }
 
@@ -500,21 +545,21 @@ export function toUTCYmdHmsnn(input) {
 }
 
 export const getAllTlmsData = (transmissionData) => {
-  return transmissionData.filter(
-    (item) => item?.__packet?.toLowerCase().includes("__tlm__")
+  return transmissionData.filter((item) =>
+    item?.__packet?.toLowerCase().includes("__tlm__")
   );
 };
 
 export const getAllCmdsData = (transmissionData) => {
-  return transmissionData.filter(
-    (item) => item?.__packet?.toLowerCase().includes("__cmd__")
+  return transmissionData.filter((item) =>
+    item?.__packet?.toLowerCase().includes("__cmd__")
   );
 };
 
 export function base64ToHex(base64) {
-  const bytes = Uint8Array.from(atob(base64), c => c.charCodeAt(0));
+  const bytes = Uint8Array.from(atob(base64), (c) => c.charCodeAt(0));
 
-  return Array.from(bytes, b => b.toString(16).padStart(2, "0")).join("");
+  return Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join("");
 }
 
 export const findHealthCommand = (value) => {
@@ -527,7 +572,7 @@ export const findHealthCommand = (value) => {
       return "Tlm";
     }
   }
-}
+};
 export const getCommandName = (value) => {
   if (value?.includes("__EMULATOR__")) {
     return value.split("__EMULATOR__")[1];
@@ -536,9 +581,7 @@ export const getCommandName = (value) => {
 };
 export function rawToHex(raw) {
   if (!Array.isArray(raw)) return "";
-  const hex = raw
-    .map(n => n.toString(16).padStart(2, "0"))
-    .join("");
+  const hex = raw.map((n) => n.toString(16).padStart(2, "0")).join("");
   return "0x" + hex.toUpperCase();
 }
 
@@ -581,16 +624,18 @@ export const statusClass = (status) => {
 
 export function parseLine(line) {
   if (typeof line !== "string" || line.includes("(HEX)")) return [];
-  const iObj = line.indexOf("{"), iArr = line.indexOf("[");
+  const iObj = line.indexOf("{"),
+    iArr = line.indexOf("[");
   let start = -1;
   if (iObj !== -1 && iArr !== -1) start = Math.min(iObj, iArr);
   else start = iObj !== -1 ? iObj : iArr;
   if (start === -1) return [];
   try {
     const parsed = JSON.parse(line.slice(start).trim());
-    if (Array.isArray(parsed)) return parsed.filter((x) => typeof x === "object");
+    if (Array.isArray(parsed))
+      return parsed.filter((x) => typeof x === "object");
     if (parsed && typeof parsed === "object") return [parsed];
-  } catch { }
+  } catch {}
   return [];
 }
 
@@ -607,7 +652,9 @@ export function pickByAliases(raw, canonicalKey) {
   const variants = ALIASES[canonicalKey] || [canonicalKey];
   for (const k of variants) {
     if (raw[k] !== undefined && raw[k] !== null) return raw[k];
-    const found = Object.keys(raw).find((rk) => rk.toLowerCase() === k.toLowerCase());
+    const found = Object.keys(raw).find(
+      (rk) => rk.toLowerCase() === k.toLowerCase()
+    );
     if (found) return raw[found];
   }
   return undefined;
@@ -615,11 +662,22 @@ export function pickByAliases(raw, canonicalKey) {
 
 export function formatValue(key, val) {
   if (val === undefined || val === null || val === "") return "—";
-  if (["pll_status", "psk_demodulator_status", "bit_synchronizer_status", "viterbi_decoder_status"].includes(key))
+  if (
+    [
+      "pll_status",
+      "psk_demodulator_status",
+      "bit_synchronizer_status",
+      "viterbi_decoder_status",
+    ].includes(key)
+  )
     return String(val);
   if (key === "ber") {
     const num = Number(val);
-    return Number.isFinite(num) ? (num < 1e-2 ? num.toExponential(2) : num.toFixed(4)) : String(val);
+    return Number.isFinite(num)
+      ? num < 1e-2
+        ? num.toExponential(2)
+        : num.toFixed(4)
+      : String(val);
   }
   if (key === "ebn0" || key === "power_level") {
     const num = Number(val);
@@ -649,7 +707,8 @@ export function computeStamp(logs) {
           const num = Number(rawTs);
           if (Number.isFinite(num)) ms = num < 1e12 ? num * 1000 : num;
         }
-        if (Number.isFinite(ms)) bestTs = bestTs === null ? ms : Math.max(bestTs, ms);
+        if (Number.isFinite(ms))
+          bestTs = bestTs === null ? ms : Math.max(bestTs, ms);
       }
     }
   }
@@ -658,25 +717,25 @@ export function computeStamp(logs) {
 }
 
 export async function fetchBeacon() {
-    const body = {
-        jsonrpc: "2.0",
-        method: OC3?.METHOD,
-        params: [OC3?.TARGET, OC3?.PACKET],
-        id: 9,
-        keyword_params: { scope: OC3?.SCOPE },
-    };
+  const body = {
+    jsonrpc: "2.0",
+    method: OC3?.METHOD,
+    params: [OC3?.TARGET, OC3?.PACKET],
+    id: 9,
+    keyword_params: { scope: OC3?.SCOPE },
+  };
 
-    const res = await fetch(OC3?.ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: OC3?.AUTH },
-        body: JSON.stringify(body),
-    });
-    if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
-    const data = await res.json();
-    const map = Array.isArray(data?.result)
-        ? Object.fromEntries(data.result)
-        : data?.result || {};
-    return map;
+  const res = await fetch(OC3?.ENDPOINT, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: OC3?.AUTH },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+  const data = await res.json();
+  const map = Array.isArray(data?.result)
+    ? Object.fromEntries(data.result)
+    : data?.result || {};
+  return map;
 }
 
 // Earth radius in km
@@ -688,7 +747,7 @@ const RAD_TO_DEG = 180 / Math.PI;
 
 /**
  * Calculate the elevation angle from a ground station to a satellite
- * 
+ *
  * @param stationId string
  * @param station Ground station position (lat, lon in degrees)
  * @param satellite Satellite position (lat, lon in degrees, altitude in km)
@@ -697,121 +756,124 @@ const RAD_TO_DEG = 180 / Math.PI;
  * @returns ContactStatus object with elevation, azimuth, range, and contact status
  */
 export function calculateContactStatus(
-    stationId,
-    station,
-    satellite,
-    minElevation = 5,
-    maxElevation = 45
+  stationId,
+  station,
+  satellite,
+  minElevation = 5,
+  maxElevation = 45
 ) {
-    const stationAlt = station.altitude_km ?? 0;
+  const stationAlt = station.altitude_km ?? 0;
 
-    // Convert to radians
-    const lat1 = station.latitude * DEG_TO_RAD;
-    const lon1 = station.longitude * DEG_TO_RAD;
-    const lat2 = satellite.latitude * DEG_TO_RAD;
-    const lon2 = satellite.longitude * DEG_TO_RAD;
+  // Convert to radians
+  const lat1 = station.latitude * DEG_TO_RAD;
+  const lon1 = station.longitude * DEG_TO_RAD;
+  const lat2 = satellite.latitude * DEG_TO_RAD;
+  const lon2 = satellite.longitude * DEG_TO_RAD;
 
-    // Calculate the central angle between station and satellite subsatellite point
-    const dLat = lat2 - lat1;
-    const dLon = lon2 - lon1;
+  // Calculate the central angle between station and satellite subsatellite point
+  const dLat = lat2 - lat1;
+  const dLon = lon2 - lon1;
 
-    const a = Math.sin(dLat / 2) ** 2 +
-        Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon / 2) ** 2;
-    const centralAngle = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon / 2) ** 2;
+  const centralAngle = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-    // Radii from Earth's center
-    const rStation = EARTH_RADIUS_KM + stationAlt;
-    const rSatellite = EARTH_RADIUS_KM + satellite.altitude_km;
+  // Radii from Earth's center
+  const rStation = EARTH_RADIUS_KM + stationAlt;
+  const rSatellite = EARTH_RADIUS_KM + satellite.altitude_km;
 
-    // Calculate slant range using law of cosines
-    const slantRange = Math.sqrt(
-        rStation ** 2 + rSatellite ** 2 -
-        2 * rStation * rSatellite * Math.cos(centralAngle)
-    );
+  // Calculate slant range using law of cosines
+  const slantRange = Math.sqrt(
+    rStation ** 2 +
+      rSatellite ** 2 -
+      2 * rStation * rSatellite * Math.cos(centralAngle)
+  );
 
-    // Calculate elevation angle using the more accurate formula
-    const elevation = Math.atan2(
-        Math.cos(centralAngle) - (rStation / rSatellite),
-        Math.sin(centralAngle)
+  // Calculate elevation angle using the more accurate formula
+  const elevation =
+    Math.atan2(
+      Math.cos(centralAngle) - rStation / rSatellite,
+      Math.sin(centralAngle)
     ) * RAD_TO_DEG;
 
-    // Calculate azimuth angle (bearing from station to satellite)
-    const y = Math.sin(dLon) * Math.cos(lat2);
-    const x = Math.cos(lat1) * Math.sin(lat2) -
-        Math.sin(lat1) * Math.cos(lat2) * Math.cos(dLon);
-    let azimuthAngle = Math.atan2(y, x) * RAD_TO_DEG;
-    azimuthAngle = (azimuthAngle + 360) % 360; // Normalize to 0-360
+  // Calculate azimuth angle (bearing from station to satellite)
+  const y = Math.sin(dLon) * Math.cos(lat2);
+  const x =
+    Math.cos(lat1) * Math.sin(lat2) -
+    Math.sin(lat1) * Math.cos(lat2) * Math.cos(dLon);
+  let azimuthAngle = Math.atan2(y, x) * RAD_TO_DEG;
+  azimuthAngle = (azimuthAngle + 360) % 360; // Normalize to 0-360
 
-    // Determine contact status
-    const inContact = elevation >= minElevation;
-    const isOptimal = elevation >= minElevation && elevation <= maxElevation;
+  // Determine contact status
+  const inContact = elevation >= minElevation;
+  const isOptimal = elevation >= minElevation && elevation <= maxElevation;
 
-    return {
-        stationId,
-        inContact,
-        elevationAngle: Math.round(elevation * 10) / 10, // Round to 1 decimal
-        azimuthAngle: Math.round(azimuthAngle * 10) / 10,
-        slantRange: Math.round(slantRange * 10) / 10,
-        isOptimal
-    };
+  return {
+    stationId,
+    inContact,
+    elevationAngle: Math.round(elevation * 10) / 10, // Round to 1 decimal
+    azimuthAngle: Math.round(azimuthAngle * 10) / 10,
+    slantRange: Math.round(slantRange * 10) / 10,
+    isOptimal,
+  };
 }
 
 /**
  * Calculate the visibility footprint radius for given elevation angle and satellite altitude
  * This is the ground distance from subsatellite point where elevation = minElevation
- * 
+ *
  * @param satelliteAltitude in km
  * @param minElevation in degrees
  * @returns radius in km
  */
-export function calculateFootprintRadius(
-    satelliteAltitude,
-    minElevation = 5
-) {
-    const h = satelliteAltitude;
-    const Re = EARTH_RADIUS_KM;
-    const el = minElevation * DEG_TO_RAD;
+export function calculateFootprintRadius(satelliteAltitude, minElevation = 5) {
+  const h = satelliteAltitude;
+  const Re = EARTH_RADIUS_KM;
+  const el = minElevation * DEG_TO_RAD;
 
-    // Central angle at which elevation equals minElevation
-    // Using geometry: rho = acos(Re * cos(el) / (Re + h)) - el
-    const rho = Math.acos((Re * Math.cos(el)) / (Re + h)) - el;
+  // Central angle at which elevation equals minElevation
+  // Using geometry: rho = acos(Re * cos(el) / (Re + h)) - el
+  const rho = Math.acos((Re * Math.cos(el)) / (Re + h)) - el;
 
-    // Ground distance (arc length)
-    const footprintRadius = Re * rho;
+  // Ground distance (arc length)
+  const footprintRadius = Re * rho;
 
-    return Math.round(footprintRadius);
+  return Math.round(footprintRadius);
 }
 
 /**
  * Get all station contact statuses for current satellite position
  */
 export function getAllContactStatuses(
-    stations,
-    satellite,
-    minElevation = 5,
-    maxElevation = 45
+  stations,
+  satellite,
+  minElevation = 5,
+  maxElevation = 45
 ) {
-    return stations.map(station =>
-        calculateContactStatus(
-            station.id,
-            { latitude: station.latitude, longitude: station.longitude },
-            satellite,
-            minElevation,
-            maxElevation
-        )
-    );
+  return stations.map((station) =>
+    calculateContactStatus(
+      station.id,
+      { latitude: station.latitude, longitude: station.longitude },
+      satellite,
+      minElevation,
+      maxElevation
+    )
+  );
 }
 
 /**
  * Check if any station is currently in contact
  */
 export function hasActiveContact(statuses) {
-    return statuses.some(s => s.inContact);
+  return statuses.some((s) => s.inContact);
 }
 
 /**
  * Get stations currently in contact
  */
 export function getActiveContacts(statuses) {
-    return statuses.filter(s => s.inContact).sort((a, b) => b.elevationAngle - a.elevationAngle);
+  return statuses
+    .filter((s) => s.inContact)
+    .sort((a, b) => b.elevationAngle - a.elevationAngle);
 }

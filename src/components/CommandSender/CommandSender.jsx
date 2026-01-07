@@ -8,17 +8,13 @@ import {
   partitionItems,
   payloadForTemplate,
 } from "../../utils/utils";
-import {
-  commandTelemetryEmulator,
-  scheduleFileCommands,
-  subSystemList,
-  targetList,
-} from "../../data";
+import { scheduleFileCommands, subSystemList, targetList } from "../../data";
 import CEHeader from "./CEHeader";
 import { getAllCommands, getTlmPacket } from "../../utils/api";
 import TelemetryList from "./TelemetryList";
 import SelectRows from "./SelectRows";
 import CommandDetails from "./CommandDetails";
+import { commandTelemetryEmulator } from "../../constants/commandsData";
 
 export default function CommandExplorer() {
   const [loading, setLoading] = useState(false);
@@ -32,7 +28,9 @@ export default function CommandExplorer() {
   const [showHeader, setShowHeader] = useState(false);
   const [isHex, setIsHex] = useState(true);
   const [targetValue, setTargetValue] = useState(targetList?.[0]?.label ?? "");
-  const [subSystemValue, setSubSystemValue] = useState(subSystemList?.[0]?.label ?? "");
+  const [subSystemValue, setSubSystemValue] = useState(
+    subSystemList?.[0]?.label ?? ""
+  );
   const [filteredCommands, setFilteredCommands] = useState([]);
   const [routing, setRouting] = useState({});
   const [payload, setPayload] = useState({});
@@ -40,7 +38,12 @@ export default function CommandExplorer() {
   const selectedCmd =
     filteredCommands.length > 0 ? filteredCommands[selectedIdx] : null;
 
-  const { target_name, packet_name, description, items = [] } = selectedCmd || {};
+  const {
+    target_name,
+    packet_name,
+    description,
+    items = [],
+  } = selectedCmd || {};
 
   const { headerItems, routingItems, payloadItems } = useMemo(
     () => partitionItems(items),
@@ -48,11 +51,11 @@ export default function CommandExplorer() {
   );
 
   const selectedSubSystemOption = useMemo(() => {
-    return subSystemList.find(opt => opt?.label === subSystemValue) || null;
+    return subSystemList.find((opt) => opt?.label === subSystemValue) || null;
   }, [subSystemList, subSystemValue]);
 
   const selectedTargetOption = useMemo(() => {
-    return targetList.find(opt => opt?.label === targetValue) || null;
+    return targetList.find((opt) => opt?.label === targetValue) || null;
   }, [targetList, targetValue]);
 
   useEffect(() => {
@@ -63,22 +66,23 @@ export default function CommandExplorer() {
     }
 
     const routingInit = {};
-    for (const it of routingItems) {
+    routingItems.forEach((it) => {
       routingInit[it.name] = getDefaultDisplay(it) ?? "";
-    }
+    });
 
     const payloadInit = {};
-    for (const it of payloadItems) {
+    payloadItems.forEach((it) => {
       if (it.states) {
         const info = getStatesInfo(it);
         payloadInit[it.name] = info?.selectedLabel ?? "";
       } else {
         payloadInit[it.name] = getDefaultDisplay(it) ?? "";
       }
-    }
+    });
+
     setRouting(routingInit);
     setPayload(payloadInit);
-  }, [selectedIdx, selectedCmd, routingItems, payloadItems]);
+  }, [selectedCmd]); // ✅ ONLY THIS
 
   useEffect(() => {
     (async () => {
@@ -127,7 +131,8 @@ export default function CommandExplorer() {
         const data = await getTlmPacket({ tlmName });
         if (!data?.result || cancelled) return;
 
-        const paramKeys = mapping?.parameters?.map((p) => p.toLowerCase()) ?? [];
+        const paramKeys =
+          mapping?.parameters?.map((p) => p.toLowerCase()) ?? [];
         const filtered = data.result.filter(([key]) =>
           paramKeys.includes(key.toLowerCase())
         );
@@ -246,8 +251,8 @@ export default function CommandExplorer() {
                   setSubSystemValue={setSubSystemValue}
                   commandOptions={commandOptions}
                   selectedOption={selectedOption}
-                  setSelectedIdx={setSelectedIdx} />
-
+                  setSelectedIdx={setSelectedIdx}
+                />
               )}
               {loading && <div className="ce-loading">Loading commands…</div>}
               {err && <div className="ce-error">Error: {err}</div>}

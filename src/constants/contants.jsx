@@ -1,14 +1,14 @@
-export const backend_api = "http://127.0.0.1:2900/openc3-api";
-export const PASS_ENDPOINT = "http://127.0.0.1:8001/status";
-export const API_BASE = "http://localhost:8008/api";
+export const backend_api = import.meta.env.VITE_OPENC3_BACKEND_API;
+export const PASS_ENDPOINT = import.meta.env.VITE_OPENC3_PASS_ENDPOINT;
+export const API_BASE = import.meta.env.VITE_OPENC3_API_BASE;
 
 export const method_types = {
   POST: "POST",
-  GET: "GET"
+  GET: "GET",
 };
 export const headers = {
   "Content-Type": "application/json",
-  Authorization: "mos12345"
+  Authorization: "mos12345",
 };
 export const method_name = {
   GET_ALL_COMMANDS: "get_all_cmds",
@@ -23,22 +23,22 @@ export const selectedOptions = [
     label: "Type",
     defaultData: "EMULATOR",
     isFromTelemetry: false,
-    data: []
+    data: [],
   },
   {
     id: 2,
     label: "Component",
     defaultData: "All",
     isFromTelemetry: false,
-    data: []
+    data: [],
   },
   {
     id: 3,
     label: "Command",
     defaultData: "Telecommands",
     isFromTelemetry: true,
-    data: []
-  }
+    data: [],
+  },
 ];
 
 export const editedCommandsHistory = [
@@ -54,8 +54,8 @@ export const editedCommandsHistory = [
       { name: "bitSize", value: "32" },
       { name: "default", value: "0" },
       { name: "endianness", value: "BIG_ENDIAN" },
-      { name: "description", value: "CSPHEADER is the header of the packet." }
-    ]
+      { name: "description", value: "CSPHEADER is the header of the packet." },
+    ],
   },
   {
     id: 2,
@@ -69,8 +69,8 @@ export const editedCommandsHistory = [
       { name: "bitSize", value: "8" },
       { name: "default", value: "0" },
       { name: "endianness", value: "BIG_ENDIAN" },
-      { name: "description", value: "CSPHEADER is the header of the packet." }
-    ]
+      { name: "description", value: "CSPHEADER is the header of the packet." },
+    ],
   },
   {
     id: 3,
@@ -84,8 +84,8 @@ export const editedCommandsHistory = [
       { name: "bitSize", value: "32" },
       { name: "default", value: "0" },
       { name: "endianness", value: "BIG_ENDIAN" },
-      { name: "description", value: "CSPHEADER is the header of the packet." }
-    ]
+      { name: "description", value: "CSPHEADER is the header of the packet." },
+    ],
   },
   {
     id: 4,
@@ -99,8 +99,8 @@ export const editedCommandsHistory = [
       { name: "bitSize", value: "32" },
       { name: "default", value: "0" },
       { name: "endianness", value: "BIG_ENDIAN" },
-      { name: "description", value: "CSPHEADER is the header of the packet." }
-    ]
+      { name: "description", value: "CSPHEADER is the header of the packet." },
+    ],
   },
   {
     id: 5,
@@ -114,61 +114,61 @@ export const editedCommandsHistory = [
       { name: "bitSize", value: "8" },
       { name: "default", value: "0" },
       { name: "endianness", value: "BIG_ENDIAN" },
-      { name: "description", value: "CSPHEADER is the header of the packet." }
-    ]
-  }
+      { name: "description", value: "CSPHEADER is the header of the packet." },
+    ],
+  },
 ];
 
 export const channelNoOptions = [
   {
     id: 1,
-    name: '0',
-    value: '0',
-    isDefault: true
+    name: "0",
+    value: "0",
+    isDefault: true,
   },
   {
     id: 2,
-    name: 'PSBoard',
-    value: '3',
-    isDefault: false
+    name: "PSBoard",
+    value: "3",
+    isDefault: false,
   },
   {
     id: 3,
-    name: 'EdgeBoard',
-    value: '15',
-    isDefault: false
+    name: "EdgeBoard",
+    value: "15",
+    isDefault: false,
   },
   {
     id: 4,
-    name: 'Thruster',
-    value: '17',
-    isDefault: false
+    name: "Thruster",
+    value: "17",
+    isDefault: false,
   },
   {
     id: 5,
-    name: 'PL2',
-    value: '20',
-    isDefault: false
+    name: "PL2",
+    value: "20",
+    isDefault: false,
   },
-]
+];
 
 export const channelStateOptions = [
   {
     id: 1,
-    name: 'on',
-    value: '1',
-    isDefault: true
+    name: "on",
+    value: "1",
+    isDefault: true,
   },
   {
     id: 2,
-    name: 'off',
-    value: '0',
-    isDefault: false
-  }
-]
+    name: "off",
+    value: "0",
+    isDefault: false,
+  },
+];
 
 export const OC3 = {
-  ENDPOINT: "http://127.0.0.1:2900/openc3-api/api",
+  ENDPOINT: import.meta.env.VITE_OPENC3_API_URL,
   AUTH: "mos12345",
   METHOD: "get_tlm_packet",
   TARGET: "EMULATOR",
@@ -177,78 +177,91 @@ export const OC3 = {
 };
 
 export const Parameters = [
-  "CSPHEADER", "SOF1", "SOF2", "TC_CTRL", "SEQ_NO", "SAT_ID", "QOS", "SA_ID", "DA_ID", "TC_LEN", "extra", "__type", "__packet", "__time", "buffer", "CMAC/HMAC"
-]
+  "CSPHEADER",
+  "SOF1",
+  "SOF2",
+  "TC_CTRL",
+  "SEQ_NO",
+  "SAT_ID",
+  "QOS",
+  "SA_ID",
+  "DA_ID",
+  "TC_LEN",
+  "extra",
+  "__type",
+  "__packet",
+  "__time",
+  "buffer",
+  "CMAC/HMAC",
+];
 
 export const passPlanData = [
   {
     id: 1,
-    name: 'S-band health Data check',
-    comments: '3',
-    status: 'Success',
+    name: "S-band health Data check",
+    comments: "3",
+    status: "Success",
   },
   {
     id: 2,
-    name: 'Time Synchronization',
-    comments: '4',
-    status: 'In-progress',
+    name: "Time Synchronization",
+    comments: "4",
+    status: "In-progress",
   },
   {
     id: 3,
-    name: 'X-band Downlink Start Status',
-    comments: '4',
-    status: 'Waiting',
+    name: "X-band Downlink Start Status",
+    comments: "4",
+    status: "Waiting",
   },
   {
     id: 4,
-    name: 'Schedule Upload',
-    comments: '13',
-    status: 'Failed',
-  }
-]
+    name: "Schedule Upload",
+    comments: "13",
+    status: "Failed",
+  },
+];
 
 export const upcomingPassPlans = [
   {
     id: 1,
-    name: '12-11-2025-PLAN-A',
-    gs_name: 'NZ-0098',
-    AOS: '2025-10-25 06:00:00',
-    LOS: '2024-10-25 06:20:00',
-    drafted_by: 'Kalpass',
-    editor: '-',
-    last_edit: '-',
+    name: "12-11-2025-PLAN-A",
+    gs_name: "NZ-0098",
+    AOS: "2025-10-25 06:00:00",
+    LOS: "2024-10-25 06:20:00",
+    drafted_by: "Kalpass",
+    editor: "-",
+    last_edit: "-",
     active: true,
-    procedure: [
-      "Beacon Data Check", "Schedule Upload", "File Upload"
-    ],
+    procedure: ["Beacon Data Check", "Schedule Upload", "File Upload"],
     procedure_details: [
       {
         id: 1,
         name: "Beacon Data Check",
         comments: 27,
-        status: 'Queued',
+        status: "Queued",
         runId: null,
-        events: []
+        events: [],
       },
       {
         id: 2,
         name: "Time Synchronization",
         comments: 27,
-        status: 'Queued',
+        status: "Queued",
         runId: null,
-        events: []
+        events: [],
       },
       {
         id: 3,
         name: "Schedule Upload",
         comments: 27,
-        status: 'Queued',
+        status: "Queued",
         runId: null,
-        events: []
+        events: [],
       },
-    ]
+    ],
   },
-]
+];
 
 //script runner
 
@@ -259,14 +272,26 @@ export const SCOPE = "DEFAULT";
 export const AUTO_LOCK = true;
 
 export const WS_URL = USE_PROXY
-  ? `${window.location.protocol === "https:" ? "wss://" : "ws://"}${window.location.host}/script-api/cable`
-  : (BASE.replace("http://", "ws://").replace("https://", "wss://") + "/script-api/cable");
+  ? `${window.location.protocol === "https:" ? "wss://" : "ws://"}${
+      window.location.host
+    }/script-api/cable`
+  : BASE.replace("http://", "ws://").replace("https://", "wss://") +
+    "/script-api/cable";
 
 export const WS_SUBPROTOCOLS = ["actioncable-v1-json"];
-export const HTTP_HEADERS = { Authorization: TOKEN, "Content-Type": "application/json" };
+export const HTTP_HEADERS = {
+  Authorization: TOKEN,
+  "Content-Type": "application/json",
+};
 
 export const SEVERITY_ORDER = { info: 0, warn: 1, error: 2 };
-export const STATUS_RANK = { idle: 0, waiting: 1, running: 2, error: 4, success: 3 };
+export const STATUS_RANK = {
+  idle: 0,
+  waiting: 1,
+  running: 2,
+  error: 4,
+  success: 3,
+};
 
 export const SUCCESS_PATTERNS = [
   /script\s*completed:?/i,
@@ -275,76 +300,76 @@ export const SUCCESS_PATTERNS = [
   /\ball\s*done\b/i,
   /\bsuccess(?:ful(?:ly)?)?\b/i,
   /(time\s*sync|timesync).*(done|complete(?:d)?|success)/i,
-  /(schedule|upload).*(done|complete(?:d)?|success)/i
+  /(schedule|upload).*(done|complete(?:d)?|success)/i,
 ];
 
 export const allProcedures = [
   {
     id: 1,
-    name: 'Beacon Data Check',
+    name: "Beacon Data Check",
     comments: 9,
-    status: 'Queued'
+    status: "Queued",
   },
   {
     id: 2,
-    name: 'Time Synchronization',
+    name: "Time Synchronization",
     comments: 4,
-    status: 'Queued'
+    status: "Queued",
   },
   {
     id: 3,
-    name: 'X-band Downlink Start Status',
+    name: "X-band Downlink Start Status",
     comments: 8,
-    status: 'Queued'
+    status: "Queued",
   },
   {
     id: 4,
-    name: 'Schedule Upload',
+    name: "Schedule Upload",
     comments: 24,
-    status: 'Queued'
+    status: "Queued",
   },
   {
     id: 5,
-    name: 'DTC File Upload',
+    name: "DTC File Upload",
     comments: 10,
-    status: 'Queued'
+    status: "Queued",
   },
   {
     id: 6,
-    name: 'S-band uplink status',
+    name: "S-band uplink status",
     comments: 6,
-    status: 'Queued'
-  }
+    status: "Queued",
+  },
 ];
 export const allScheduleFiles = [
   {
     id: 1,
-    name: 'schedule.json'
+    name: "schedule.json",
   },
   {
     id: 2,
-    name: 'schedule_updated.json'
+    name: "schedule_updated.json",
   },
   {
     id: 3,
-    name: 'schedule_older.json'
-  }
-]
+    name: "schedule_older.json",
+  },
+];
 
 export const allDTCFiles = [
   {
     id: 1,
-    name: 'ftm_tx_log.txt'
+    name: "ftm_tx_log.txt",
   },
   {
     id: 2,
-    name: 'ftm_log1.txt'
+    name: "ftm_log1.txt",
   },
   {
     id: 3,
-    name: 'ftm_log2.txt'
-  }
-]
+    name: "ftm_log2.txt",
+  },
+];
 
 // command sender
 
@@ -377,38 +402,45 @@ export const ROUTING_NAMES = new Set(["DA_ID", "RM_ID", "TC_ID"]);
 // Ground Connection page
 
 export const FIELD_ORDER = [
-    "pll_status", "psk_demodulator_status", "bit_synchronizer_status",
-    "viterbi_decoder_status", "ebn0", "ber", "power_level",
-    "uplink_carrier_offset", "downlink_carrier_offset",
-    "bad_frames_counter", "telemetry_frames_counter"
+  "pll_status",
+  "psk_demodulator_status",
+  "bit_synchronizer_status",
+  "viterbi_decoder_status",
+  "ebn0",
+  "ber",
+  "power_level",
+  "uplink_carrier_offset",
+  "downlink_carrier_offset",
+  "bad_frames_counter",
+  "telemetry_frames_counter",
 ];
 
 export const LABELS = {
-    pll_status: "PLL Status",
-    psk_demodulator_status: "PSK Demodulator",
-    bit_synchronizer_status: "Bit Synchronizer",
-    viterbi_decoder_status: "Viterbi Decoder",
-    ebn0: "Eb/N0 (dB)",
-    ber: "BER (pre-FEC)",
-    power_level: "Power Level (dBm)",
-    uplink_carrier_offset: "Uplink Carrier Offset (Hz)",
-    downlink_carrier_offset: "Downlink Carrier Offset (Hz)",
-    bad_frames_counter: "Bad Frames",
-    telemetry_frames_counter: "Telemetry Frames"
+  pll_status: "PLL Status",
+  psk_demodulator_status: "PSK Demodulator",
+  bit_synchronizer_status: "Bit Synchronizer",
+  viterbi_decoder_status: "Viterbi Decoder",
+  ebn0: "Eb/N0 (dB)",
+  ber: "BER (pre-FEC)",
+  power_level: "Power Level (dBm)",
+  uplink_carrier_offset: "Uplink Carrier Offset (Hz)",
+  downlink_carrier_offset: "Downlink Carrier Offset (Hz)",
+  bad_frames_counter: "Bad Frames",
+  telemetry_frames_counter: "Telemetry Frames",
 };
 
 export const ALIASES = {
-    ebn0: ["ebn0", "EbN0", "EBN0", "eb_no", "snr_db"],
-    power_level: ["power_level", "rssi_dbm", "rx_power_dbm", "RSSI"],
-    ber: ["ber", "bit_error_rate", "BER"],
-    pll_status: ["pll_status", "pll"],
-    psk_demodulator_status: ["psk_demodulator_status", "psk"],
-    bit_synchronizer_status: ["bit_synchronizer_status", "bit_sync"],
-    viterbi_decoder_status: ["viterbi_decoder_status", "viterbi"],
-    uplink_carrier_offset: ["uplink_carrier_offset", "uplink_offset"],
-    downlink_carrier_offset: ["downlink_carrier_offset", "downlink_offset"],
-    bad_frames_counter: ["bad_frames_counter", "bad_frames"],
-    telemetry_frames_counter: ["telemetry_frames_counter", "tm_frames"]
+  ebn0: ["ebn0", "EbN0", "EBN0", "eb_no", "snr_db"],
+  power_level: ["power_level", "rssi_dbm", "rx_power_dbm", "RSSI"],
+  ber: ["ber", "bit_error_rate", "BER"],
+  pll_status: ["pll_status", "pll"],
+  psk_demodulator_status: ["psk_demodulator_status", "psk"],
+  bit_synchronizer_status: ["bit_synchronizer_status", "bit_sync"],
+  viterbi_decoder_status: ["viterbi_decoder_status", "viterbi"],
+  uplink_carrier_offset: ["uplink_carrier_offset", "uplink_offset"],
+  downlink_carrier_offset: ["downlink_carrier_offset", "downlink_offset"],
+  bad_frames_counter: ["bad_frames_counter", "bad_frames"],
+  telemetry_frames_counter: ["telemetry_frames_counter", "tm_frames"],
 };
 
 export const BASE_CONNECTION = "http://localhost:8002";

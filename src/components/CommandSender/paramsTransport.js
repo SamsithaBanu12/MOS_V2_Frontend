@@ -1,6 +1,6 @@
 // Network send + the single universal template live here.
 
-const API_URL = "http://127.0.0.1:2900/openc3-api/api";
+const API_URL = import.meta.env.VITE_OPENC3_API_URL;
 const AUTH = "mos12345";
 
 /**
