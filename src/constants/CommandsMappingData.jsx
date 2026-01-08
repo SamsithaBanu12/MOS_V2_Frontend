@@ -398,4 +398,56 @@ export const commandStateMapping = [
       },
     ],
   },
+  {
+    command: "211_EPS_TC_SET_DEVICE_STS",
+    telemetry: "211_EPS_TM_SET_DEVICE_STS",
+    states: [
+      {
+        parameter: "Channel_no",
+        states: {
+          1: "OBC",
+          3: "PSBoard",
+          7: "ADCS",
+          9: "UHF",
+          11: "S-Band",
+          13: "X-Band-1",
+          14: "X-Band-2",
+          15: "Edge",
+          17: "Thruster",
+          19: "MSI",
+          20: "SES-A",
+          21: "SES-B",
+          22: "SAS-A",
+          23: "UHF-Burnwire",
+          24: "SAS-B",
+        },
+      },
+      {
+        parameter: "Channel_state",
+        states: {
+          0: "OFF",
+          1: "ON",
+          2: "RESTART",
+        },
+      },
+    ],
+  },
+  {
+    command: "202_TC_SET_EPS_CONF_OPTION_1",
+    telemetry: "OBC_545_TM_PLD_VM_PWR_ON",
+    states: [
+      {
+        parameter: "WEEKDAY",
+        states: {
+          0: "MONDAY",
+          1: "TUESDAY",
+          2: "WEDNESDAY",
+          3: "THRUSDAY",
+          4: "FRIDAY",
+          5: "SATURDAY",
+          6: "SUNDAY",
+        },
+      },
+    ],
+  },
 ];

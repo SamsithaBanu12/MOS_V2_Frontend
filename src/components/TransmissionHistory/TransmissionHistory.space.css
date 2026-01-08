@@ -1,6 +1,6 @@
 /* Space-themed Transmission History */
 .th-card {
-  font-family:var(--font);
+  font-family: var(--font);
   color: #fff;
   border: 1px solid var(--highlight-bg);
   border-radius: 8px;
@@ -45,7 +45,6 @@
   display: inline-block;
   padding: 3px 8px;
   border-radius: 8px;
-  margin-right: 6px;
   border: 1px solid var(--highlight-bg2);
   color: #fff;
   font-size: 13px;
@@ -53,6 +52,14 @@
 }
 
 /* Tabs */
+
+.th-tabs-wrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .th-tabs {
   display: flex;
   flex-direction: row;
@@ -118,6 +125,7 @@
   gap: 6px;
   color: #fff;
   font-size: 13px;
+  margin-top: 5px;
 }
 
 .th-btn,
@@ -161,19 +169,19 @@
   overflow-x: auto;
 }
 
-.th-table-wrap{
+.th-table-wrap {
   max-height: 74.5vh;
   overflow: auto;
   position: relative;
 }
 
-.th-table{
+.th-table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0 8px;
 }
 
-.th-table thead th{
+.th-table thead th {
   position: sticky;
   top: 0;
   z-index: 9999;
@@ -187,7 +195,7 @@
   text-transform: uppercase;
   color: #fff;
   font-weight: 600;
-    z-index: 999;
+  z-index: 999;
 }
 
 .th-table thead tr {
@@ -486,6 +494,48 @@
   color: #fff;
   overflow-x: scroll;
 }
+
 .th-row-input::-webkit-scrollbar {
- display: none;
+  display: none;
+}
+
+.th-refresh-btn {
+  border-radius: 8px;
+  border: 1px solid #10344eff;
+  padding: 9px 14px;
+  color: var(--title-color);
+  cursor: pointer;
+  transition: 0.2s all;
+  font-size: 14px;
+  width: 90px;
+  background: rgba(50, 90, 96, 0.35);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 14px;
+  font-weight: 600;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow:
+    0 10px 22px rgba(0, 0, 0, 0.30),
+    0 1px 0 rgba(255, 255, 255, 0.08) inset;
+  cursor: pointer;
+}
+
+.th-clear-btn {
+  border-radius: 8px;
+  border: 1px solid #10344eff;
+  padding: 9px 14px;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.2s all;
+  font-size: 14px;
+  width: 90px;
+  font-size: 14px;
+  font-weight: 600;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow:
+    0 10px 22px rgba(0, 0, 0, 0.30),
+    0 1px 0 rgba(255, 255, 255, 0.08) inset;
+  cursor: pointer;
 }

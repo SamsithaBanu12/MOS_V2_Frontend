@@ -1,28 +1,20 @@
 // TransmissionHistory.jsx
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import "./TransmissionHistory.space.css";
-import { IoClose } from "react-icons/io5";
-import {
-  base64ToHex,
-  findHealthCommand,
-  getAllCmdsData,
-  getAllTlmsData,
-  getCommandName,
-  getTcTmId,
-  toUTCYmdHmsnn,
-} from "../../utils/utils";
+import { getAllCmdsData, getAllTlmsData } from "../../utils/utils";
 import { Parameters } from "../../constants/contants";
 import TransmissionTabs from "./TransmissionTabs";
 import TransmissionHistoryList from "./TransmissionHistoryList";
 import TransmissionHistoryDetails from "./TransmissionHistoryDetails";
 
-export default function TransmissionHistory({ transmissionData }) {
+export default function TransmissionHistory({ transmissionData, onRefresh }) {
   const [activeTab, setActiveTab] = useState("CMD");
   const [filter, setFilter] = useState("");
   const [useLocalTime, setUseLocalTime] = useState(true);
   const [commandData, setCommandData] = useState(null);
   const [isRowSelected, setIsRowSelected] = useState(false);
   const [activeTabNames, setActiveTabNames] = useState("");
+  const [clearedTab, setClearedTab] = useState(null);
 
   const cmdsData = getAllCmdsData(transmissionData);
   const tlmsData = getAllTlmsData(transmissionData);
@@ -65,18 +57,19 @@ export default function TransmissionHistory({ transmissionData }) {
   };
 
   const filteredCmds = useMemo(() => {
+    if (clearedTab === "CMD") return [];
     return cmds.filter((r) => filterFn(r, ["__packet"]));
-  }, [cmds, filter]);
+  }, [cmds, filter, clearedTab]);
 
   const filteredTlms = useMemo(() => {
+    if (clearedTab === "TLM") return [];
     return tlms.filter((r) => filterFn(r, ["__packet"]));
-  }, [tlms, filter]);
+  }, [tlms, filter, clearedTab]);
 
   const handleRowClick = (row) => {
     setCommandData(row);
     setIsRowSelected(true);
   };
-
 
   return (
     <div className="th-wrapper">
@@ -94,13 +87,15 @@ export default function TransmissionHistory({ transmissionData }) {
           active={activeTab}
           onChange={(val) => {
             setActiveTab(val);
+            setClearedTab(null); // restore data
             setCommandData(null);
             setIsRowSelected(false);
           }}
           activeTabNames={setActiveTabNames}
+          useLocalTime={useLocalTime}
+          setUseLocalTime={setUseLocalTime}
         />
 
-        {/* Controls ALWAYS visible, even if filter returns zero rows */}
         <div className="th-controls">
           <input
             className="th-input"
@@ -116,14 +111,30 @@ export default function TransmissionHistory({ transmissionData }) {
               setIsRowSelected(false);
             }}
           />
-          <label className="th-label">
-            <input
-              type="checkbox"
-              checked={useLocalTime}
-              onChange={(e) => setUseLocalTime(e.target.checked)}
-            />
-            Local time
-          </label>
+          <button
+            className="th-refresh-btn"
+            onClick={() => {
+              onRefresh();
+              setClearedTab(null);
+              setFilter("");
+              setCommandData(null);
+              setIsRowSelected(false);
+            }}
+          >
+            Refresh
+          </button>
+
+          <button
+            className="th-clear-btn"
+            onClick={() => {
+              setClearedTab(activeTab);
+              setFilter("");
+              setCommandData(null);
+              setIsRowSelected(false);
+            }}
+          >
+            Clear
+          </button>
         </div>
         <TransmissionHistoryList
           activeTab={activeTab}
@@ -133,8 +144,6 @@ export default function TransmissionHistory({ transmissionData }) {
           useLocalTime={useLocalTime}
         />
       </div>
-
-      {/* Details panel */}
       {isRowSelected && commandData && (
         <TransmissionHistoryDetails
           activeTab={activeTab}
