@@ -970,17 +970,41 @@ export function filterCommand(packet, commandDefinitions, comm) {
 
   const source = packet.params ?? packet;
 
-  const filteredParams = Object.fromEntries(
+  let filteredParams = Object.fromEntries(
     Object.entries(source).filter(([key]) => allowedKeys.has(key))
   );
+  const stateMapping = commandStateMapping.find((m) =>
+    comm === "CMD"
+      ? m.command === packetCommand
+      : m.telemetry === packetCommand
+  );
+
+  if (stateMapping?.states?.length) {
+    filteredParams = { ...filteredParams };
+
+    for (const stateDef of stateMapping.states) {
+      const paramName = stateDef.parameter;
+
+      if (
+        Object.prototype.hasOwnProperty.call(filteredParams, paramName)
+      ) {
+        const rawValue = filteredParams[paramName];
+
+        // only map numeric values
+        if (
+          typeof rawValue === "number" &&
+          stateDef.states?.[rawValue] !== undefined
+        ) {
+          filteredParams[paramName] = stateDef.states[rawValue];
+        }
+      }
+    }
+  }
+
   const packetName =
     comm === "CMD"
-      ? {
-          command: packetCommand,
-        }
-      : {
-          telemetry: packetCommand,
-        };
+      ? { command: packetCommand }
+      : { telemetry: packetCommand };
 
   return {
     ...packetName,

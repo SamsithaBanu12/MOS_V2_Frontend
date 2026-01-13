@@ -284,6 +284,11 @@
 /* Text states */
 .th-mono {
   font-family: var(--font);
+  max-width: 300px;
+  overflow-x: scroll;
+}
+.th-mono::-webkit-scrollbar{
+  display: none;
 }
 
 .th-muted {
