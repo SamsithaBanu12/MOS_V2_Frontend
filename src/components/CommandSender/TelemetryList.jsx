@@ -1,5 +1,5 @@
 import { commandStateMapping } from "../../constants/CommandsMappingData";
-import { getHighlightClass } from "../../utils/utils";
+import { getHighlightClass, getStateParameterValue } from "../../utils/utils";
 
 const TelemetryList = ({
   commandTelemetryMap,
@@ -7,21 +7,6 @@ const TelemetryList = ({
   filteredTelemetry,
   isFromSchedule,
 }) => {
-  const getStateParameterValue = (commandTelemetryMap, key, value) => {
-    const filterStateParameter = commandStateMapping?.find(
-      (item) =>
-        item?.telemetry?.toLowerCase() ===
-        commandTelemetryMap?.telemetry?.toLowerCase()
-    );
-    if (filterStateParameter) {
-      return (
-        filterStateParameter?.states?.find((item) => item?.parameter === key)
-          ?.states?.[value] ?? value
-      );
-    }
-    return value ?? null;
-  };
-
   return (
     <div className={`${isFromSchedule ? "tm-wrapper1" : "tm-wrapper"}`}>
       <div className="tm-header">Telemetry Details</div>

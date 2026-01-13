@@ -10,6 +10,7 @@ export const commandTelemetryEmulator = [
       "ID_SAFE",
       "COMMISSIONING_RESULT",
     ],
+    commandParams: [],
   },
   {
     id: 2,
@@ -17,6 +18,7 @@ export const commandTelemetryEmulator = [
     telemetry: "THRUSTER_1022_TM_EXOTRAIL_GET_HEAT_ACTIVITY",
     target: "EMULATOR",
     parameters: ["THRUSTER_HEATER_ACTIVITY"],
+    commandParams: [],
   },
   {
     id: 3,
@@ -24,6 +26,7 @@ export const commandTelemetryEmulator = [
     telemetry: "THRUSTER_1023_TM_EXOTRAIL_GET_HK_FLUIDIC_INFO",
     target: "EMULATOR",
     parameters: ["ANODE_PULSE_COUNT", "CATHODE_PULSE_COUNT", "TANK_PRESSURE"],
+    commandParams: [],
   },
   {
     id: 4,
@@ -36,6 +39,7 @@ export const commandTelemetryEmulator = [
       "PPU_INPUT_CURRENT",
       "PPU_INPUT_TEMPERATURE",
     ],
+    commandParams: [],
   },
   {
     id: 5,
@@ -53,6 +57,7 @@ export const commandTelemetryEmulator = [
       "TEMPERATURE_OF_PMS_CATHODE_2",
       "TEMPERATURE_OF_PMS_INTERFACE_2",
     ],
+    commandParams: [],
   },
   {
     id: 6,
@@ -68,6 +73,7 @@ export const commandTelemetryEmulator = [
       "Minute",
       "Milliseconds",
     ],
+    commandParams: [],
   },
   {
     id: 7,
@@ -80,6 +86,7 @@ export const commandTelemetryEmulator = [
       "Thruster_input_volt_5v",
       "Thruster_input_volt_3v3",
     ],
+    commandParams: [],
   },
   {
     id: 8,
@@ -108,6 +115,7 @@ export const commandTelemetryEmulator = [
       "Maximum_temperature_for_PPU",
       "Maximum_pressure_for_tank",
     ],
+    commandParams: [],
   },
   {
     id: 9,
@@ -115,6 +123,7 @@ export const commandTelemetryEmulator = [
     telemetry: "THRUSTER_1028_TM_EXOTRAIL_GET_FLUIDIC_VALVE_SEL",
     target: "EMULATOR",
     parameters: ["FLUIDIC_VALVE_MODE"],
+    commandParams: [],
   },
   {
     id: 10,
@@ -126,6 +135,7 @@ export const commandTelemetryEmulator = [
       "RADIATOR_HIGH_TEMPERATURE",
       "RADIATOR_HEATING_DURATIONS_IN_MINUTES",
     ],
+    commandParams: [],
   },
   {
     id: 11,
@@ -133,6 +143,7 @@ export const commandTelemetryEmulator = [
     telemetry: "THRUSTER_1030_TM_EXOTRAIL_SET_FIRING_OPERATING_POINT",
     target: "EMULATOR",
     parameters: ["EXOTRAIL_MODE"],
+    commandParams: ["FIRING_OPERATING_POINT"],
   },
   {
     id: 12,
@@ -140,6 +151,7 @@ export const commandTelemetryEmulator = [
     telemetry: "THRUSTER_1031_TM_EXOTRAIL_TEST_SET_OBC_MODE",
     target: "EMULATOR",
     parameters: ["EXOTRIAL_OBC_MODE"],
+    commandParams: ["EXOTRIAL_OBC_MODE"],
   },
   {
     id: 13,
@@ -147,6 +159,28 @@ export const commandTelemetryEmulator = [
     telemetry: "THRUSTER_1033_TM_EXOTRAIL_SET_SAFE_LIMIT",
     target: "EMULATOR",
     parameters: ["EXOTRAIL_MODE"],
+    commandParams: [
+      "MAXIMUM_TEMPERATURE_LIMIT_FOR_THRUSTER_HEAD_RADIATOR_1",
+      "MINIMUM_TEMPERATURE_LIMIT_FOR_THRUSTER_HEAD_RADIATOR_1",
+      "MAXIMUM_TEMPERATURE_LIMIT_FOR_THRUSTER_PMS_ANODE_1",
+      "MINIMUM_TEMPERATURE_LIMIT_FOR_THRUSTER_PMS_ANODE_1",
+      "MAXIMUM_TEMPERATURE_LIMIT_FOR_THRUSTER_PMS_CATHODE_1",
+      "MINIMUM_TEMPERATURE_LIMIT_FOR_THRUSTER_PMS_CATHODE_1",
+      "MAXIMUM_TEMPERATURE_LIMIT_FOR_THRUSTER_HEAD_RADIATOR_2",
+      "MINIMUM_TEMPERATURE_LIMIT_FOR_THRUSTER_HEAD_RADIATOR_2",
+      "MAXIMUM_TEMPERATURE_LIMIT_FOR_THRUSTER_PMS_ANODE_2",
+      "MINIMUM_TEMPERATURE_LIMIT_FOR_THRUSTER_PMS_ANODE_2",
+      "MAXIMUM_TEMPERATURE_LIMIT_FOR_THRUSTER_PMS_CATHODE_2",
+      "MINIMUM_TEMPERATURE_LIMIT_FOR_THRUSTER_PMS_CATHODE_2",
+      "MAXIMUM_TEMPERATURE_LIMIT_FOR_THRUSTER_PMS_PRESSURE_1",
+      "MINIMUM_TEMPERATURE_LIMIT_FOR_THRUSTER_PMS_PRESSURE_1",
+      "MAXIMUM_TEMPERATURE_LIMIT_FOR_THRUSTER_THRUSTER_HEAD_SUPPLY_1",
+      "MINIMUM_TEMPERATURE_LIMIT_FOR_THRUSTER_HEAD_SUPPLY_1",
+      "MAXIMUM_TEMPERATURE_LIMIT_FOR_THRUSTER_TCU_ONBOARD_COMPUTER_1",
+      "MINIMUM_TEMPERATURE_LIMIT_FOR_THRUSTER_TCU_ONBOARD_COMPUTER_1",
+      "MAXIMUM_TEMPERATURE_FOR_PPU",
+      "MAXIMUM_PRESSURE_FOR_TANK",
+    ],
   },
   {
     id: 14,
@@ -154,6 +188,7 @@ export const commandTelemetryEmulator = [
     telemetry: "THRUSTER_1034_TM_EXOTRAIL_SET_FLUIDIC_VALVE_SEL",
     target: "EMULATOR",
     parameters: ["EXOTRAIL_MODE"],
+    commandParams: ["FLUIDIC_VALVE_SELECTION"],
   },
   {
     id: 15,
@@ -161,6 +196,7 @@ export const commandTelemetryEmulator = [
     telemetry: "THRUSTER_1036_TM_EXOTRAIL_SET_FIRING_DURATION",
     target: "EMULATOR",
     parameters: ["EXOTRAIL_MODE"],
+    commandParams: ["FIRING_DURATION_IN_MINUTES"],
   },
   {
     id: 16,
@@ -241,6 +277,7 @@ export const commandTelemetryEmulator = [
       "STRUCTURE_END_FLAG_1",
       "STRUCTURE_END_FLAG_2",
     ],
+    commandParams: [],
   },
   {
     id: 17,
@@ -248,6 +285,7 @@ export const commandTelemetryEmulator = [
     telemetry: "OBC_500_TM_GET_PROC_UTIL_INFO",
     target: "EMULATOR",
     parameters: ["CPU_USAGE"],
+    commandParams: [],
   },
   {
     id: 18,
@@ -263,6 +301,14 @@ export const commandTelemetryEmulator = [
       "Milliseconds",
       "Status",
     ],
+    commandParams: [
+      "HOURS",
+      "MINUTES",
+      "MILLISECONDS",
+      "DATE",
+      "MONTH",
+      "YEAR",
+    ],
   },
   {
     id: 19,
@@ -270,6 +316,7 @@ export const commandTelemetryEmulator = [
     telemetry: "",
     target: "EMULATOR",
     parameters: [],
+    commandParams: [],
   },
   {
     id: 20,
@@ -277,6 +324,7 @@ export const commandTelemetryEmulator = [
     telemetry: "TM_547",
     target: "EMULATOR",
     parameters: ["SEGMENT_ID", "LUT_ID"],
+    commandParams: ["EVENT"],
   },
   {
     id: 21,
@@ -319,6 +367,7 @@ export const commandTelemetryEmulator = [
       "ID_OF_SEGMENTS_EXECUTED_0",
       "RESERVED_1",
     ],
+    commandParams: ["STATUS"],
   },
   {
     id: 22,
@@ -326,6 +375,7 @@ export const commandTelemetryEmulator = [
     telemetry: "TM_CONOPS_SCH_LUT_RUN_CTRL",
     target: "EMULATOR",
     parameters: ["STATUS"],
+    commandParams: ["LUT_NUM", "ACTION"],
   },
   {
     id: 23,
@@ -333,6 +383,7 @@ export const commandTelemetryEmulator = [
     telemetry: "TM_DEFERRED_STORAGE",
     target: "EMULATOR",
     parameters: ["ADDRESS_OFFSET"],
+    commandParams: [],
   },
   {
     id: 24,
@@ -350,6 +401,7 @@ export const commandTelemetryEmulator = [
       "EOF1",
       "EOF2",
     ],
+    commandParams: ["SOF3", "SOF4", "ID", "EOF1", "EOF2"],
   },
   {
     id: 25,
@@ -357,6 +409,21 @@ export const commandTelemetryEmulator = [
     telemetry: "ADCS_19_TM_SET_ADCS_CTRL_MODE_CONF",
     target: "EMULATOR",
     parameters: ["SOF3", "SOF4", "ID", "STATUS", "EOF1", "EOF2"],
+    commandParams: [
+      "SOF3",
+      "SOF4",
+      "ID",
+      "STATUS",
+      "EOF1",
+      "EOF2",
+      "CONTROL_MODE",
+      "TIMEOUT_VALUE_FOR_ASSIGNED_CONTROL_MODE",
+      "DEFAULT_CONTROL_MODE",
+      "COMMANDED_ATTITUDE_QUATERNION_1",
+      "COMMANDED_ATTITUDE_QUATERNION_2",
+      "COMMANDED_ATTITUDE_QUATERNION_3",
+      "COMMANDED_ATTITUDE_QUATERNION_4",
+    ],
   },
   {
     id: 26,
@@ -374,6 +441,7 @@ export const commandTelemetryEmulator = [
       "EOF1",
       "EOF2",
     ],
+    commandParams: ["SOF3", "SOF4", "ID", "EOF1", "EOF2"],
   },
   {
     id: 27,
@@ -391,6 +459,7 @@ export const commandTelemetryEmulator = [
       "EOF1",
       "EOF2",
     ],
+    commandParams: ["SOF3", "SOF4", "ID", "EOF1", "EOF2"],
   },
   {
     id: 28,
@@ -408,6 +477,7 @@ export const commandTelemetryEmulator = [
       "EOF1",
       "EOF2",
     ],
+    commandParams: ["SOF3", "SOF4", "ID", "EOF1", "EOF2"],
   },
   {
     id: 29,
@@ -425,6 +495,7 @@ export const commandTelemetryEmulator = [
       "EOF1",
       "EOF2",
     ],
+    commandParams: ["SOF3", "SOF4", "ID", "EOF1", "EOF2"],
   },
   {
     id: 30,
@@ -442,6 +513,7 @@ export const commandTelemetryEmulator = [
       "EOF1",
       "EOF2",
     ],
+    commandParams: ["SOF3", "SOF4", "ID", "EOF1", "EOF2"],
   },
   {
     id: 31,
@@ -460,6 +532,7 @@ export const commandTelemetryEmulator = [
       "EOF1",
       "EOF2",
     ],
+    commandParams: ["SOF3", "SOF4", "ID", "EOF1", "EOF2"],
   },
   {
     id: 32,
@@ -478,6 +551,7 @@ export const commandTelemetryEmulator = [
       "EOF1",
       "EOF2",
     ],
+    commandParams: ["SOF3", "SOF4", "ID", "EOF1", "EOF2"],
   },
   {
     id: 33,
@@ -494,6 +568,7 @@ export const commandTelemetryEmulator = [
       "EOF1",
       "EOF2",
     ],
+    commandParams: ["SOF3", "SOF4", "ID", "EOF1", "EOF2"],
   },
   {
     id: 34,
@@ -512,6 +587,14 @@ export const commandTelemetryEmulator = [
       "Command_Wheel_Speed_4",
       "EOF1",
       "EOF2",
+    ],
+    commandParams: [
+      "SOF3",
+      "SOF4",
+      "ID",
+      "EOF1",
+      "EOF2",
+      "REACTION_WHEEL_INSTANCE_ID",
     ],
   },
   {
@@ -532,6 +615,14 @@ export const commandTelemetryEmulator = [
       "EOF1",
       "EOF2",
     ],
+    commandParams: [
+      "SOF3",
+      "SOF4",
+      "ID",
+      "EOF1",
+      "EOF2",
+      "REACTION_WHEEL_INSTANCE_ID",
+    ],
   },
   {
     id: 36,
@@ -549,6 +640,14 @@ export const commandTelemetryEmulator = [
       "Raw_Magnetometer_Z_Measurement",
       "EOF1",
       "EOF2",
+    ],
+    commandParams: [
+      "SOF3",
+      "SOF4",
+      "ID",
+      "EOF1",
+      "EOF2",
+      "MAGNETOMETER_INSTANCE_ID",
     ],
   },
   {
@@ -577,6 +676,7 @@ export const commandTelemetryEmulator = [
       "EOF1",
       "EOF2",
     ],
+    commandParams: ["SOF3", "SOF4", "ID", "EOF1", "EOF2", "CSS_ID"],
   },
   {
     id: 38,
@@ -594,6 +694,7 @@ export const commandTelemetryEmulator = [
       "EOF1",
       "EOF2",
     ],
+    commandParams: ["SOF3", "SOF4", "ID", "EOF1", "EOF2"],
   },
   {
     id: 39,
@@ -611,6 +712,7 @@ export const commandTelemetryEmulator = [
       "EOF1",
       "EOF2",
     ],
+    commandParams: ["SOF3", "SOF4", "ID", "EOF1", "EOF2", "CSS_ID"],
   },
   {
     id: 40,
@@ -628,6 +730,7 @@ export const commandTelemetryEmulator = [
       "EOF1",
       "EOF2",
     ],
+    commandParams: ["SOF3", "SOF4", "ID", "EOF1", "EOF2"],
   },
   {
     id: 41,
@@ -645,6 +748,7 @@ export const commandTelemetryEmulator = [
       "EOF1",
       "EOF2",
     ],
+    commandParams: ["SOF3", "SOF4", "ID", "EOF1", "EOF2"],
   },
   {
     id: 42,
@@ -669,6 +773,7 @@ export const commandTelemetryEmulator = [
       "EOF1",
       "EOF2",
     ],
+    commandParams: ["SOF3", "SOF4", "ID", "EOF1", "EOF2"],
   },
   {
     id: 43,
@@ -676,6 +781,17 @@ export const commandTelemetryEmulator = [
     telemetry: "ADCS_19_TM_SET_ADCS_CTRL_MODE_CONF",
     target: "EMULATOR",
     parameters: ["SOF3", "SOF4", "ID", "STATUS", "EOF1", "EOF2"],
+    commandParams: [
+      "SOF3",
+      "SOF4",
+      "ID",
+      "EOF1",
+      "EOF2",
+      "CONTROL_MODE",
+      "TIMEOUT_VALUE_FOR_ASSIGNED_CONTROL_MODE",
+      "DEFAULT_CONTROL_MODE",
+      "AXIS_SELECTION",
+    ],
   },
   {
     id: 44,
@@ -683,6 +799,17 @@ export const commandTelemetryEmulator = [
     telemetry: "ADCS_19_TM_SET_ADCS_CTRL_MODE_CONF",
     target: "EMULATOR",
     parameters: ["SOF3", "SOF4", "ID", "STATUS", "EOF1", "EOF2"],
+    commandParams: [
+      "SOF3",
+      "SOF4",
+      "ID",
+      "EOF1",
+      "EOF2",
+      "CONTROL_MODE",
+      "TIMEOUT_VALUE_FOR_ASSIGNED_CONTROL_MODE",
+      "DEFAULT_CONTROL_MODE",
+      "RESERVED_SUN_POINTING",
+    ],
   },
   {
     id: 45,
@@ -690,6 +817,16 @@ export const commandTelemetryEmulator = [
     telemetry: "ADCS_19_TM_SET_ADCS_CTRL_MODE_CONF",
     target: "EMULATOR",
     parameters: ["SOF3", "SOF4", "ID", "STATUS", "EOF1", "EOF2"],
+    commandParams: [
+      "SOF3",
+      "SOF4",
+      "ID",
+      "EOF1",
+      "EOF2",
+      "CONTROL_MODE",
+      "TIMEOUT_VALUE_FOR_ASSIGNED_CONTROL_MODE",
+      "DEFAULT_CONTROL_MODE",
+    ],
   },
   {
     id: 46,
@@ -697,6 +834,25 @@ export const commandTelemetryEmulator = [
     telemetry: "ADCS_19_TM_SET_ADCS_CTRL_MODE_CONF",
     target: "EMULATOR",
     parameters: ["SOF3", "SOF4", "ID", "STATUS", "EOF1", "EOF2"],
+    commandParams: [
+      "SOF3",
+      "SOF4",
+      "ID",
+      "EOF1",
+      "EOF2",
+      "CONTROL_MODE",
+      "TIMEOUT_VALUE_FOR_ASSIGNED_CONTROL_MODE",
+      "DEFAULT_CONTROL_MODE",
+      "ECEF_TARGET_REFERENCE_TYPE",
+      "VELOCITY_ABERRATION",
+      "REFERENCE_FRAME_X_DESIRED_DIRECTION",
+      "TARGET_ECEF_GEOCENTRIC_X_POSITION",
+      "TARGET_ECEF_GEOCENTRIC_Y_POSITION",
+      "TARGET_ECEF_GEOCENTRIC_Z_POSITION",
+      "HEADING_OR_BEARING_ANGLE",
+      "BODY_FIXED_COMMAND_FRAME_Z_DIRECTION",
+      "BODY_FIXED_COMMAND_FRAME_X_DIRECTION",
+    ],
   },
   {
     id: 47,
@@ -704,6 +860,37 @@ export const commandTelemetryEmulator = [
     telemetry: "ADCS_19_TM_SET_ADCS_CTRL_MODE_CONF",
     target: "EMULATOR",
     parameters: ["SOF3", "SOF4", "ID", "STATUS", "EOF1", "EOF2"],
+    commandParams: [
+      "SOF3",
+      "SOF4",
+      "ID",
+      "EOF1",
+      "EOF2",
+      "CONTROL_MODE",
+      "TIMEOUT_VALUE_FOR_ASSIGNED_CONTROL_MODE",
+      "DEFAULT_CONTROL_MODE",
+      "WITH_ADDITIONAL_CONTROL_TARGET_REFERENCE_TYPE",
+      "VELOCITY_ABERRATION",
+      "REFERENCE_FRAME_X_DESIRED_DIRECTION",
+      "REFERENCE_FRAME_Z_DESIRED_DIRECTION",
+      "TARGET_X_COORDINATES",
+      "TARGET_Y_COORDINATES",
+      "TARGET_Z_COORDINATES",
+      "HEADING_OR_BEARING_ANGLE",
+      "BODY_FIXED_COMMAND_FRAME_Z_DIRECTION",
+      "BODY_FIXED_COMMAND_FRAME_X_DIRECTION",
+      "ATTITUDE_INTERPRETATION",
+      "QUATERNION_1_OR_ROLL",
+      "QUATERNION_2_OR_PITCH",
+      "QUATERNION_3_OR_YAW",
+      "QUATERNION_4_SCALER_ELEMENT",
+      "RATE_INTERPRETATION",
+      "COMMANDED_X_AXIS_RATE",
+      "COMMANDED_Y_AXIS_RATE",
+      "COMMANDED_Z_AXIS_RATE",
+      "TAI_TIME_TO_EXECUTE_COMMANDED_RATE",
+      "5HZ_ADCS_CYCLE_WITHIN_1_SEC",
+    ],
   },
   {
     id: 48,
@@ -711,6 +898,7 @@ export const commandTelemetryEmulator = [
     telemetry: "OBC_610_TM_GET_TEMP",
     target: "EMULATOR",
     parameters: ["DEVICE_ID", "TEMPERATURE"],
+    commandParams: ["DEVICE_ID"],
   },
   {
     id: 49,
@@ -718,6 +906,7 @@ export const commandTelemetryEmulator = [
     telemetry: "OBC_611_TM_GET_TIME",
     target: "EMULATOR",
     parameters: ["DEVICE_ID", "MCU_UPTIME", "EPOCH_TIME"],
+    commandParams: ["DEVICE_ID"],
   },
 
   {
@@ -726,6 +915,7 @@ export const commandTelemetryEmulator = [
     telemetry: "OBC_545_TM_PLD_VM_PWR_ON",
     target: "EMULATOR",
     parameters: ["STATUS"],
+    commandParams: ["VIRTUAL_MACHINE_ID"],
   },
   {
     id: 51,
@@ -733,6 +923,13 @@ export const commandTelemetryEmulator = [
     telemetry: "OBC_546_TM_PLD_VM_PWR_OFF",
     target: "EMULATOR",
     parameters: ["STATUS"],
+    commandParams: [
+      "VIRTUAL_MACHINE_ID",
+      "SHUTDOWN_TIME_MIN",
+      "SHUTDOWN_TIME_SEC",
+      "SHUTDOWN_TIME_MSEC",
+      "SHUTDOWN_PURPOSE",
+    ],
   },
   {
     id: 52,
@@ -740,6 +937,7 @@ export const commandTelemetryEmulator = [
     telemetry: "OBC_508_TM_CONFIG_AUTO_LEOP_TRIGGER_TMR",
     target: "EMULATOR",
     parameters: ["Response_Status"],
+    commandParams: ["TIMER_CONFIGURATION_VALUE"],
   },
   {
     id: 53,
@@ -747,6 +945,7 @@ export const commandTelemetryEmulator = [
     telemetry: "OBC_508_TM_TRIGGER_HINGE_PROCESS",
     target: "EMULATOR",
     parameters: ["Response"],
+    commandParams: [],
   },
   {
     id: 54,
@@ -754,6 +953,7 @@ export const commandTelemetryEmulator = [
     telemetry: "OBC_505_TC_GET_AUTO_LEOPS_STATE",
     target: "EMULATOR",
     parameters: ["Satellite_Body_Axis_1"],
+    commandParams: [],
   },
   {
     id: 55,
@@ -761,10 +961,11 @@ export const commandTelemetryEmulator = [
     telemetry: "OBC_602_TM_TRIGGER_HINGE_PROCESS",
     target: "EMULATOR",
     parameters: ["Response"],
+    commandParams: [],
   },
   {
     id: 56,
-    command: "200_EPS_TC_GET_SUB_SYS_INFO",
+    command: "EPS_200_TC_GET_SUB_SYS_INFO",
     telemetry: "200_EPS_TM_GET_SUB_SYS_INFO",
     target: "EMULATOR",
     parameters: [
@@ -1064,17 +1265,27 @@ export const commandTelemetryEmulator = [
       "Reserved_hdrm",
       "RBF_STATUS",
     ],
+    commandParams: [],
   },
   {
     id: 57,
-    command: "216_EPS_TC_SET_EPS_CTRL_DEV_TMR",
+    command: "EPS_216_TC_SET_EPS_CTRL_DEV_TMR",
     telemetry: "216_EPS_TM_SET_EPS_CTRL_DEV_TMR",
     target: "EMULATOR",
     parameters: ["STATUS"],
+    commandParams: [
+      "VALID_STATE_COUNT",
+      "CHANNEL_NUMBER_OF_HDRM",
+      "HDRM_POWER_ON_DURATION",
+      "COOLING_PERIOD",
+      "NUMBER_OF_TRAILS",
+      "RESERVED_1",
+      "RESERVED_2",
+    ],
   },
   {
     id: 58,
-    command: "217_EPS_TC_GET_EPS_CTRL_DEV_TMR",
+    command: "EPS_217_TC_GET_EPS_CTRL_DEV_TMR",
     telemetry: "217_EPS_TM_GET_EPS_CTRL_DEV_TMR",
     target: "EMULATOR",
     parameters: [
@@ -1087,13 +1298,15 @@ export const commandTelemetryEmulator = [
       "RESERVED_2",
       "RESERVED_3",
     ],
+    commandParams: ["CHANNEL_NUMBER_OF_HDRM"],
   },
   {
     id: 59,
-    command: "211_EPS_TC_SET_DEVICE_STS",
+    command: "EPS_211_TC_SET_DEVICE_STS",
     telemetry: "211_EPS_TM_SET_DEVICE_STS",
     target: "EMULATOR",
     parameters: ["STATUS", "SUB_SYSTEM_ID", "POWER_STATE"],
+    commandParams: ["CHANNEL_NO", "CHANNEL_STATE"],
   },
   {
     id: 60,
@@ -1101,10 +1314,11 @@ export const commandTelemetryEmulator = [
     telemetry: "OBC_602_TM_TRIGGER_HINGE_PROCESS",
     target: "EMULATOR",
     parameters: ["Response"],
+    commandParams: [],
   },
   {
     id: 61,
-    command: "212_EPS_TC_GET_DEVICE_STS",
+    command: "EPS_212_TC_GET_DEVICE_STS",
     telemetry: "212_EPS_TM_GET_DEVICE_STS",
     target: "EMULATOR",
     parameters: [
@@ -1177,6 +1391,7 @@ export const commandTelemetryEmulator = [
       "PL_6_SAS_B",
       "PL_8_AVIONICS",
     ],
+    commandParams: [],
   },
   {
     id: 62,
@@ -1203,6 +1418,7 @@ export const commandTelemetryEmulator = [
       "Reserved_65",
       "Reserved_69",
     ],
+    commandParams: [],
   },
   {
     id: 63,
@@ -1231,6 +1447,7 @@ export const commandTelemetryEmulator = [
       "Reserved_82",
       "Reserved_83",
     ],
+    commandParams: [],
   },
   {
     id: 64,
@@ -1238,6 +1455,7 @@ export const commandTelemetryEmulator = [
     telemetry: "COMMS_420_TM_SBAND_GET_RX_SEL_CFG",
     target: "EMULATOR",
     parameters: ["RECEIVER_PORT_SELECTION"],
+    commandParams: [],
   },
   {
     id: 65,
@@ -1245,6 +1463,7 @@ export const commandTelemetryEmulator = [
     telemetry: "OBC_602_TM_TRIGGER_HINGE_PROCESS",
     target: "EMULATOR",
     parameters: ["Response"],
+    commandParams: [],
   },
   {
     id: 66,
@@ -1304,6 +1523,7 @@ export const commandTelemetryEmulator = [
 
       "Reserved_95",
     ],
+    commandParams: [],
   },
   {
     id: 67,
@@ -1311,5 +1531,14 @@ export const commandTelemetryEmulator = [
     telemetry: "COMMS_468_TM_SBAND_GET_PROD_KEY",
     target: "EMULATOR",
     parameters: ["Old_Product_Key", "Current_Product_Key"],
+    commandParams: [],
+  },
+  {
+    id: 68,
+    command: "PS_600_TC_PLD_START_SEQUENCE",
+    telemetry: "PS_600_TM_PLD_START_SEQUENCE",
+    target: "EMULATOR",
+    parameters: ["Sequence_Response"],
+    commandParams: [],
   },
 ];

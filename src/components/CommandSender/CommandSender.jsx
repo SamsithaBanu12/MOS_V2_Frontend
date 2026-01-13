@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { buildParamsString, sendCommand } from "./paramsTransport";
 import "./CommandExplorer.space.css";
-import { toast } from "react-toastify";
 import {
   getDefaultDisplay,
   getStatesInfo,
@@ -15,6 +14,7 @@ import TelemetryList from "./TelemetryList";
 import SelectRows from "./SelectRows";
 import CommandDetails from "./CommandDetails";
 import { commandTelemetryEmulator } from "../../constants/commandsData";
+import toast from "react-hot-toast";
 
 export default function CommandExplorer() {
   const [loading, setLoading] = useState(false);

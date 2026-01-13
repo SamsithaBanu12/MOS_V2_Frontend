@@ -445,3 +445,22 @@ export const ALIASES = {
 
 export const BASE_CONNECTION = "http://localhost:8002";
 export const STALE_MS = 5000;
+
+export const CommandExtraParameters = [
+  "GND_ID",
+  "ID",
+  "PACKET_TIMEFORMATTED",
+  "PACKET_TIMESECONDS",
+  "RECEIVED_TIMEFORMATTED",
+  "RECEIVED_TIMESECONDS",
+  "TIMESTAMP",
+];
+
+export const TelemetryExtraParameters = [
+  "ID",
+  "RECEIVED_TIMEFORMATTED",
+  "RECEIVED_TIMESECONDS",
+  "TIMESTAMP",
+  "PACKET_TIMEFORMATTED",
+  "PACKET_TIMESECONDS",
+];

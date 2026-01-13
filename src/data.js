@@ -1,255 +1,3 @@
-export const commandTelemetryDrishti = [
-  {
-    id: 1,
-    command: "1021_TC_EXOTRAIL_GET_SYS_INFO",
-    telemetry: "1021_TM_EXOTRAIL_GET_SYS_INFO",
-    target: "DRISHTI",
-  },
-  {
-    id: 2,
-    command: "1022_TC_EXOTRAIL_GET_HEAT_ACTIVITY",
-    telemetry: "1022_TM_EXOTRAIL_GET_HEAT_ACTIVITY",
-    target: "DRISHTI",
-  },
-  {
-    id: 3,
-    command: "1023_TC_EXOTRAIL_GET_HK_FLUIDIC_INFO",
-    telemetry: "1023_TM_EXOTRAIL_GET_HK_FLUIDIC_INFO",
-    target: "DRISHTI",
-  },
-  {
-    id: 4,
-    command: "1024_TC_EXOTRAIL_GET_HK_FLUIDIC_INFO",
-    telemetry: "1024_TM_EXOTRAIL_GET_HK_FLUIDIC_INFO",
-    target: "DRISHTI",
-  },
-  {
-    id: 5,
-    command: "1025_TC_EXOTRAIL_GET_HK_THERMIC_INFO",
-    telemetry: "1025_TM_EXOTRAIL_GET_HK_THERMIC_INFO",
-    target: "DRISHTI",
-  },
-  {
-    id: 6,
-    command: "581_OBC_TC_GET_CURRENT_TIME",
-    telemetry: "TM_GET_CURRENT_TIME",
-    target: "DRISHTI",
-  },
-];
-
-export const commandTelemetryMap = [
-  {
-    id: 1,
-    command: "1021_TC_EXOTRAIL_GET_SYS_INFO",
-    telemetry: "DRISHTI 1021_SCREEN",
-    target: "DRISHTI",
-  },
-  {
-    id: 2,
-    command: "1022_TC_EXOTRAIL_GET_HEAT_ACTIVITY",
-    telemetry: "DRISHTI 1022_SCREEN",
-    target: "DRISHTI",
-  },
-  {
-    id: 3,
-    command: "1023_TC_EXOTRAIL_GET_HK_FLUIDIC_INFO",
-    telemetry: "DRISHTI 1023_SCREEN",
-    target: "DRISHTI",
-  },
-  {
-    id: 4,
-    command: "1024_TC_EXOTRAIL_GET_HK_FLUIDIC_INFO",
-    telemetry: "DRISHTI 1024_SCREEN",
-    target: "DRISHTI",
-  },
-  {
-    id: 5,
-    command: "1025_TC_EXOTRAIL_GET_HK_THERMIC_INFO",
-    telemetry: "DRISHTI 1025_SCREEN",
-    target: "DRISHTI",
-  },
-  {
-    id: 6,
-    command: "1026_TC_EXOTRAIL_GET_HK_POWER_INFO",
-    telemetry: "DRISHTI 1026_SCREEN",
-    target: "DRISHTI",
-  },
-  {
-    id: 7,
-    command: "1027_TC_EXOTRAIL_GET_SAFE_LIMIT",
-    telemetry: "DRISHTI 1027_SCREEN",
-    target: "DRISHTI",
-  },
-  {
-    id: 8,
-    command: "1028_TC_EXOTRAIL_GET_FLUIDIC_VALVE_SEL",
-    telemetry: "DRISHTI 1028_SCREEN",
-    target: "DRISHTI",
-  },
-  {
-    id: 9,
-    command: "1029_TC_EXOTRAIL_GET_HEATER_CFG",
-    telemetry: "DRISHTI 1029_SCREEN",
-    target: "DRISHTI",
-  },
-  {
-    id: 10,
-    command: "1030_TC_EXOTRAIL_SET_FIRING_OPERATING_POINT",
-    telemetry: "DRISHTI 1030_SCREEN",
-    target: "DRISHTI",
-  },
-  {
-    id: 11,
-    command: "1031_TC_EXOTRAIL_TEST_SET_OBC_MODE",
-    telemetry: "DRISHTI 1031_SCREEN",
-    target: "DRISHTI",
-  },
-  {
-    id: 12,
-    command: "1033_TC_EXOTRAIL_SET_SAFE_LIMIT",
-    telemetry: "DRISHTI 1033_SCREEN",
-    target: "DRISHTI",
-  },
-  {
-    id: 13,
-    command: "1034_TC_EXOTRAIL_SET_FLUIDIC_VALVE_SEL",
-    telemetry: "DRISHTI 1034_SCREEN",
-    target: "DRISHTI",
-  },
-  {
-    id: 14,
-    command: "1036_TC_EXOTRAIL_SET_FIRING_DURATION",
-    telemetry: "DRISHTI 1036_SCREEN",
-    target: "DRISHTI",
-  },
-  {
-    id: 15,
-    command: "1038_TC_OBC_EXOTRIAL_THRUSTER_TM_DECODE_DATA",
-    telemetry: "DRISHTI 1038_SCREEN",
-    target: "DRISHTI",
-  },
-  {
-    id: 16,
-    command: "19_ADCS_TC_SET_CONTROL_MODE_TARGET_TRACKING",
-    telemetry: "DRISHTI ADCS_CONTROL",
-    target: "DRISHTI",
-  },
-  {
-    id: 17,
-    command: "200_EPS_TC_GET_SUB_SYS_INFO",
-    telemetry: "DRISHTI PANEL_STATS",
-    target: "DRISHTI",
-  },
-  {
-    id: 18,
-    command: "201_EPS_TC_GET_CONF",
-    telemetry: "DRISHTI PANEL_STATS",
-    target: "DRISHTI",
-  },
-  {
-    id: 19,
-    command: "211_EPS_TC_SET_EPS_CHANNEL_STATUS",
-    telemetry: "",
-    target: "DRISHTI",
-  },
-  {
-    id: 20,
-    command: "212_EPS_TC_GET_DEV_HW_STATUS",
-    telemetry: "",
-    target: "DRISHTI",
-  },
-  {
-    id: 21,
-    command: "500_OBC_TC_GET_OBC_CPU_USAGE",
-    telemetry: "",
-    target: "DRISHTI",
-  },
-  {
-    id: 22,
-    command: "501_OBC_TC_GET_MEMORY_UTILISATION",
-    telemetry: "",
-    target: "DRISHTI",
-  },
-  {
-    id: 23,
-    command: "545_OBC_TC_VM_POWER_ON",
-    telemetry: "",
-    target: "DRISHTI",
-  },
-  {
-    id: 24,
-    command: "546_OBC_TC_VM_POWER_OFF",
-    telemetry: "",
-    target: "DRISHTI",
-  },
-  {
-    id: 25,
-    command: "550_OBC_TC_SET_CUR_TIME",
-    telemetry: "DRISHTI SET_CURRENT_TIME",
-    target: "DRISHTI",
-  },
-  {
-    id: 26,
-    command: "581_OBC_TC_GET_CURRENT_TIME",
-    telemetry: "DRISHTI GET_CURRENT_TIME",
-    target: "DRISHTI",
-  },
-  {
-    id: 27,
-    command: "610_OBC_TC_GET_PS_TEMP",
-    telemetry: "",
-    target: "DRISHTI",
-  },
-  {
-    id: 28,
-    command: "611_OBC_TC_GET_PS_TIME",
-    telemetry: "",
-    target: "DRISHTI",
-  },
-  {
-    id: 29,
-    command: "638_OBC_TC_GET_MCU_RESET_INFO",
-    telemetry: "",
-    target: "DRISHTI",
-  },
-  {
-    id: 30,
-    command: "TC_547",
-    telemetry: "",
-    target: "DRISHTI",
-  },
-  {
-    id: 31,
-    command: "TC_549",
-    telemetry: "DRISHTI SCHEDULE_549",
-    target: "DRISHTI",
-  },
-  {
-    id: 32,
-    command: "TC_CONOPS_LUT_RUN_CTRL",
-    telemetry: "DRISHTI SCHEDULE_548",
-    target: "DRISHTI",
-  },
-  {
-    id: 33,
-    command: "TC_DEFFERED_STRG_OPT",
-    telemetry: "",
-    target: "DRISHTI",
-  },
-  {
-    id: 34,
-    command: "TC_GET_HEALTH_METRICS",
-    telemetry: "",
-    target: "DRISHTI",
-  },
-  {
-    id: 35,
-    command: "TC_OBC_PLD_VM_PWR_OFF",
-    telemetry: "DRISHTI STATUS",
-    target: "DRISHTI",
-  },
-];
-
 export const scheduleFiles = [
   {
     id: 1,
@@ -495,3 +243,32 @@ export const COUNTRY_COLORS = {
   UK: "#FF6B6B", // UK - Plum
   ZA: "#FF6B6B", // South Africa - Coral
 };
+
+// TimeLine filter in transmission history page
+
+export const TimeLineFilter = [
+  {
+    id: 1,
+    label: "all",
+  },
+  {
+    id: 2,
+    label: "10 mins ago",
+  },
+  {
+    id: 3,
+    label: "20 mins ago",
+  },
+  {
+    id: 4,
+    label: "30 mins ago",
+  },
+  {
+    id: 5,
+    label: "1 hour ago",
+  },
+  {
+    id: 6,
+    label: "2 hours ago",
+  },
+];

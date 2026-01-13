@@ -1,10 +1,10 @@
-import { toast } from "react-toastify";
 import { FaRegClock } from "react-icons/fa6";
 import { IoReloadOutline } from "react-icons/io5";
 import { SiTicktick } from "react-icons/si";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import {
   BASE,
+  CommandExtraParameters,
   DERIVED_HIDE,
   HEADER_NAMES,
   HTTP_HEADERS,
@@ -12,8 +12,11 @@ import {
   ROUTING_NAMES,
   SCOPE,
   SEVERITY_ORDER,
+  TelemetryExtraParameters,
 } from "../constants/contants";
 import moment from "moment";
+import toast from "react-hot-toast";
+import { commandStateMapping } from "../constants/CommandsMappingData";
 
 export const getDisplayValue = (isHex, value) => {
   if (value == null) return "";
@@ -869,11 +872,118 @@ export function hasActiveContact(statuses) {
   return statuses.some((s) => s.inContact);
 }
 
-/**
- * Get stations currently in contact
- */
+//  Get stations currently in contact
+
 export function getActiveContacts(statuses) {
   return statuses
     .filter((s) => s.inContact)
     .sort((a, b) => b.elevationAngle - a.elevationAngle);
+}
+
+// filters in transmission history
+
+const isWithinLastMinutesFormatted = (timeString, maxMinutes) => {
+  if (!timeString) return false;
+
+  const utcString = timeString.replace(/\//g, "-") + "Z";
+  const parsedUtcMs = new Date(utcString).getTime();
+
+  const nowUtcMs = Date.now();
+  const diffMinutes = (nowUtcMs - parsedUtcMs) / 60000;
+
+  return diffMinutes <= maxMinutes;
+};
+
+export const getFilteredCommands = (filteredComms, timeValue) => {
+  const filteredData = filteredComms.filter((item) =>
+    isWithinLastMinutesFormatted(
+      item.params?.RECEIVED_TIMEFORMATTED
+        ? item?.params?.RECEIVED_TIMEFORMATTED
+        : moment.utc(item?.__time / 1e6).format("YYYY/MM/DD HH:mm:ss.SSS"),
+      timeValue
+    )
+  );
+  return filteredData;
+};
+
+export const getTelemetryName = (tele, tab) => {
+  if (tab === "TLM") {
+    const prefix = "DECOM__TLM__EMULATOR__";
+    return tele?.startsWith(prefix) ? tele.slice(prefix.length) : "";
+  } else if (tab === "CMD") {
+    const prefix = "DECOM__CMD__EMULATOR__";
+    return tele?.startsWith(prefix) ? tele.slice(prefix.length) : "";
+  }
+};
+
+export const getStateParameterValue = (commandTelemetryMap, key, value) => {
+  const filterStateParameter = commandStateMapping?.find(
+    (item) =>
+      item?.telemetry?.toLowerCase() ===
+      commandTelemetryMap?.telemetry?.toLowerCase()
+  );
+  if (filterStateParameter) {
+    return (
+      filterStateParameter?.states?.find((item) => item?.parameter === key)
+        ?.states?.[value] ?? value
+    );
+  }
+  return value ?? null;
+};
+
+export const downloadJson = (data, filename) => {
+  if (!data) return;
+
+  const jsonStr = JSON.stringify(data, null, 2);
+  const blob = new Blob([jsonStr], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+
+  document.body.appendChild(link);
+  link.click();
+
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+};
+
+export function filterCommand(packet, commandDefinitions, comm) {
+  if (!packet || typeof packet !== "object") return {};
+
+  const packetCommand = getTelemetryName(packet?.__packet, comm);
+
+  const commandDef = commandDefinitions.find((c) =>
+    comm === "CMD" ? c.command === packetCommand : c.telemetry === packetCommand
+  );
+
+  const allowedCommandParams =
+    comm === "CMD"
+      ? commandDef?.commandParams ?? []
+      : commandDef?.parameters ?? [];
+
+  const allowedExtraParams =
+    comm === "CMD" ? CommandExtraParameters : TelemetryExtraParameters;
+
+  const allowedKeys = new Set([...allowedExtraParams, ...allowedCommandParams]);
+
+  const source = packet.params ?? packet;
+
+  const filteredParams = Object.fromEntries(
+    Object.entries(source).filter(([key]) => allowedKeys.has(key))
+  );
+  const packetName =
+    comm === "CMD"
+      ? {
+          command: packetCommand,
+        }
+      : {
+          telemetry: packetCommand,
+        };
+
+  return {
+    ...packetName,
+    ...filteredParams,
+  };
 }
