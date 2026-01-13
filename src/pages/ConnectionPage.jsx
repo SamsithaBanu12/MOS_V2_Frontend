@@ -1,14 +1,11 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import './ConnectPage.css'
 import { openBridgeWS } from '../utils/api/ws'
-import { getStatus, connectBridge, disconnectBridge } from '../utils/api/api'
+import { connectBridge, disconnectBridge } from '../utils/api/api'
 import StationSelector from '../components/StationSelector/StationSelector'
 import ConnectionPanel from '../components/ConnectionPanel/ConnectionPanel'
 import StatsPanel from '../components/StatsPanel/StatsPanel'
-
-// Health overlay
 import HealthDrawer from "../components/HealthDrawer/HealthDrawer";
-import { useGettingConnectionStatus } from '../utils/hooks'
 import BeaconData from '../components/BeaconData/BeaconData'
 import { useStation } from '../context/StationContext'
 import SBandHealth from '../components/SBandHealth/SBandHealth'
@@ -20,21 +17,13 @@ function ConnectionPage() {
     stationMeta,
     setStationMeta,
     connected,
-    setConnected,
+    status,
+    refreshStatus,
   } = useStation();
 
-  const [status, setStatus] = useState({
-    a_connected: false,
-    b_connected: false,
-    counters: {},
-  });
   const [wsReady, setWsReady] = useState(false);
   const [healthOpen, setHealthOpen] = useState(false);
 
-  // ⬅ backend polling / hook
-  useGettingConnectionStatus(stationId, setStatus);
-
-  // 🔌 WS lifecycle
   useEffect(() => {
     if (!stationId) return;
 
@@ -46,13 +35,13 @@ function ConnectionPage() {
           msg?.station === stationId &&
           msg.type === 'status'
         ) {
-          getStatus(stationId).then(setStatus).catch(() => { });
+          refreshStatus();
         }
       },
     });
 
     return () => ws.close();
-  }, [stationId]);
+  }, [stationId, refreshStatus]);
 
   const handleStationChange = (id, meta) => {
     setStationId(id);
@@ -62,21 +51,14 @@ function ConnectionPage() {
   const handleConnect = async () => {
     if (!stationId) return;
     await connectBridge(stationId);
+    refreshStatus();
   };
 
   const handleDisconnect = async () => {
     if (!stationId) return;
     await disconnectBridge(stationId);
+    refreshStatus();
   };
-
-  // ✅ single source of truth for "connected"
-  useEffect(() => {
-    setConnected(
-      Boolean(status?.a_connected && status?.b_connected)
-    );
-  }, [status, setConnected]);
-
-  console.log('station meta', stationMeta);
 
   return (
     <div className="app-root">
