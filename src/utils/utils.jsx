@@ -17,6 +17,7 @@ import {
 import moment from "moment";
 import toast from "react-hot-toast";
 import { commandStateMapping } from "../constants/CommandsMappingData";
+import { telemetryStateMapping } from "../constants/TelemetryMappingData";
 
 export const getDisplayValue = (isHex, value) => {
   if (value == null) return "";
@@ -140,9 +141,9 @@ export function formatClock(totalSeconds) {
   const secs = s % 60;
   return hrs > 0
     ? `${String(hrs).padStart(2, "0")}:${String(mins).padStart(
-        2,
-        "0"
-      )}:${String(secs).padStart(2, "0")}`
+      2,
+      "0"
+    )}:${String(secs).padStart(2, "0")}`
     : `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
 }
 
@@ -286,8 +287,8 @@ export function toUTCYmdHms(input) {
     input instanceof Date
       ? input
       : typeof input === "number"
-      ? new Date(input < 1e12 ? input * 1000 : input) // seconds vs ms
-      : new Date(input);
+        ? new Date(input < 1e12 ? input * 1000 : input) // seconds vs ms
+        : new Date(input);
 
   const pad = (n) => String(n).padStart(2, "0");
 
@@ -331,8 +332,8 @@ export function tagFor(e) {
     return e.severity === "warn"
       ? "output_warn"
       : e.severity === "error"
-      ? detectSeverity(e.text)
-      : "output_info";
+        ? detectSeverity(e.text)
+        : "output_info";
   }
   if (e.type === "http") return "http";
   if (e.type === "ws") return "ws";
@@ -370,10 +371,10 @@ export function partitionItems(items) {
   const payloadItems =
     tcLenIdx >= 0
       ? filtered
-          .slice(tcLenIdx + 1)
-          .filter(
-            (i) => !HEADER_NAMES.has(i.name) && !ROUTING_NAMES.has(i.name)
-          )
+        .slice(tcLenIdx + 1)
+        .filter(
+          (i) => !HEADER_NAMES.has(i.name) && !ROUTING_NAMES.has(i.name)
+        )
       : [];
   return { headerItems, routingItems, payloadItems };
 }
@@ -443,18 +444,18 @@ export const payloadForTemplate = (payloadItems, payload) => {
     payloadItems?.map((it) =>
       it.states
         ? {
-            name: it.name,
-            kind: "state",
-            value:
-              getStatesInfo(it)?.options.find(
-                (o) => o.label === payload[it.name]
-              )?.value ?? null,
-          }
+          name: it.name,
+          kind: "state",
+          value:
+            getStatesInfo(it)?.options.find(
+              (o) => o.label === payload[it.name]
+            )?.value ?? null,
+        }
         : {
-            name: it.name,
-            kind: "hex",
-            value: payload[it.name],
-          }
+          name: it.name,
+          kind: "hex",
+          value: payload[it.name],
+        }
     ) ?? []
   );
 };
@@ -638,7 +639,7 @@ export function parseLine(line) {
     if (Array.isArray(parsed))
       return parsed.filter((x) => typeof x === "object");
     if (parsed && typeof parsed === "object") return [parsed];
-  } catch {}
+  } catch { }
   return [];
 }
 
@@ -789,8 +790,8 @@ export function calculateContactStatus(
   // Calculate slant range using law of cosines
   const slantRange = Math.sqrt(
     rStation ** 2 +
-      rSatellite ** 2 -
-      2 * rStation * rSatellite * Math.cos(centralAngle)
+    rSatellite ** 2 -
+    2 * rStation * rSatellite * Math.cos(centralAngle)
   );
 
   // Calculate elevation angle using the more accurate formula
@@ -973,11 +974,13 @@ export function filterCommand(packet, commandDefinitions, comm) {
   let filteredParams = Object.fromEntries(
     Object.entries(source).filter(([key]) => allowedKeys.has(key))
   );
-  const stateMapping = commandStateMapping.find((m) =>
-    comm === "CMD"
-      ? m.command === packetCommand
-      : m.telemetry === packetCommand
-  );
+
+  const stateMapping = comm === "CMD" ? commandStateMapping.find((m) => m.command === packetCommand) : telemetryStateMapping.find((m) => m.telemetry === packetCommand);
+  // const stateMapping = commandStateMapping.find((m) =>
+  //   comm === "CMD"
+  //     ? m.command === packetCommand
+  //     : m.telemetry === packetCommand
+  // );
 
   if (stateMapping?.states?.length) {
     filteredParams = { ...filteredParams };

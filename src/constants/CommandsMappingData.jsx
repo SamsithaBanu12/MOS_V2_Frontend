@@ -399,7 +399,7 @@ export const commandStateMapping = [
     ],
   },
   {
-    command: "211_EPS_TC_SET_DEVICE_STS",
+    command: "EPS_211_TC_SET_DEVICE_STS",
     telemetry: "211_EPS_TM_SET_DEVICE_STS",
     states: [
       {
@@ -446,6 +446,59 @@ export const commandStateMapping = [
           4: "FRIDAY",
           5: "SATURDAY",
           6: "SUNDAY",
+        },
+      },
+    ],
+  },
+  {
+    command: "PS_610_TC_PLD_UPGRADE_PLD_CMD",
+    telemetry: "PS_610_TM_PLD_UPGRADE_PLD_CMD",
+    states: [
+      {
+        parameter: "OPERATIONS",
+        states: {
+          0: "Upgrage_Run",
+          1: "Upgrage_Docker_Image",
+        },
+      },
+    ],
+  },
+  {
+    command: "PS_611_TC_PLD_UPDATE_FACTORY_IMAGE_CMD",
+    telemetry: "PS_611_TM_PLD_UPDATE_FACTORY_IMAGE_CMD",
+    states: [
+      {
+        parameter: "OPERATIONS",
+        states: {
+          0: "Upgrage_Run",
+          1: "Upgrage_Docker_Image",
+        },
+      },
+    ],
+  },
+  {
+    command: "PS_612_TC_PLD_RESTORE_FACTORY_IMAGE_CMD",
+    telemetry: "PS_612_TM_PLD_RESTORE_FACTORY_IMAGE_CMD",
+    states: [
+      {
+        parameter: "OPERATIONS",
+        states: {
+          0: "Upgrage_Run",
+          1: "Upgrage_Docker_Image",
+        },
+      },
+    ],
+  },
+  {
+    command: "PS_615_TC_CHANGE_FTM_CONFIG_CMD",
+    telemetry: "PS_615_TM_CHANGE_FTM_CONFIG_CMD",
+    states: [
+      {
+        parameter: "Radio_ID",
+        states: {
+          5: "XBAND_1",
+          6: "XBAND_2",
+          148: 'SBAND'
         },
       },
     ],
