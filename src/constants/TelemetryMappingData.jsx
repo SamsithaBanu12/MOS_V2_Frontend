@@ -1741,4 +1741,82 @@ export const telemetryStateMapping = [
             },
         ],
     },
+    {
+        command: "OBC_610_TC_GET_TEMP",
+        telemetry: "OBC_610_TM_GET_TEMP",
+        states: [
+            {
+                parameter: "DEVICE_ID",
+                states: {
+                    0: "OBC",
+                    1: "PS",
+                    2: "ES"
+                },
+            },
+        ],
+    },
+    {
+        command: "OBC_503_TC_OBC_MEM_DOWNLOAD",
+        telemetry: "OBC_503_TM_OBC_MEM_DOWNLOAD",
+        states: [
+            {
+                parameter: "MEMORY_DOWNLOAD_STATUS",
+                states: {
+                    0: "MEMORY_DOWNLOAD_INITIATTED",
+                    1: "OBC_MEMORY_DOWNLOAD_FAILED_INVALID_MEMORY_TYPE",
+                    2: "OBC_MEMORY_DOWNLOAD_FAILED_INVALID_MEMORY_ADDRESS_OR_MEMORY_RANGE"
+                },
+            },
+        ],
+    },
+    {
+        command: "OBC_925_TC_GET_ON_BRD_TEMP",
+        telemetry: "OBC_925_TM_GET_ON_BRD_TEMP",
+        states: [
+            {
+                parameter: "SENSOR_ID",
+                states: {
+                    0: "OBC",
+                    1: "PS",
+                    2: 'ES',
+                    3: 'NETWORK_INTERFACE_CONTROLLER',
+                    6: 'PS_SSD1',
+                    7: 'PS_SSD2',
+                    8: "PS_SSD_3",
+                    9: 'PS_SSD4'
+                },
+            },
+        ],
+    },
+    {
+        command: "OBC_926_TC_GET_ON_BRD_PWR_INFO",
+        telemetry: "OBC_926_TM_GET_ON_BRD_PWR_INFO",
+        states: [
+            {
+                parameter: "SENSOR_ID",
+                states: {
+                    20: "OBC_1",
+                    21: "OBC_2",
+                    22: "PS",
+                    23: "PS_1",
+                    24: "PS_2",
+                    25: "ES_1",
+                    26: "ES_2",
+                    27: "NIC",
+                    28: "PS_POWER_SWITCH",
+                    30: "PS_1_POWER_SWITCH",
+                    31: "PS_2_POWER_SWITCH",
+                    32: "ES_1_POWER_SWITCH",
+                    33: "ES_2_POWER_SWITCH",
+                    34: "NIC_POWER_SWITCH",
+                    35: "PS_SSD_1_HEAT_COIL_SWITCH",
+                    36: "PS_SSD_2_HEAT_COIL_SWITCH",
+                    37: "PS_SSD_3_HEAT_COIL_SWITCH",
+                    38: "PS_SSD_4_HEAT_COIL_SWITCH",
+                    39: "ES_SSD_1_HEAT_COIL_SWITCH",
+                    40: "ES_SSD_2_HEAT_COIL_SWITCH"
+                },
+            },
+        ],
+    },
 ];
