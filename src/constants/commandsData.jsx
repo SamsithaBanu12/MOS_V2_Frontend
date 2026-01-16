@@ -1781,7 +1781,7 @@ export const commandTelemetryEmulator = [
   {
     id: 90,
     command: "OBC_604_TC_GET_HINGE_STATUS",
-    telemetry: "OBC_604_TC_GET_HINGE_STATUS",
+    telemetry: "OBC_604_TM_GET_HINGE_STATUS",
     target: "EMULATOR",
     parameters: [
       "STATUS",
