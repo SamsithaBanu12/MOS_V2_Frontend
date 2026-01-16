@@ -609,4 +609,32 @@ export const commandStateMapping = [
       },
     ],
   },
+  {
+    command: "COMMS_813_TC_UHF_BEACON_TX_ST",
+    telemetry: "COMMS_813_TM_UHF_BEACON_TX_ST",
+    states: [
+      {
+        parameter: "BEACON_TRANSMISSION_STATUS",
+        states: {
+          1: "START_UHF_BEACON_ONLY",
+          2: 'START_OBC_BEACON_ONLY',
+          3: 'START_UHF_and_OBC_BEACON',
+        },
+      },
+    ],
+  },
+  {
+    command: "COMMS_814_TC_UHF_BEACON_TX_STOP",
+    telemetry: "COMMS_814_TM_UHF_BEACON_TX_STOP",
+    states: [
+      {
+        parameter: "BEACON_TRANSMISSION_STATUS",
+        states: {
+          1: "STOP_UHF_BEACON_ONLY",
+          2: 'STOP_OBC_BEACON_ONLY',
+          3: 'STOP_UHF_and_OBC_BEACON',
+        },
+      },
+    ],
+  },
 ];

@@ -1878,23 +1878,23 @@ export const commandTelemetryEmulator = [
   },
   {
     id: 96,
-    command: "OBC_650_TC_SET_XBAND_ROUT_PATH",
+    command: "COMMS_334_TC_COMMS_SBAND_BEACON_START",
     telemetry: "COMMS_334_TM_COMMS_SBAND_BEACON_START",
     target: "EMULATOR",
     parameters: ["Status"],
-    commandParams: ["XBAND_IPCC_PATH"],
+    commandParams: ["RESERVED"],
   },
   {
     id: 97,
-    command: "OBC_650_TC_SET_XBAND_ROUT_PATH",
+    command: "COMMS_335_TC_COMMS_SBAND_BEACON_STOP",
     telemetry: "COMMS_335_TM_COMMS_SBAND_BEACON_STOP",
     target: "EMULATOR",
     parameters: ["Status"],
-    commandParams: ["XBAND_IPCC_PATH"],
+    commandParams: ["RESERVED"],
   },
   {
     id: 98,
-    command: "OBC_650_TC_SET_XBAND_ROUT_PATH",
+    command: "COMMS_800_TC_UHF_GET_TM_INFO",
     telemetry: "COMMS_800_TM_UHF_GET_TM_INFO",
     target: "EMULATOR",
     parameters: [
@@ -1917,11 +1917,11 @@ export const commandTelemetryEmulator = [
       "data_tx_cnt",
       "data_rx_cnt"
     ],
-    commandParams: ["XBAND_IPCC_PATH"],
+    commandParams: [],
   },
   {
     id: 99,
-    command: "OBC_650_TC_SET_XBAND_ROUT_PATH",
+    command: "COMMS_803_TC_UHF_GET_TX_CFG",
     telemetry: "COMMS_803_TM_UHF_GET_TX_CFG",
     target: "EMULATOR",
     parameters: [
@@ -1941,11 +1941,11 @@ export const commandTelemetryEmulator = [
       "Channel_BW",
       "Frequency_deviation_in_Hz"
     ],
-    commandParams: ["XBAND_IPCC_PATH"],
+    commandParams: [],
   },
   {
     id: 100,
-    command: "OBC_650_TC_SET_XBAND_ROUT_PATH",
+    command: "COMMS_805_TC_UHF_GET_RX_CFG",
     telemetry: "COMMS_805_TM_UHF_GET_RX_CFG",
     target: "EMULATOR",
     parameters: [
@@ -1966,11 +1966,11 @@ export const commandTelemetryEmulator = [
       "Frequency_deviation_in_Hz",
       "RX_Sync_Time_Out"
     ],
-    commandParams: ["XBAND_IPCC_PATH"],
+    commandParams: [],
   },
   {
     id: 97,
-    command: "OBC_650_TC_SET_XBAND_ROUT_PATH",
+    command: "COMMS_807_TC_UHF_GET_TX_PKT_CFG",
     telemetry: "COMMS_807_TM_UHF_GET_TX_PKT_CFG",
     target: "EMULATOR",
     parameters: [
@@ -1982,11 +1982,11 @@ export const commandTelemetryEmulator = [
       "Reserved",
       "Reserved"
     ],
-    commandParams: ["XBAND_IPCC_PATH"],
+    commandParams: [],
   },
   {
     id: 97,
-    command: "OBC_650_TC_SET_XBAND_ROUT_PATH",
+    command: "COMMS_809_TC_UHF_GET_RX_PKT_CFG",
     telemetry: "COMMS_809_TM_UHF_GET_RX_PKT_CFG",
     target: "EMULATOR",
     parameters: [
@@ -1998,11 +1998,11 @@ export const commandTelemetryEmulator = [
       "Reserved",
       "Reserved"
     ],
-    commandParams: ["XBAND_IPCC_PATH"],
+    commandParams: [],
   },
   {
     id: 97,
-    command: "OBC_650_TC_SET_XBAND_ROUT_PATH",
+    command: "COMMS_811_TC_UHF_GET_RX_PKT_CFG",
     telemetry: "COMMS_811_TM_UHF_GET_RX_PKT_CFG",
     target: "EMULATOR",
     parameters: [
@@ -2013,22 +2013,22 @@ export const commandTelemetryEmulator = [
       "Reserved",
       "RF_Output_Power"
     ],
-    commandParams: ["XBAND_IPCC_PATH"],
+    commandParams: [],
   },
   {
     id: 97,
-    command: "OBC_650_TC_SET_XBAND_ROUT_PATH",
+    command: "COMMS_813_TC_UHF_BEACON_TX_ST",
     telemetry: "COMMS_813_TM_UHF_BEACON_TX_ST",
     target: "EMULATOR",
     parameters: ["Status"],
-    commandParams: ["XBAND_IPCC_PATH"],
+    commandParams: ["BEACON_TRANSMISSION_STATUS"],
   },
   {
     id: 97,
-    command: "OBC_650_TC_SET_XBAND_ROUT_PATH",
-    telemetry: "OMMS_814_TM_UHF_BEACON_TX_STOP",
+    command: "COMMS_814_TC_UHF_BEACON_TX_STOP",
+    telemetry: "COMMS_814_TM_UHF_BEACON_TX_STOP",
     target: "EMULATOR",
     parameters: ["Status"],
-    commandParams: ["XBAND_IPCC_PATH"],
+    commandParams: ["BEACON_TRANSMISSION_STATUS"],
   },
 ];

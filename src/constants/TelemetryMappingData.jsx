@@ -1819,4 +1819,186 @@ export const telemetryStateMapping = [
             },
         ],
     },
+    {
+        command: "COMMS_334_TC_COMMS_SBAND_BEACON_START",
+        telemetry: "COMMS_334_TM_COMMS_SBAND_BEACON_START",
+        states: [
+            {
+                parameter: "Status",
+                states: {
+                    0: "SUCCESS",
+                    1: "FAILURE",
+                },
+            },
+        ],
+    },
+    {
+        command: "COMMS_335_TC_COMMS_SBAND_BEACON_STOP",
+        telemetry: "COMMS_335_TM_COMMS_SBAND_BEACON_STOP",
+        states: [
+            {
+
+                parameter: "Status",
+                states: {
+                    0: "SUCCESS",
+                    1: "FAILURE",
+                },
+
+            },
+        ],
+    },
+    {
+        command: "COMMS_803_TC_UHF_GET_TX_CFG",
+        telemetry: "COMMS_803_TM_UHF_GET_TX_CFG",
+        states: [
+            {
+                parameter: "Modulation_Type",
+                states: {
+                    0: "2FSK",
+                    1: "GFSK"
+                }
+            },
+            {
+                parameter: "Enable_DC_filter",
+                states: {
+                    0: "DISABLE",
+                    1: "ENABLE"
+                }
+            },
+            {
+                parameter: "FEC_enable",
+                states: {
+                    0: "DISABLE",
+                    1: "ENABLE"
+                }
+            },
+            {
+                parameter: "Manchester_Enable",
+                states: {
+                    0: "DISABLE",
+                    1: "ENABLE"
+                }
+            }
+        ],
+    },
+    {
+        command: "COMMS_805_TC_UHF_GET_RX_CFG",
+        telemetry: "COMMS_805_TM_UHF_GET_RX_CFG",
+        states: [
+            {
+                parameter: "Modulation_Type",
+                states: {
+                    0: "2FSK",
+                    1: "GFSK"
+                }
+            },
+            {
+                parameter: "Enable_DC_filter",
+                states: {
+                    0: "DISABLE",
+                    1: "ENABLE"
+                }
+            },
+            {
+                parameter: "FEC_enable",
+                states: {
+                    0: "DISABLE",
+                    1: "ENABLE"
+                }
+            },
+            {
+                parameter: "Manchester_Enable",
+                states: {
+                    0: "DISABLE",
+                    1: "ENABLE"
+                }
+            }
+        ],
+    },
+    {
+        command: "COMMS_807_TC_UHF_GET_TX_PKT_CFG",
+        telemetry: "COMMS_807_TM_UHF_GET_TX_PKT_CFG",
+        states: [
+            {
+                parameter: "Whitening_Enable",
+                states: {
+                    0: "DISABLE",
+                    1: "ENABLE"
+                }
+            },
+            {
+                parameter: "CRC_Enable",
+                states: {
+                    0: "DISABLE",
+                    1: "ENABLE"
+                }
+            }
+        ],
+    },
+    {
+        command: "COMMS_809_TC_UHF_GET_RX_PKT_CFG",
+        telemetry: "COMMS_809_TM_UHF_GET_RX_PKT_CFG",
+        states: [
+            {
+                parameter: "Whitening_Enable",
+                states: {
+                    0: "DISABLE",
+                    1: "ENABLE"
+                }
+            },
+            {
+                parameter: "CRC_Enable",
+                states: {
+                    0: "DISABLE",
+                    1: "ENABLE"
+                }
+            }
+        ],
+    },
+    {
+        command: "COMMS_811_TC_UHF_GET_RX_PKT_CFG",
+        telemetry: "COMMS_811_TM_UHF_GET_RX_PKT_CFG",
+        states: [
+            {
+                parameter: "LNA_Sel",
+                states: {
+                    0: "DISABLE",
+                    1: "ENABLE"
+                }
+            },
+            {
+                parameter: "Filter_Len",
+                states: {
+                    0: "DISABLE",
+                    1: "ENABLE"
+                }
+            }
+        ],
+    },
+    {
+        command: "COMMS_813_TC_UHF_BEACON_TX_ST",
+        telemetry: "COMMS_813_TM_UHF_BEACON_TX_ST",
+        states: [
+            {
+                parameter: "Status",
+                states: {
+                    0: "SUCCESS",
+                    1: "FAILURE",
+                },
+            },
+        ],
+    },
+    {
+        command: "COMMS_814_TC_UHF_BEACON_TX_STOP",
+        telemetry: "COMMS_814_TM_UHF_BEACON_TX_STOP",
+        states: [
+            {
+                parameter: "Status",
+                states: {
+                    0: "SUCCESS",
+                    1: "FAILURE",
+                },
+            },
+        ],
+    },
 ];
