@@ -28,6 +28,11 @@ const TransmissionHistoryDetails = ({
         (m) =>
           m.telemetry === getTelemetryName(commandData?.__packet, activeTab)
       );
+      if (!mapping) {
+        setFilteredTelemetry([]);
+        return;
+      }
+      // setCommandTelemetryMap(mapping);
       const fetchTlm = async () => {
         const tlmName = mapping?.telemetry;
         if (!tlmName) return;
@@ -122,13 +127,12 @@ const TransmissionHistoryDetails = ({
               <div className="packet-name">
                 <span>{getCommandName(commandData?.__packet)}</span>
               </div>
+              {Object.keys(filteredCommands || {}).length === 0 && (
+                <div className="no-commands">
+                  No payload parameters here!!
+                </div>
+              )}
               <div className="scrollable2">
-                {Object.keys(filteredCommands || {}).length === 0 && (
-                  <div className="no-commands">
-                    No payload parameters here!!
-                  </div>
-                )}
-
                 {Object.entries(processedCommands || {}).map(([key, value]) => {
                   return (
                     <div className="th-item-row" key={key}>
@@ -165,6 +169,11 @@ const TransmissionHistoryDetails = ({
                   ? base64ToHex(commandData.buffer)
                   : commandData?.buffer || ""}
               </div>
+              {Object.keys(filteredTelemetry || {}).length === 0 && (
+                <div className="no-commands">
+                  No payload parameters here!!
+                </div>
+              )}
               <div className="scrollable2">
                 {findHealthCommand(commandData?.__packet) !== "Health" &&
                   Object.entries(filteredTelemetry || {}).map(
