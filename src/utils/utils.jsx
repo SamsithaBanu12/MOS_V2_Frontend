@@ -967,12 +967,12 @@ export function filterCommand(packet, commandDefinitions, comm) {
   const allowedExtraParams =
     comm === "CMD" ? CommandExtraParameters : TelemetryExtraParameters;
 
-  const allowedKeys = new Set([...allowedExtraParams, ...allowedCommandParams]);
+  const allowedKeys = new Set([...allowedExtraParams, ...allowedCommandParams].map(k => k.toLowerCase()));
 
   const source = packet.params ?? packet;
 
   let filteredParams = Object.fromEntries(
-    Object.entries(source).filter(([key]) => allowedKeys.has(key))
+    Object.entries(source).filter(([key]) => allowedKeys.has(key.toLowerCase()))
   );
 
   const stateMapping = comm === "CMD" ? commandStateMapping.find((m) => m.command === packetCommand) : telemetryStateMapping.find((m) => m.telemetry === packetCommand);
