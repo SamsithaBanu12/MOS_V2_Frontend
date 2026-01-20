@@ -272,3 +272,51 @@ export const TimeLineFilter = [
     label: "2 hours ago",
   },
 ];
+
+export const TelemetryType = [
+  {
+    id: 1,
+    label: 'Telemetry',
+  },
+  {
+    id: 2,
+    label: "Health"
+  },
+  {
+    id: 3,
+    label: 'Beacon'
+  },
+  {
+    id: 4,
+    label: 'File Upload'
+  }
+]
+
+export const CommandsType = [
+  {
+    id: 1,
+    label: 'Commands',
+  },
+  {
+    id: 2,
+    label: 'File Upload'
+  }
+]
+
+export const FilterTypes = [
+  {
+    value: 1,
+    label: "Time Range",
+    status: 'both',
+  },
+  {
+    value: 2,
+    label: "Telemetry Type",
+    status: 'tlm',
+  },
+  {
+    value: 3,
+    label: 'Commands Type',
+    status: 'cmd'
+  }
+]

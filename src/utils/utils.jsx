@@ -567,14 +567,20 @@ export function base64ToHex(base64) {
 }
 
 export const findHealthCommand = (value) => {
+  if (!value || typeof value !== "string") return "";
   if (value.includes("__CMD__")) {
+    if (value.includes("FTM_SEND_DATA")) return "File Upload";
     return "Cmd";
   } else if (value.includes("TLM")) {
     if (value.includes("__HEALTH")) {
       return "Health";
+    } else if (value.includes("BEACON")) {
+      return "Beacon";
     } else {
       return "Tlm";
     }
+  } else if (value.includes("NOTIFICATION")) {
+    return "Notification";
   }
 };
 export const getCommandName = (value) => {

@@ -14,7 +14,7 @@ import TransmissionTabs from "./TransmissionTabs";
 import TransmissionHistoryList from "./TransmissionHistoryList";
 import TransmissionHistoryDetails from "./TransmissionHistoryDetails";
 import Select from "react-select";
-import { TimeLineFilter } from "../../data";
+import { CommandsType, FilterTypes, TelemetryType, TimeLineFilter } from "../../data";
 import { timelineSelectStyles } from "../../customStyles/customStyle";
 import { commandTelemetryEmulator } from "../../constants/commandsData";
 
@@ -27,6 +27,9 @@ export default function TransmissionHistory({ transmissionData, onRefresh }) {
   const [activeTabNames, setActiveTabNames] = useState("");
   const [clearedTab, setClearedTab] = useState(null);
   const [timeLineFilters, setTimeLineFilter] = useState("all");
+  const [filterType, setFilterType] = useState("Time Range");
+  const [telemetryType, setTelemetryType] = useState("Telemetry");
+  const [commandType, setCommandType] = useState("Commands")
 
   const cmdsData = getAllCmdsData(transmissionData);
   const tlmsData = getAllTlmsData(transmissionData);
@@ -69,38 +72,62 @@ export default function TransmissionHistory({ transmissionData, onRefresh }) {
   const filteredCmds = useMemo(() => {
     if (clearedTab === "CMD") return [];
     let filteredCommands = cmds.filter((r) => filterFn(r, ["__packet"]));
-    if (timeLineFilters === "all") {
-      return filteredCommands;
-    } else if (timeLineFilters === "10 mins ago") {
-      return getFilteredCommands(filteredCommands, 10);
-    } else if (timeLineFilters === "20 mins ago") {
-      return getFilteredCommands(filteredCommands, 20);
-    } else if (timeLineFilters === "30 mins ago") {
-      return getFilteredCommands(filteredCommands, 30);
-    } else if (timeLineFilters === "1 hour ago") {
-      return getFilteredCommands(filteredCommands, 60);
-    } else if (timeLineFilters === "2 hours ago") {
-      return getFilteredCommands(filteredCommands, 120);
+    if (filterType === "Time Range") {
+      if (timeLineFilters === "all") {
+        return filteredCommands;
+      } else if (timeLineFilters === "10 mins ago") {
+        return getFilteredCommands(filteredCommands, 10);
+      } else if (timeLineFilters === "20 mins ago") {
+        return getFilteredCommands(filteredCommands, 20);
+      } else if (timeLineFilters === "30 mins ago") {
+        return getFilteredCommands(filteredCommands, 30);
+      } else if (timeLineFilters === "1 hour ago") {
+        return getFilteredCommands(filteredCommands, 60);
+      } else if (timeLineFilters === "2 hours ago") {
+        return getFilteredCommands(filteredCommands, 120);
+      }
     }
-  }, [cmds, filter, clearedTab, timeLineFilters]);
+    else if (filterType === "Commands Type") {
+      return filteredCommands.filter((pkt) => {
+        const type = findHealthCommand(pkt?.__packet);
+        if (commandType === "Commands") return type === "Cmd";
+        if (commandType === "File Upload") return type === "File Upload";
+        return true;
+      });
+    }
+    return filteredCommands;
+  }, [cmds, filter, clearedTab, timeLineFilters, filterType, commandType, activeTab]);
 
   const filteredTlms = useMemo(() => {
     if (clearedTab === "TLM") return [];
     let filteredTelemetry = tlms.filter((r) => filterFn(r, ["__packet"]));
-    if (timeLineFilters === "all") {
-      return filteredTelemetry;
-    } else if (timeLineFilters === "10 mins ago") {
-      return getFilteredCommands(filteredTelemetry, 10);
-    } else if (timeLineFilters === "20 mins ago") {
-      return getFilteredCommands(filteredTelemetry, 20);
-    } else if (timeLineFilters === "30 mins ago") {
-      return getFilteredCommands(filteredTelemetry, 30);
-    } else if (timeLineFilters === "1 hour ago") {
-      return getFilteredCommands(filteredTelemetry, 60);
-    } else if (timeLineFilters === "2 hours ago") {
-      return getFilteredCommands(filteredTelemetry, 120);
+
+    if (filterType === "Time Range") {
+      if (timeLineFilters === "all") {
+        return filteredTelemetry;
+      } else if (timeLineFilters === "10 mins ago") {
+        return getFilteredCommands(filteredTelemetry, 10);
+      } else if (timeLineFilters === "20 mins ago") {
+        return getFilteredCommands(filteredTelemetry, 20);
+      } else if (timeLineFilters === "30 mins ago") {
+        return getFilteredCommands(filteredTelemetry, 30);
+      } else if (timeLineFilters === "1 hour ago") {
+        return getFilteredCommands(filteredTelemetry, 60);
+      } else if (timeLineFilters === "2 hours ago") {
+        return getFilteredCommands(filteredTelemetry, 120);
+      }
+    } else if (filterType === "Telemetry Type") {
+      return filteredTelemetry.filter((pkt) => {
+        const type = findHealthCommand(pkt?.__packet);
+        if (telemetryType === "Telemetry") return type === "Tlm";
+        if (telemetryType === "Health") return type === "Health";
+        if (telemetryType === "Beacon") return type === "Beacon";
+        if (telemetryType === "File Upload") return type === "Notification";
+        return true;
+      });
     }
-  }, [tlms, filter, clearedTab, timeLineFilters]);
+    return filteredTelemetry;
+  }, [tlms, filter, clearedTab, timeLineFilters, filterType, telemetryType, activeTab]);
 
   const handleRowClick = (row) => {
     setCommandData(row);
@@ -109,7 +136,19 @@ export default function TransmissionHistory({ transmissionData, onRefresh }) {
 
   const timelineFilterOption = useMemo(() => {
     return TimeLineFilter.find((opt) => opt?.label === timeLineFilters) || null;
-  }, [timeLineFilters, TimeLineFilter]);
+  }, [timeLineFilters]);
+
+  const filterTypeOption = useMemo(() => {
+    return FilterTypes.find((opt) => opt?.label === filterType) || null;
+  }, [filterType]);
+
+  const telemetryTypeOption = useMemo(() => {
+    return TelemetryType.find((opt) => opt?.label === telemetryType) || null;
+  }, [telemetryType]);
+
+  const commandTypeOption = useMemo(() => {
+    return CommandsType.find((opt) => opt?.label === commandType) || null;
+  }, [commandType]);
 
   const finalFilteredCommands = filteredCmds.map((pkt) =>
     filterCommand(pkt, commandTelemetryEmulator, "CMD")
@@ -133,6 +172,15 @@ export default function TransmissionHistory({ transmissionData, onRefresh }) {
     downloadJson(payload, "commands_transmissions_history.json");
   };
 
+  const filteredFilterTypes = () => {
+    if (activeTab === "CMD") {
+      return FilterTypes.filter((opt) => opt?.status === 'cmd' || opt?.status === "both");
+    }
+    if (activeTab === "TLM") {
+      return FilterTypes.filter((opt) => opt?.status === 'tlm' || opt?.status === "both");
+    }
+  }
+
   return (
     <div className="th-wrapper">
       <div className="th-card-wrapper">
@@ -153,6 +201,10 @@ export default function TransmissionHistory({ transmissionData, onRefresh }) {
               setClearedTab(null); // restore data
               setCommandData(null);
               setIsRowSelected(false);
+              setFilterType("Time Range");
+              setTimeLineFilter("all");
+              setTelemetryType("Telemetry");
+              setCommandType("Commands");
             }}
             activeTabNames={setActiveTabNames}
             useLocalTime={useLocalTime}
@@ -186,7 +238,6 @@ export default function TransmissionHistory({ transmissionData, onRefresh }) {
             >
               Refresh
             </button>
-
             <button
               className="th-clear-btn"
               onClick={() => {
@@ -200,12 +251,42 @@ export default function TransmissionHistory({ transmissionData, onRefresh }) {
             </button>
             <Select
               classNamePrefix="th-command-select"
-              options={TimeLineFilter}
-              value={timelineFilterOption}
-              onChange={(option) => setTimeLineFilter(option?.label ?? "")}
+              options={filteredFilterTypes()}
+              value={filterTypeOption}
+              onChange={(option) => setFilterType(option?.label ?? "Time Range")}
               isSearchable
               styles={timelineSelectStyles}
             />
+            {filterType === "Time Range" && (
+              <Select
+                classNamePrefix="th-command-select"
+                options={TimeLineFilter}
+                value={timelineFilterOption}
+                onChange={(option) => setTimeLineFilter(option?.label ?? "all")}
+                isSearchable
+                styles={timelineSelectStyles}
+              />
+            )}
+            {filterType === "Telemetry Type" && activeTab === "TLM" && (
+              <Select
+                classNamePrefix="th-command-select"
+                options={TelemetryType}
+                value={telemetryTypeOption}
+                onChange={(option) => setTelemetryType(option?.label ?? "Telemetry")}
+                isSearchable
+                styles={timelineSelectStyles}
+              />
+            )}
+            {filterType === "Commands Type" && activeTab === "CMD" && (
+              <Select
+                classNamePrefix="th-command-select"
+                options={CommandsType}
+                value={commandTypeOption}
+                onChange={(option) => setCommandType(option?.label ?? "Commands")}
+                isSearchable
+                styles={timelineSelectStyles}
+              />
+            )}
           </div>
           <TransmissionHistoryList
             activeTab={activeTab}
