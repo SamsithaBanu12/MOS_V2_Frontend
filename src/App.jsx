@@ -26,6 +26,8 @@ import AlertsPage from "./pages/AlertsPage";
 import TelemetryScreen from "./pages/TelemetryScreen";
 import GroundTrackPage from "./pages/GroundTrackPage";
 import { Toaster } from "react-hot-toast";
+import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
 
 export default function App() {
   return (
@@ -84,6 +86,8 @@ export default function App() {
           <Route path="/netra/ground-track" element={<GroundTrackPage />} />
           <Route path="/netra/alerts" element={<AlertsPage />} />
         </Route>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
       </Routes>
       <Toaster position="top-right" reverseOrder={false} />
     </>

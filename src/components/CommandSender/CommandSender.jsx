@@ -16,6 +16,8 @@ import CommandDetails from "./CommandDetails";
 import { commandTelemetryEmulator } from "../../constants/commandsData";
 import toast from "react-hot-toast";
 
+const EMPTY_ARRAY = [];
+
 export default function CommandExplorer() {
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState("");
@@ -42,7 +44,7 @@ export default function CommandExplorer() {
     target_name,
     packet_name,
     description,
-    items = [],
+    items = EMPTY_ARRAY,
   } = selectedCmd || {};
 
   const { headerItems, routingItems, payloadItems } = useMemo(
@@ -82,7 +84,7 @@ export default function CommandExplorer() {
 
     setRouting(routingInit);
     setPayload(payloadInit);
-  }, [selectedCmd]); // ✅ ONLY THIS
+  }, [selectedCmd, routingItems, payloadItems]);
 
   useEffect(() => {
     (async () => {

@@ -406,7 +406,7 @@ export function fmtBlockHex(defObj) {
 export function getDefaultDisplay(item) {
   const { data_type, bit_size, default: defVal } = item;
   if (item.states) return null;
-  if (data_type === "UINT") return fmtNumHex(defVal, bit_size);
+  if (data_type === "UINT" || data_type === "FLOAT") return fmtNumHex(defVal, bit_size);
   if (data_type === "BLOCK") return fmtBlockHex(defVal || item.id_value);
   return "—";
 }
