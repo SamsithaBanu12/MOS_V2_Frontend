@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
+import ErrorBoundary from '../common/ErrorBoundary';
 import './ConnectPage.css'
 import { openBridgeWS } from '../utils/api/ws'
 import { connectBridge, disconnectBridge } from '../utils/api/api'
@@ -61,47 +62,52 @@ function ConnectionPage() {
   };
 
   return (
-    <div className="app-root">
-      <div className="app-grid">
-        <main className="content-grid">
-          <div className="left-rail">
-            <section className="panel">
-              <StationSelector
-                value={stationId}
-                onChange={handleStationChange}
-                connected={connected}
+    <ErrorBoundary
+      title="Connection Page Error"
+      message="We encountered an unexpected error while rendering the Connection Page."
+    >
+      <div className="app-root">
+        <div className="app-grid">
+          <main className="content-grid">
+            <div className="left-rail">
+              <section className="panel">
+                <StationSelector
+                  value={stationId}
+                  onChange={handleStationChange}
+                  connected={connected}
+                />
+              </section>
+
+              <ConnectionPanel
+                status={status}
+                stationId={stationId}
+                stationMeta={stationMeta}
+                onConnect={handleConnect}
+                onDisconnect={handleDisconnect}
               />
-            </section>
 
-            <ConnectionPanel
-              status={status}
-              stationId={stationId}
-              stationMeta={stationMeta}
-              onConnect={handleConnect}
-              onDisconnect={handleDisconnect}
-            />
+              <StatsPanel
+                counters={status.counters || {}}
+                aOk={status.a_connected}
+                bOk={status.b_connected}
+                stationId={stationId}
+              />
+            </div>
 
-            <StatsPanel
-              counters={status.counters || {}}
-              aOk={status.a_connected}
-              bOk={status.b_connected}
-              stationId={stationId}
-            />
-          </div>
+            <div className="right-rail">
+              <BeaconData />
+              <SBandHealth />
+            </div>
+          </main>
 
-          <div className="right-rail">
-            <BeaconData />
-            <SBandHealth />
-          </div>
-        </main>
-
-        <HealthDrawer
-          open={healthOpen}
-          onClose={() => setHealthOpen(false)}
-          stationId={stationId}
-        />
+          <HealthDrawer
+            open={healthOpen}
+            onClose={() => setHealthOpen(false)}
+            stationId={stationId}
+          />
+        </div>
       </div>
-    </div>
+    </ErrorBoundary>
   );
 }
 

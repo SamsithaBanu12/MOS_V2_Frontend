@@ -1,0 +1,65 @@
+.error-display-wrapper {
+    padding: 70px 50px;
+    text-align: center;
+    background-color: var(--compo-bg);
+    border: 1px solid var(--highlight-bg);
+    border-radius: 8px;
+    margin: 20px 70px 20px 10px;
+}
+
+.error-display-title {
+    margin-bottom: 10px;
+    font-size: 22px;
+    color: #fff;
+}
+
+.error-display-message {
+    color: #aaa;
+    margin-bottom: 20px;
+    font-size: 15px;
+}
+
+.error-display-button {
+    padding: 10px 24px;
+    background-color: rgb(183, 57, 57);
+    color: #eddddd;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.error-display-button:hover {
+    background-color: #9b2c2c;
+}
+
+/* Loading Overlay */
+.reload-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    /* Darker overlay for better visibility */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    /* Ensure it stays on top */
+}
+
+.refresh-icon {
+    font-size: 48px;
+    color: #fff;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}

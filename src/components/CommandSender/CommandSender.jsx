@@ -15,6 +15,7 @@ import SelectRows from "./SelectRows";
 import CommandDetails from "./CommandDetails";
 import { commandTelemetryEmulator } from "../../constants/commandsData";
 import toast from "react-hot-toast";
+import ErrorDisplay from "../../common/ErrorDisplay";
 
 const EMPTY_ARRAY = [];
 
@@ -36,6 +37,7 @@ export default function CommandExplorer() {
   const [filteredCommands, setFilteredCommands] = useState([]);
   const [routing, setRouting] = useState({});
   const [payload, setPayload] = useState({});
+  const [refreshBtn, setRefreshBtn] = useState(false);
 
   const selectedCmd =
     filteredCommands.length > 0 ? filteredCommands[selectedIdx] : null;
@@ -104,7 +106,7 @@ export default function CommandExplorer() {
         setLoading(false);
       }
     })();
-  }, []);
+  }, [refreshBtn]);
 
   useEffect(() => {
     setFilteredTelemetry([]);
@@ -257,7 +259,16 @@ export default function CommandExplorer() {
                 />
               )}
               {loading && <div className="ce-loading">Loading commands…</div>}
-              {err && <div className="ce-error">Error: {err}</div>}
+              {err &&
+                <ErrorDisplay
+                  title="Fetch Error"
+                  message="We couldn't load the Telecommands from the server."
+                  onAction={() => setRefreshBtn((prev) => !prev)}
+                  actionLabel="Retry Fetch"
+                  error={err}
+                  loading={loading}
+                />
+              }
               {!loading && !err && selectedCmd && (
                 <CommandDetails
                   packet_name={packet_name}
