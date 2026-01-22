@@ -5,9 +5,57 @@ import {
   method_name,
   target_name,
   OC3,
-  SCOPE
+  SCOPE,
+  AUTH_API_BASE
 } from "../constants/contants";
 import { httpPost } from "./utils";
+
+export const registerUser = async (userData) => {
+  try {
+    const res = await fetch(`${AUTH_API_BASE}/auth/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    });
+    if (res.ok) {
+      return await res.json();
+    } else {
+      const errorData = await res.json();
+      throw new Error(errorData.message || "Registration failed");
+    }
+  } catch (error) {
+    console.error("Error registering user:", error);
+    throw error;
+  }
+};
+
+export const loginUser = async (credentials) => {
+  try {
+    const res = await fetch(`${AUTH_API_BASE}/auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(credentials),
+    });
+    if (res.ok) {
+      return await res.json();
+    } else {
+      const errorData = await res.json();
+      throw new Error(errorData.message || "Login failed");
+    }
+  } catch (error) {
+    console.error("Error logging in:", error);
+    throw error;
+  }
+};
+
+export const logoutUser = () => {
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+};
 
 export const getAllCommands = async () => {
   const res = await fetch(`${backend_api}/api`, {

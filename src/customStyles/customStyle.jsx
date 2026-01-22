@@ -44,8 +44,8 @@ const commandSelectStyles = {
     backgroundColor: state.isSelected
       ? "rgba(255, 255, 255, 0.12)"
       : state.isFocused
-      ? "#1c1c1c"
-      : "transparent",
+        ? "#1c1c1c"
+        : "transparent",
     color: "#fff",
   }),
   indicatorSeparator: () => ({
@@ -84,19 +84,19 @@ export const timelineSelectStyles = {
   singleValue: (base) => ({
     ...base,
     color: "#ffffff",
-    fontSize: 14,
+    fontSize: 12,
   }),
 
   input: (base) => ({
     ...base,
     color: "#ffffff",
-    fontSize: 14,
+    fontSize: 12,
   }),
 
   placeholder: (base) => ({
     ...base,
     color: "rgba(255, 255, 255, 0.6)",
-    fontSize: 13,
+    fontSize: 12,
   }),
 
   menu: (base) => ({
@@ -122,8 +122,8 @@ export const timelineSelectStyles = {
     backgroundColor: state.isSelected
       ? "rgba(255, 255, 255, 0.12)"
       : state.isFocused
-      ? "#000"
-      : "#000",
+        ? "#000"
+        : "#000",
     color: "#ffffff",
 
     "&:active": {

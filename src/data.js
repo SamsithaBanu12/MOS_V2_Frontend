@@ -320,3 +320,21 @@ export const FilterTypes = [
     status: 'cmd'
   }
 ]
+
+export const RoleTypes = [
+  {
+    value: 1,
+    label: "ADMIN",
+    status: 'admin',
+  },
+  {
+    value: 2,
+    label: "SUPER_ADMIN",
+    status: 'super_admin'
+  },
+  {
+    value: 3,
+    label: "OPERATOR",
+    status: 'operator'
+  }
+]

@@ -549,12 +549,14 @@ export function toUTCYmdHmsnn(input) {
 }
 
 export const getAllTlmsData = (transmissionData) => {
+  if (!Array.isArray(transmissionData)) return [];
   return transmissionData.filter((item) =>
     item?.__packet?.toLowerCase().includes("__tlm__")
   );
 };
 
 export const getAllCmdsData = (transmissionData) => {
+  if (!Array.isArray(transmissionData)) return [];
   return transmissionData.filter((item) =>
     item?.__packet?.toLowerCase().includes("__cmd__")
   );
@@ -902,6 +904,7 @@ const isWithinLastMinutesFormatted = (timeString, maxMinutes) => {
 };
 
 export const getFilteredCommands = (filteredComms, timeValue) => {
+  if (!Array.isArray(filteredComms)) return [];
   const filteredData = filteredComms.filter((item) =>
     isWithinLastMinutesFormatted(
       item.params?.RECEIVED_TIMEFORMATTED
@@ -958,6 +961,7 @@ export const downloadJson = (data, filename) => {
 
 export function filterCommand(packet, commandDefinitions, comm) {
   if (!packet || typeof packet !== "object") return {};
+  if (!Array.isArray(commandDefinitions)) return {};
 
   const packetCommand = getTelemetryName(packet?.__packet, comm);
 

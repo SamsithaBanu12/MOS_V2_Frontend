@@ -28,11 +28,13 @@ import GroundTrackPage from "./pages/GroundTrackPage";
 import { Toaster } from "react-hot-toast";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
+// import ProtectedRoute from "./components/ProtectedRoute";
 
 export default function App() {
   return (
     <>
       <Routes>
+        {/* <Route element={<ProtectedRoute />}> */}
         <Route element={<DashboardLayout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/c2" element={<CommandControlPage />} />
@@ -85,6 +87,7 @@ export default function App() {
           <Route path="/netra/thruster" element={<ThrusterPage />} />
           <Route path="/netra/ground-track" element={<GroundTrackPage />} />
           <Route path="/netra/alerts" element={<AlertsPage />} />
+          {/* </Route> */}
         </Route>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />

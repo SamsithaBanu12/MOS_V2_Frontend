@@ -179,6 +179,7 @@ export default function TransmissionHistory({ transmissionData, onRefresh }) {
     if (activeTab === "TLM") {
       return FilterTypes.filter((opt) => opt?.status === 'tlm' || opt?.status === "both");
     }
+    return [];
   }
 
   return (

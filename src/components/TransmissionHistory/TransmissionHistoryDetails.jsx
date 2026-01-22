@@ -21,7 +21,7 @@ const TransmissionHistoryDetails = ({
   const [commandTelemetryMap, setCommandTelemetryMap] = useState([]);
 
   useEffect(() => {
-    if (!commandData) return;
+    if (!commandData || !Array.isArray(commandTelemetryEmulator)) return;
 
     if (activeTab === "TLM") {
       const mapping = commandTelemetryEmulator.find(

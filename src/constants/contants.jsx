@@ -1,6 +1,7 @@
 export const backend_api = import.meta.env.VITE_OPENC3_BACKEND_API;
 export const PASS_ENDPOINT = import.meta.env.VITE_OPENC3_PASS_ENDPOINT;
 export const API_BASE = import.meta.env.VITE_OPENC3_API_BASE;
+export const AUTH_API_BASE = import.meta.env.VITE_AUTH_API_BASE;
 
 export const method_types = {
   POST: "POST",
@@ -272,11 +273,10 @@ export const SCOPE = "DEFAULT";
 export const AUTO_LOCK = true;
 
 export const WS_URL = USE_PROXY
-  ? `${window.location.protocol === "https:" ? "wss://" : "ws://"}${
-      window.location.host
-    }/script-api/cable`
+  ? `${window.location.protocol === "https:" ? "wss://" : "ws://"}${window.location.host
+  }/script-api/cable`
   : BASE.replace("http://", "ws://").replace("https://", "wss://") +
-    "/script-api/cable";
+  "/script-api/cable";
 
 export const WS_SUBPROTOCOLS = ["actioncable-v1-json"];
 export const HTTP_HEADERS = {
@@ -464,3 +464,12 @@ export const TelemetryExtraParameters = [
   "PACKET_TIMEFORMATTED",
   "PACKET_TIMESECONDS",
 ];
+
+export const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+export const nameRegex = /^[A-Za-z\s]+$/;
+export const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+export const exampleUserCredential = {
+  email: 'samsi@gmail.com',
+  password: 'Samsitha@123'
+}
