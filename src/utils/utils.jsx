@@ -977,7 +977,11 @@ export function filterCommand(packet, commandDefinitions, comm) {
   const allowedExtraParams =
     comm === "CMD" ? CommandExtraParameters : TelemetryExtraParameters;
 
-  const allowedKeys = new Set([...allowedExtraParams, ...allowedCommandParams].map(k => k.toLowerCase()));
+  const allowedKeys = new Set(
+    [...allowedExtraParams, ...allowedCommandParams]
+      .filter(k => k != null)
+      .map((k) => k.toLowerCase())
+  );
 
   const source = packet.params ?? packet;
 

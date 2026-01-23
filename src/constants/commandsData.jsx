@@ -765,7 +765,6 @@ export const commandTelemetryEmulator = [
       "Safe_mode_Sun_Pointing_State",
       "ATTITUDE_VALIDITY",
       "REFERENCE_VALIDITY",
-      ,
       "TIME_VALIDITY",
       "NUMBER_OF_TRACKER",
       "TRACKER_ATTITUDE_STATUS_1",

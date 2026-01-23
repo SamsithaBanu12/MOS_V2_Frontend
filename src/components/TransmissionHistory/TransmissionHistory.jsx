@@ -17,6 +17,7 @@ import Select from "react-select";
 import { CommandsType, FilterTypes, TelemetryType, TimeLineFilter } from "../../data";
 import { timelineSelectStyles } from "../../customStyles/customStyle";
 import { commandTelemetryEmulator } from "../../constants/commandsData";
+import { useSidebar } from "../../context/SidebarContext";
 
 export default function TransmissionHistory({ transmissionData, onRefresh }) {
   const [activeTab, setActiveTab] = useState("CMD");
@@ -29,7 +30,8 @@ export default function TransmissionHistory({ transmissionData, onRefresh }) {
   const [timeLineFilters, setTimeLineFilter] = useState("all");
   const [filterType, setFilterType] = useState("Time Range");
   const [telemetryType, setTelemetryType] = useState("Telemetry");
-  const [commandType, setCommandType] = useState("Commands")
+  const [commandType, setCommandType] = useState("Commands");
+  const { collapsed } = useSidebar();
 
   const cmdsData = getAllCmdsData(transmissionData);
   const tlmsData = getAllTlmsData(transmissionData);
@@ -185,7 +187,7 @@ export default function TransmissionHistory({ transmissionData, onRefresh }) {
   return (
     <div className="th-wrapper">
       <div className="th-card-wrapper">
-        <div className="th-card">
+        <div className={`th-card ${collapsed ? "collapsed" : ""}`}>
           <div className="th-card-head">
             <div className="th-title">Transmission History</div>
             <div className="th-tag">

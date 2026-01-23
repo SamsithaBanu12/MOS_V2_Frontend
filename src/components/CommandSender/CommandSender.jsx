@@ -16,6 +16,7 @@ import CommandDetails from "./CommandDetails";
 import { commandTelemetryEmulator } from "../../constants/commandsData";
 import toast from "react-hot-toast";
 import ErrorDisplay from "../../common/ErrorDisplay";
+import { useSidebar } from "../../context/SidebarContext";
 
 const EMPTY_ARRAY = [];
 
@@ -38,6 +39,7 @@ export default function CommandExplorer() {
   const [routing, setRouting] = useState({});
   const [payload, setPayload] = useState({});
   const [refreshBtn, setRefreshBtn] = useState(false);
+  const { collapsed } = useSidebar();
 
   const selectedCmd =
     filteredCommands.length > 0 ? filteredCommands[selectedIdx] : null;
@@ -240,7 +242,7 @@ export default function CommandExplorer() {
 
   return (
     <div className="ce-whole-wrapper">
-      <div className="ce-app">
+      <div className={`ce-app ${collapsed ? "collapsed" : ""}`}>
         <CEHeader />
         <div className="ce-panel">
           <div className="ce-select-panel">

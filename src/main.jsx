@@ -5,13 +5,16 @@ import App from "./App";
 import './index.css';
 import { StationProvider } from "./context/StationContext";
 import "cesium/Build/Cesium/Widgets/widgets.css";
+import { SidebarProvider } from "./context/SidebarContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <StationProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </StationProvider>
+    <SidebarProvider>
+      <StationProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </StationProvider>
+    </SidebarProvider>
   </React.StrictMode>
 );

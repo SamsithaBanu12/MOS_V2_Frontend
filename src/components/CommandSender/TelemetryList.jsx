@@ -1,5 +1,6 @@
 import { commandStateMapping } from "../../constants/CommandsMappingData";
 import { getHighlightClass, getStateParameterValue } from "../../utils/utils";
+import { useSidebar } from "../../context/SidebarContext";
 
 const TelemetryList = ({
   commandTelemetryMap,
@@ -7,8 +8,10 @@ const TelemetryList = ({
   filteredTelemetry,
   isFromSchedule,
 }) => {
+  const { collapsed } = useSidebar();
+
   return (
-    <div className={`${isFromSchedule ? "tm-wrapper1" : "tm-wrapper"}`}>
+    <div className={`${isFromSchedule ? "tm-wrapper1" : "tm-wrapper"} ${collapsed ? "collapsed" : ""}`}>
       <div className="tm-header">Telemetry Details</div>
       <div className="tm-name-wrapper">
         <div className="name">{commandTelemetryMap?.telemetry}</div>

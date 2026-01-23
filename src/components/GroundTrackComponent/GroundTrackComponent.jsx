@@ -5,6 +5,7 @@ import TelemetryOverlay from './TelemetryOverlay';
 import "./GroundTrackComponent.css";
 import { GROUND_STATIONS } from "../../data";
 import { calculateContactStatus } from "../../utils/utils";
+import { useSidebar } from "../../context/SidebarContext";
 
 const MIN_ELEVATION = 5;
 
@@ -16,12 +17,12 @@ export function GroundTrackComponent() {
     const [visibleOrbits, setVisibleOrbits] = useState(3);
     const [simulatedTime, setSimulatedTime] = useState(null);
     const [accumulatedPasses, setAccumulatedPasses] = useState([]);
+    const { collapsed } = useSidebar();
 
     // Calculate total orbits and time bounds from data
     const orbitInfo = useMemo(() => {
         if (!data || !data.positions.length) return { totalOrbits: 1, startTime: new Date(), endTime: new Date() };
 
-        // Count orbits by detecting ascending nodes
         let orbitCount = 1;
         for (let i = 1; i < data.positions.length; i++) {
             const prev = data.positions[i - 1];
@@ -144,7 +145,7 @@ export function GroundTrackComponent() {
     };
 
     return (
-        <div className="mission-control-root">
+        <div className={`mission-control-root ${collapsed ? "collapsed" : ""}`}>
             {/* Background Map Container */}
             <div className="map-container">
                 <CesiumMap

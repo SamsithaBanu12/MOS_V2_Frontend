@@ -9,6 +9,7 @@ import {
 } from "../../utils/utils";
 import { useEffect, useMemo, useState } from "react";
 import { commandTelemetryEmulator } from "../../constants/commandsData";
+import { useSidebar } from "../../context/SidebarContext";
 
 const TransmissionHistoryDetails = ({
   isRowSelected,
@@ -19,6 +20,7 @@ const TransmissionHistoryDetails = ({
   const [filteredTelemetry, setFilteredTelemetry] = useState([]);
   const [filteredCommands, setFilteredCommands] = useState([]);
   const [commandTelemetryMap, setCommandTelemetryMap] = useState([]);
+  const { collapsed } = useSidebar();
 
   useEffect(() => {
     if (!commandData || !Array.isArray(commandTelemetryEmulator)) return;
@@ -115,7 +117,7 @@ const TransmissionHistoryDetails = ({
   return (
     <div>
       {activeTab === "CMD" ? (
-        <div className="command-details">
+        <div className={`command-details ${collapsed ? "collapsed" : ""}`}>
           <div className="command-details-header">
             <div className="header1">Tele-Command Details</div>
             <button className="close" onClick={() => setIsRowSelected(false)}>
@@ -123,7 +125,7 @@ const TransmissionHistoryDetails = ({
             </button>
           </div>
           <div className="command-details-body">
-            <div className="left-side-wrapper">
+            <div className={`left-side-wrapper ${collapsed ? "collapsed" : ""}`}>
               <div className="packet-name">
                 <span>{getCommandName(commandData?.__packet)}</span>
               </div>

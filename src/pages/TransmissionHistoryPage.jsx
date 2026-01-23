@@ -14,7 +14,7 @@ export default function TransmissionHistoryPage() {
     async function loadPackets() {
       try {
         setLoading(true);
-        const res = await fetch("http://localhost:8012/packets?limit=100");
+        const res = await fetch("http://localhost:8012/packets");
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const data = await res.json();
         setTransmissionData(data);

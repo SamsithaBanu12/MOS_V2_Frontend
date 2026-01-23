@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { use, useEffect, useMemo, useState } from 'react'
 import ErrorBoundary from '../common/ErrorBoundary';
 import './ConnectPage.css'
 import { openBridgeWS } from '../utils/api/ws'
@@ -8,7 +8,8 @@ import ConnectionPanel from '../components/ConnectionPanel/ConnectionPanel'
 import StatsPanel from '../components/StatsPanel/StatsPanel'
 import HealthDrawer from "../components/HealthDrawer/HealthDrawer";
 import BeaconData from '../components/BeaconData/BeaconData'
-import { useStation } from '../context/StationContext'
+import { useStation } from '../context/StationContext';
+import { useSidebar } from '../context/SidebarContext';
 import SBandHealth from '../components/SBandHealth/SBandHealth'
 
 function ConnectionPage() {
@@ -21,6 +22,7 @@ function ConnectionPage() {
     status,
     refreshStatus,
   } = useStation();
+  const { collapsed } = useSidebar();
 
   const [wsReady, setWsReady] = useState(false);
   const [healthOpen, setHealthOpen] = useState(false);
@@ -94,7 +96,7 @@ function ConnectionPage() {
               />
             </div>
 
-            <div className="right-rail">
+            <div className={`right-rail ${collapsed ? "collapsed" : ""}`}>
               <BeaconData />
               <SBandHealth />
             </div>

@@ -6,6 +6,10 @@
   margin-top: 10px;
 }
 
+.fu-wrapper.collapsed {
+  width: 94vw;
+}
+
 .fu-top-wrapper {
   border: 1px solid var(--highlight-bg);
   border-radius: 8px;
@@ -151,9 +155,6 @@ select:focus {
   overflow-y: auto;
   overflow-x: auto;
   margin-top: 10px;
-  /* border-radius: 8px; */
-  /* background: #0b202e; */
-  /* box-shadow: inset 0 0 10px rgba(90, 150, 255, 0.1); */
   position: relative;
   padding: 0 5px 7px 5px;
   max-height: 35vh;
@@ -172,6 +173,10 @@ select:focus {
   border-spacing: 0 8px;
   font-size: 13px;
   color: #fff;
+}
+
+.fu-stats-table.collapsed {
+  min-width: 54.3vw;
 }
 
 .fu-stats-table thead th {
@@ -283,6 +288,10 @@ select:focus {
   min-width: 48vw;
 }
 
+.fu-status-wrapper.collapsed {
+  min-width: 57vw;
+}
+
 .fu-status-wrapper-topic {
   font-size: 15px;
   font-weight: 600;
@@ -310,6 +319,10 @@ select:focus {
   height: 20px;
 }
 
+.fu-progress-bar.collapsed {
+  width: 48vw;
+}
+
 .fu-progress-bar-upload {
   display: flex;
   flex-direction: row;
@@ -318,9 +331,7 @@ select:focus {
 
 .fu-progress-bar-inner {
   height: 100%;
-  /* <– important */
   background: #397676;
-  /* or any colour you like */
   border-radius: 999px;
   transition: width 0.25s ease-out;
 }
@@ -354,6 +365,16 @@ select:focus {
   font-size: 12px;
   font-weight: 500;
   pointer-events: none;
+}
+
+.fu-progress-value1.collapsed {
+  top: 65.7%;
+  left: 38.5%;
+}
+
+.fu-progress-value.collapsed {
+  top: 65.7%;
+  left: 38.5%;
 }
 
 .fu-progress-value {
