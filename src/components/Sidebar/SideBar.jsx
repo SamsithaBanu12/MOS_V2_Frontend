@@ -116,7 +116,7 @@ export default function Sidebar() {
                 <div className="submenu-title">C2</div>
 
                 <NavSubItem
-                  to="/c2/connection"
+                  to="/c2/connection-setup"
                   label="Connection Setup"
                   onClick={closeAllMenus}
                 />
@@ -286,7 +286,7 @@ export default function Sidebar() {
 
               <div className="submenu">
                 <NavSubItem
-                  to="/c2/connection"
+                  to="/c2/connection-setup"
                   label="Connection Setup"
                 />
                 <NavSubItem

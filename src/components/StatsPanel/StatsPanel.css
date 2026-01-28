@@ -3,7 +3,7 @@
   flex-direction: column;
   min-height: 0;
   gap: 10px;
-  max-height: 48vh;
+  max-height: 43.2vh;
 }
 
 /* Title row with Clear button on the right */
@@ -109,23 +109,26 @@
   /* border: 1px solid rgba(255, 255, 255, 0.08); */
 }
 
-tr{
+tr {
   background-color: transparent;
-  margin-top:10px;
+  margin-top: 10px;
 }
-thead tr{
+
+thead tr {
   background-color: var(--highlight-bg2);
   color: white;
 }
+
 .stats-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 13px;
 }
+
 .stats-table {
   width: 100%;
   border-radius: 10px;
-  border-collapse: separate; 
+  border-collapse: separate;
   border-spacing: 0 7px;
 }
 
@@ -161,6 +164,7 @@ thead tr{
   color: var(--fg);
   border-color: rgba(255, 255, 255, 0.25);
 }
-tr{
-  margin-top:15px;
+
+tr {
+  margin-top: 15px;
 }

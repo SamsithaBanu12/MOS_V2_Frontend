@@ -2,6 +2,7 @@ export const backend_api = import.meta.env.VITE_OPENC3_BACKEND_API;
 export const PASS_ENDPOINT = import.meta.env.VITE_OPENC3_PASS_ENDPOINT;
 export const API_BASE = import.meta.env.VITE_OPENC3_API_BASE;
 export const AUTH_API_BASE = import.meta.env.VITE_AUTH_API_BASE;
+export const LEAFSPACE_PASSAGE_ENDPOINT = import.meta.env.VITE_LEAFSPACE_PASSAGE_ENDPOINT;
 
 export const method_types = {
   POST: "POST",

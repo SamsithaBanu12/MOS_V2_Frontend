@@ -338,3 +338,14 @@ export const RoleTypes = [
     status: 'operator'
   }
 ]
+
+export const policyTypes = [
+  {
+    value: 1,
+    label: "onDemand15min",
+  },
+  {
+    value: 2,
+    label: "onDemand48h",
+  },
+];

@@ -28,6 +28,8 @@ import GroundTrackPage from "./pages/GroundTrackPage";
 import { Toaster } from "react-hot-toast";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
+import PassListingPage from "./pages/PassListingPage";
+import ConnectionSetup from "./pages/ConnectionSetup";
 // import ProtectedRoute from "./components/ProtectedRoute";
 
 export default function App() {
@@ -45,6 +47,13 @@ export default function App() {
             <Route path="schedule-upload" element={<ScheduleUploadPage />} />
             <Route path="file-upload" element={<FileUploadPage />} />
           </Route>
+          <Route path="/c2/connection-setup" element={<ConnectionSetup />}>
+            <Route index element={<Navigate to="connection" replace />} />
+            <Route path="pass-listing" element={<PassListingPage />} />
+            <Route path="connection" element={<ConnectionPage />} />
+          </Route>
+          <Route path="/c2/connection-setup" element={<Navigate to="/c2/connection-setup" replace />} />
+          <Route path="/c2/pass-listing" element={<Navigate to="/c2/pass-listing" replace />} />
           <Route
             path="/c2/schedule-upload"
             element={<Navigate to="/c2/upload/schedule-upload" replace />}

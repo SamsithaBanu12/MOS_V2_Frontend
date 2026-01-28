@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import {
   method_types,
   backend_api,
@@ -6,7 +7,8 @@ import {
   target_name,
   OC3,
   SCOPE,
-  AUTH_API_BASE
+  AUTH_API_BASE,
+  LEAFSPACE_PASSAGE_ENDPOINT,
 } from "../constants/contants";
 import { httpPost } from "./utils";
 
@@ -206,3 +208,36 @@ export async function sendPromptResponse(runId, method, answer, prompt_id, multi
   const url = `/script-api/running-script/${runId}/prompt?scope=${SCOPE}`;
   return httpPost(url, payload);
 }
+
+// Leafspace Passages
+
+export const getAllPassages = async () => {
+  try {
+    const response = await fetch('http://localhost:8024/passages');
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log("Passages from DB:", data);
+    return data;
+  } catch (error) {
+    console.error("Could not fetch passages:", error);
+    throw error; // Re-throw so the caller knows it failed
+  }
+};
+
+export const bookPassages = async (payload) => {
+  const response = await fetch('http://localhost:8024/passages/candidates/book?allow_overlap=false', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload)
+  });
+
+  const data = await response.json();
+  console.log("Booking Response:", data);
+  return data;
+};
