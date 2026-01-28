@@ -8,6 +8,10 @@
     color: #ffffff;
 }
 
+.mission-control-root.collapsed {
+    width: 93vw;
+}
+
 /* Draggable HUD Styling */
 .telemetry-dashboard {
     position: absolute;
@@ -88,7 +92,6 @@
     font-size: 15px;
     font-weight: 600;
     font-family: 'JetBrains Mono', monospace;
-    /* Technical font */
 }
 
 /* Unified Mission Controls */
@@ -554,7 +557,6 @@
 
     .orbit-slider-group {
         display: none;
-        /* Hide on very small screens to save space */
     }
 
     .mission-legend {

@@ -1,13 +1,15 @@
-import { NavLink } from "react-router";
+import { NavLink } from "react-router-dom";
 
-export default function NavSubItem({ to, label }) {
+export default function NavSubItem({ to, label, onClick }) {
   return (
     <NavLink
       to={to}
       className={({ isActive }) => `subItem ${isActive ? "active" : ""}`}
+      onClick={() => {
+        onClick?.();
+      }}
     >
-      <span className="bullet" />
-      <span className="subLabel">{label}</span>
+      {label}
     </NavLink>
   );
 }

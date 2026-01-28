@@ -1,10 +1,10 @@
-import { toast } from "react-toastify";
 import { FaRegClock } from "react-icons/fa6";
 import { IoReloadOutline } from "react-icons/io5";
 import { SiTicktick } from "react-icons/si";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import {
   BASE,
+  CommandExtraParameters,
   DERIVED_HIDE,
   HEADER_NAMES,
   HTTP_HEADERS,
@@ -12,8 +12,12 @@ import {
   ROUTING_NAMES,
   SCOPE,
   SEVERITY_ORDER,
+  TelemetryExtraParameters,
 } from "../constants/contants";
 import moment from "moment";
+import toast from "react-hot-toast";
+import { commandStateMapping } from "../constants/CommandsMappingData";
+import { telemetryStateMapping } from "../constants/TelemetryMappingData";
 
 export const getDisplayValue = (isHex, value) => {
   if (value == null) return "";
@@ -137,9 +141,9 @@ export function formatClock(totalSeconds) {
   const secs = s % 60;
   return hrs > 0
     ? `${String(hrs).padStart(2, "0")}:${String(mins).padStart(
-        2,
-        "0"
-      )}:${String(secs).padStart(2, "0")}`
+      2,
+      "0"
+    )}:${String(secs).padStart(2, "0")}`
     : `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
 }
 
@@ -283,8 +287,8 @@ export function toUTCYmdHms(input) {
     input instanceof Date
       ? input
       : typeof input === "number"
-      ? new Date(input < 1e12 ? input * 1000 : input) // seconds vs ms
-      : new Date(input);
+        ? new Date(input < 1e12 ? input * 1000 : input) // seconds vs ms
+        : new Date(input);
 
   const pad = (n) => String(n).padStart(2, "0");
 
@@ -328,8 +332,8 @@ export function tagFor(e) {
     return e.severity === "warn"
       ? "output_warn"
       : e.severity === "error"
-      ? detectSeverity(e.text)
-      : "output_info";
+        ? detectSeverity(e.text)
+        : "output_info";
   }
   if (e.type === "http") return "http";
   if (e.type === "ws") return "ws";
@@ -367,10 +371,10 @@ export function partitionItems(items) {
   const payloadItems =
     tcLenIdx >= 0
       ? filtered
-          .slice(tcLenIdx + 1)
-          .filter(
-            (i) => !HEADER_NAMES.has(i.name) && !ROUTING_NAMES.has(i.name)
-          )
+        .slice(tcLenIdx + 1)
+        .filter(
+          (i) => !HEADER_NAMES.has(i.name) && !ROUTING_NAMES.has(i.name)
+        )
       : [];
   return { headerItems, routingItems, payloadItems };
 }
@@ -402,7 +406,7 @@ export function fmtBlockHex(defObj) {
 export function getDefaultDisplay(item) {
   const { data_type, bit_size, default: defVal } = item;
   if (item.states) return null;
-  if (data_type === "UINT") return fmtNumHex(defVal, bit_size);
+  if (data_type === "UINT" || data_type === "FLOAT") return fmtNumHex(defVal, bit_size);
   if (data_type === "BLOCK") return fmtBlockHex(defVal || item.id_value);
   return "—";
 }
@@ -440,18 +444,18 @@ export const payloadForTemplate = (payloadItems, payload) => {
     payloadItems?.map((it) =>
       it.states
         ? {
-            name: it.name,
-            kind: "state",
-            value:
-              getStatesInfo(it)?.options.find(
-                (o) => o.label === payload[it.name]
-              )?.value ?? null,
-          }
+          name: it.name,
+          kind: "state",
+          value:
+            getStatesInfo(it)?.options.find(
+              (o) => o.label === payload[it.name]
+            )?.value ?? null,
+        }
         : {
-            name: it.name,
-            kind: "hex",
-            value: payload[it.name],
-          }
+          name: it.name,
+          kind: "hex",
+          value: payload[it.name],
+        }
     ) ?? []
   );
 };
@@ -545,12 +549,14 @@ export function toUTCYmdHmsnn(input) {
 }
 
 export const getAllTlmsData = (transmissionData) => {
+  if (!Array.isArray(transmissionData)) return [];
   return transmissionData.filter((item) =>
     item?.__packet?.toLowerCase().includes("__tlm__")
   );
 };
 
 export const getAllCmdsData = (transmissionData) => {
+  if (!Array.isArray(transmissionData)) return [];
   return transmissionData.filter((item) =>
     item?.__packet?.toLowerCase().includes("__cmd__")
   );
@@ -563,14 +569,20 @@ export function base64ToHex(base64) {
 }
 
 export const findHealthCommand = (value) => {
+  if (!value || typeof value !== "string") return "";
   if (value.includes("__CMD__")) {
+    if (value.includes("FTM_SEND_DATA")) return "File Upload";
     return "Cmd";
   } else if (value.includes("TLM")) {
     if (value.includes("__HEALTH")) {
       return "Health";
+    } else if (value.includes("BEACON")) {
+      return "Beacon";
     } else {
       return "Tlm";
     }
+  } else if (value.includes("NOTIFICATION")) {
+    return "Notification";
   }
 };
 export const getCommandName = (value) => {
@@ -635,7 +647,7 @@ export function parseLine(line) {
     if (Array.isArray(parsed))
       return parsed.filter((x) => typeof x === "object");
     if (parsed && typeof parsed === "object") return [parsed];
-  } catch {}
+  } catch { }
   return [];
 }
 
@@ -786,8 +798,8 @@ export function calculateContactStatus(
   // Calculate slant range using law of cosines
   const slantRange = Math.sqrt(
     rStation ** 2 +
-      rSatellite ** 2 -
-      2 * rStation * rSatellite * Math.cos(centralAngle)
+    rSatellite ** 2 -
+    2 * rStation * rSatellite * Math.cos(centralAngle)
   );
 
   // Calculate elevation angle using the more accurate formula
@@ -869,11 +881,150 @@ export function hasActiveContact(statuses) {
   return statuses.some((s) => s.inContact);
 }
 
-/**
- * Get stations currently in contact
- */
+//  Get stations currently in contact
+
 export function getActiveContacts(statuses) {
   return statuses
     .filter((s) => s.inContact)
     .sort((a, b) => b.elevationAngle - a.elevationAngle);
+}
+
+// filters in transmission history
+
+const isWithinLastMinutesFormatted = (timeString, maxMinutes) => {
+  if (!timeString) return false;
+
+  const utcString = timeString.replace(/\//g, "-") + "Z";
+  const parsedUtcMs = new Date(utcString).getTime();
+
+  const nowUtcMs = Date.now();
+  const diffMinutes = (nowUtcMs - parsedUtcMs) / 60000;
+
+  return diffMinutes <= maxMinutes;
+};
+
+export const getFilteredCommands = (filteredComms, timeValue) => {
+  if (!Array.isArray(filteredComms)) return [];
+  const filteredData = filteredComms.filter((item) =>
+    isWithinLastMinutesFormatted(
+      item.params?.RECEIVED_TIMEFORMATTED
+        ? item?.params?.RECEIVED_TIMEFORMATTED
+        : moment.utc(item?.__time / 1e6).format("YYYY/MM/DD HH:mm:ss.SSS"),
+      timeValue
+    )
+  );
+  return filteredData;
+};
+
+export const getTelemetryName = (tele, tab) => {
+  if (tab === "TLM") {
+    const prefix = "DECOM__TLM__EMULATOR__";
+    return tele?.startsWith(prefix) ? tele.slice(prefix.length) : "";
+  } else if (tab === "CMD") {
+    const prefix = "DECOM__CMD__EMULATOR__";
+    return tele?.startsWith(prefix) ? tele.slice(prefix.length) : "";
+  }
+};
+
+export const getStateParameterValue = (commandTelemetryMap, key, value) => {
+  const filterStateParameter = commandStateMapping?.find(
+    (item) =>
+      item?.telemetry?.toLowerCase() ===
+      commandTelemetryMap?.telemetry?.toLowerCase()
+  );
+  if (filterStateParameter) {
+    return (
+      filterStateParameter?.states?.find((item) => item?.parameter === key)
+        ?.states?.[value] ?? value
+    );
+  }
+  return value ?? null;
+};
+
+export const downloadJson = (data, filename) => {
+  if (!data) return;
+
+  const jsonStr = JSON.stringify(data, null, 2);
+  const blob = new Blob([jsonStr], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+
+  document.body.appendChild(link);
+  link.click();
+
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+};
+
+export function filterCommand(packet, commandDefinitions, comm) {
+  if (!packet || typeof packet !== "object") return {};
+  if (!Array.isArray(commandDefinitions)) return {};
+
+  const packetCommand = getTelemetryName(packet?.__packet, comm);
+
+  const commandDef = commandDefinitions.find((c) =>
+    comm === "CMD" ? c.command === packetCommand : c.telemetry === packetCommand
+  );
+
+  const allowedCommandParams =
+    comm === "CMD"
+      ? commandDef?.commandParams ?? []
+      : commandDef?.parameters ?? [];
+
+  const allowedExtraParams =
+    comm === "CMD" ? CommandExtraParameters : TelemetryExtraParameters;
+
+  const allowedKeys = new Set(
+    [...allowedExtraParams, ...allowedCommandParams]
+      .filter(k => k != null)
+      .map((k) => k.toLowerCase())
+  );
+
+  const source = packet.params ?? packet;
+
+  let filteredParams = Object.fromEntries(
+    Object.entries(source).filter(([key]) => allowedKeys.has(key.toLowerCase()))
+  );
+
+  const stateMapping = comm === "CMD" ? commandStateMapping.find((m) => m.command === packetCommand) : telemetryStateMapping.find((m) => m.telemetry === packetCommand);
+  // const stateMapping = commandStateMapping.find((m) =>
+  //   comm === "CMD"
+  //     ? m.command === packetCommand
+  //     : m.telemetry === packetCommand
+  // );
+
+  if (stateMapping?.states?.length) {
+    filteredParams = { ...filteredParams };
+
+    for (const stateDef of stateMapping.states) {
+      const paramName = stateDef.parameter;
+
+      if (
+        Object.prototype.hasOwnProperty.call(filteredParams, paramName)
+      ) {
+        const rawValue = filteredParams[paramName];
+
+        // only map numeric values
+        if (
+          typeof rawValue === "number" &&
+          stateDef.states?.[rawValue] !== undefined
+        ) {
+          filteredParams[paramName] = stateDef.states[rawValue];
+        }
+      }
+    }
+  }
+
+  const packetName =
+    comm === "CMD"
+      ? { command: packetCommand }
+      : { telemetry: packetCommand };
+
+  return {
+    ...packetName,
+    ...filteredParams,
+  };
 }

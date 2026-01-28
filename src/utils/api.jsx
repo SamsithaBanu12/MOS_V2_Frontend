@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import {
   method_types,
   backend_api,
@@ -5,9 +6,58 @@ import {
   method_name,
   target_name,
   OC3,
-  SCOPE
+  SCOPE,
+  AUTH_API_BASE,
+  LEAFSPACE_PASSAGE_ENDPOINT,
 } from "../constants/contants";
 import { httpPost } from "./utils";
+
+export const registerUser = async (userData) => {
+  try {
+    const res = await fetch(`${AUTH_API_BASE}/auth/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    });
+    if (res.ok) {
+      return await res.json();
+    } else {
+      const errorData = await res.json();
+      throw new Error(errorData.message || "Registration failed");
+    }
+  } catch (error) {
+    console.error("Error registering user:", error);
+    throw error;
+  }
+};
+
+export const loginUser = async (credentials) => {
+  try {
+    const res = await fetch(`${AUTH_API_BASE}/auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(credentials),
+    });
+    if (res.ok) {
+      return await res.json();
+    } else {
+      const errorData = await res.json();
+      throw new Error(errorData.message || "Login failed");
+    }
+  } catch (error) {
+    console.error("Error logging in:", error);
+    throw error;
+  }
+};
+
+export const logoutUser = () => {
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+};
 
 export const getAllCommands = async () => {
   const res = await fetch(`${backend_api}/api`, {
@@ -158,3 +208,36 @@ export async function sendPromptResponse(runId, method, answer, prompt_id, multi
   const url = `/script-api/running-script/${runId}/prompt?scope=${SCOPE}`;
   return httpPost(url, payload);
 }
+
+// Leafspace Passages
+
+export const getAllPassages = async () => {
+  try {
+    const response = await fetch('http://localhost:8024/passages');
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log("Passages from DB:", data);
+    return data;
+  } catch (error) {
+    console.error("Could not fetch passages:", error);
+    throw error; // Re-throw so the caller knows it failed
+  }
+};
+
+export const bookPassages = async (payload) => {
+  const response = await fetch('http://localhost:8024/passages/candidates/book?allow_overlap=false', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload)
+  });
+
+  const data = await response.json();
+  console.log("Booking Response:", data);
+  return data;
+};

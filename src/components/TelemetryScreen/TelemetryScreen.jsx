@@ -5,6 +5,14 @@ function TelemetryScreen({ telemetryUrl, title }) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
 
+    const getKioskUrl = (url) => {
+        if (!url) return url;
+        const separator = url.includes('?') ? '&' : '?';
+        return `${url}${separator}kiosk`;
+    };
+
+    const kioskUrl = getKioskUrl(telemetryUrl);
+
     const handleError = () => {
         setLoading(false);
         setError(true);
@@ -22,7 +30,7 @@ function TelemetryScreen({ telemetryUrl, title }) {
 
             {error && (
                 <div
-                   className="grafana-app-error"
+                    className="grafana-app-error"
                 >
                     <p>Failed to load dashboard. Please check the server.</p>
                 </div>
@@ -30,7 +38,7 @@ function TelemetryScreen({ telemetryUrl, title }) {
 
             <iframe
                 title={title}
-                src={telemetryUrl}
+                src={kioskUrl}
                 className="grafana-iframe"
                 sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-modals"
                 allow_embedding="true"

@@ -3,10 +3,12 @@ import './SBandHealth.css';
 import { FIELD_ORDER, LABELS, STALE_MS } from "../../constants/contants";
 import { formatValue } from "../../utils/utils";
 import { useHealthPoll } from "../../utils/hooks";
+import { useSidebar } from "../../context/SidebarContext";
 
 export default function SBandHealth() {
     const s = useHealthPoll("/health/sband");
     const x = useHealthPoll("/health/xband");
+    const { collapsed } = useSidebar();
     const scrollRef = useRef(null);
 
     const lastUpdatedMs = Math.max(s.lastUpdatedMs || 0, x.lastUpdatedMs || 0) || null;
@@ -53,7 +55,7 @@ export default function SBandHealth() {
     );
 
     return (
-        <section className="space-card sband-card">
+        <section className={`space-card sband-card ${collapsed ? "collapsed" : ""}`}>
             {renderTable("S-Band", s.values, s.isStale)}
             {renderTable("X-Band", x.values, x.isStale)}
         </section>

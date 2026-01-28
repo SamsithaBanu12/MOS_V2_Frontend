@@ -11,6 +11,10 @@
   width: 38vw;
 }
 
+.ce-app.collapsed {
+  width: 45vw;
+}
+
 /* Header */
 .ce-header {
   text-align: left;
@@ -216,6 +220,7 @@
   flex-direction: column;
   gap: 5px;
 }
+
 .ce-flex {
   display: flex;
   flex-direction: column;
@@ -381,6 +386,10 @@
   overflow-y: auto;
   scrollbar-width: none;
   width: 42.5vw;
+}
+
+.tm-wrapper.collapsed {
+  width: 44.5vw;
 }
 
 .tm-header {

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { getHistoryMock } from "./FileUploadData.jsx";
 import "./FileUpload.space.css";
 import { MdOutlineFileUpload } from "react-icons/md";
+import { useSidebar } from "../../context/SidebarContext.jsx";
 
 export default function FileUploadGUI() {
   const [file, setFile] = useState(null);
@@ -22,6 +23,7 @@ export default function FileUploadGUI() {
   const [totalPacketsValue, setTotalPacketsValue] = useState(0);
 
   const fileInputRef = useRef(null);
+  const { collapsed } = useSidebar();
 
   useEffect(() => {
     getHistoryMock().then(setHistory);
@@ -155,7 +157,7 @@ export default function FileUploadGUI() {
               setLogs((prev) => [...prev, `[ERROR] ${parsed.message}`]);
               setUploadStatus("Error");
             }
-          } catch (e) {}
+          } catch (e) { }
         }
       }
     } catch (err) {
@@ -204,7 +206,7 @@ export default function FileUploadGUI() {
   };
 
   return (
-    <div className="fu-wrapper">
+    <div className={`fu-wrapper ${collapsed ? "collapsed" : ""}`}>
       <div className="fu-top-wrapper">
         <div className="fu-file-builder">
           <div className="fu-file-header">File Upload Builder</div>
@@ -277,8 +279,8 @@ export default function FileUploadGUI() {
 
         <div className="fu-file-history">
           <div className="fu-file-history-topic">Upload Files History</div>
-          <div className="fu-scroll fu-stats-table-wrap">
-            <table className="fu-stats-table">
+          <div className={`fu-scroll fu-stats-table-wrap ${collapsed ? "collapsed" : ""}`}>
+            <table className={`fu-stats-table ${collapsed ? "collapsed" : ""}`}>
               <thead>
                 <tr>
                   <th>File Name</th>
@@ -316,7 +318,7 @@ export default function FileUploadGUI() {
 
       {uploadCTAClicked && (
         <div className="fu-bottom-wrapper">
-          <div className="fu-status-wrapper">
+          <div className={`fu-status-wrapper ${collapsed ? "collapsed" : ""}`}>
             <div className="fu-status-wrapper-topic">File Upload Status</div>
 
             {ack === 0 && (
@@ -342,7 +344,7 @@ export default function FileUploadGUI() {
               ) : (
                 <div className="fu-progress-bar-upload">
                   <div className="progress-header">File Upload Progress</div>
-                  <div className="fu-progress-bar">
+                  <div className={`fu-progress-bar ${collapsed ? "collapsed" : ""}`}>
                     <div
                       className="fu-progress-bar-inner"
                       style={{
@@ -352,7 +354,7 @@ export default function FileUploadGUI() {
                     >
                       <span
                         className={
-                          ack === 1 ? "fu-progress-value" : "fu-progress-value1"
+                          ack === 1 ? `fu-progress-value ${collapsed ? "collapsed" : ""}` : `fu-progress-value1 ${collapsed ? "collapsed" : ""}`
                         }
                       >
                         {progress}%

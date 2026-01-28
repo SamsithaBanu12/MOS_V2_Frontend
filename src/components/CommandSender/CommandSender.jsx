@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { buildParamsString, sendCommand } from "./paramsTransport";
 import "./CommandExplorer.space.css";
-import { toast } from "react-toastify";
 import {
   getDefaultDisplay,
   getStatesInfo,
@@ -15,6 +14,11 @@ import TelemetryList from "./TelemetryList";
 import SelectRows from "./SelectRows";
 import CommandDetails from "./CommandDetails";
 import { commandTelemetryEmulator } from "../../constants/commandsData";
+import toast from "react-hot-toast";
+import ErrorDisplay from "../../common/ErrorDisplay";
+import { useSidebar } from "../../context/SidebarContext";
+
+const EMPTY_ARRAY = [];
 
 export default function CommandExplorer() {
   const [loading, setLoading] = useState(false);
@@ -34,6 +38,8 @@ export default function CommandExplorer() {
   const [filteredCommands, setFilteredCommands] = useState([]);
   const [routing, setRouting] = useState({});
   const [payload, setPayload] = useState({});
+  const [refreshBtn, setRefreshBtn] = useState(false);
+  const { collapsed } = useSidebar();
 
   const selectedCmd =
     filteredCommands.length > 0 ? filteredCommands[selectedIdx] : null;
@@ -42,7 +48,7 @@ export default function CommandExplorer() {
     target_name,
     packet_name,
     description,
-    items = [],
+    items = EMPTY_ARRAY,
   } = selectedCmd || {};
 
   const { headerItems, routingItems, payloadItems } = useMemo(
@@ -82,7 +88,7 @@ export default function CommandExplorer() {
 
     setRouting(routingInit);
     setPayload(payloadInit);
-  }, [selectedCmd]); // ✅ ONLY THIS
+  }, [selectedCmd, routingItems, payloadItems]);
 
   useEffect(() => {
     (async () => {
@@ -102,7 +108,7 @@ export default function CommandExplorer() {
         setLoading(false);
       }
     })();
-  }, []);
+  }, [refreshBtn]);
 
   useEffect(() => {
     setFilteredTelemetry([]);
@@ -236,7 +242,7 @@ export default function CommandExplorer() {
 
   return (
     <div className="ce-whole-wrapper">
-      <div className="ce-app">
+      <div className={`ce-app ${collapsed ? "collapsed" : ""}`}>
         <CEHeader />
         <div className="ce-panel">
           <div className="ce-select-panel">
@@ -255,7 +261,16 @@ export default function CommandExplorer() {
                 />
               )}
               {loading && <div className="ce-loading">Loading commands…</div>}
-              {err && <div className="ce-error">Error: {err}</div>}
+              {err &&
+                <ErrorDisplay
+                  title="Fetch Error"
+                  message="We couldn't load the Telecommands from the server."
+                  onAction={() => setRefreshBtn((prev) => !prev)}
+                  actionLabel="Retry Fetch"
+                  error={err}
+                  loading={loading}
+                />
+              }
               {!loading && !err && selectedCmd && (
                 <CommandDetails
                   packet_name={packet_name}
