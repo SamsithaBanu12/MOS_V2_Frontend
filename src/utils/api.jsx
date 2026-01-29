@@ -228,6 +228,36 @@ export const getAllPassages = async () => {
   }
 };
 
+export const getAllGroundstations = async () => {
+  try {
+    const response = await fetch('http://localhost:8024/groundstations');
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const getAllSatellites = async () => {
+  try {
+    const response = await fetch('http://localhost:8024/satellites');
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const bookPassages = async (payload) => {
   try {
     const response = await fetch('http://localhost:8024/passages/candidates/book?allow_overlap=false', {

@@ -31,6 +31,7 @@ const EditPassDetails = ({ setAddContactClicked, selectedPassage }) => {
                             className="pass-book-param-row-input"
                             type="text"
                             value={value}
+                            readOnly
                         />
                     </div>
                 ))}

@@ -22,12 +22,11 @@ const PassContactList = ({ passages }) => {
                 <thead>
                     <tr>
                         <th>Satelite</th>
-                        <th>GS Id</th>
+                        <th>GS Name</th>
                         <th>Passage Id</th>
                         <th>Status</th>
                         <th>AOS</th>
                         <th>LOS</th>
-                        {/* <th>Source</th> */}
                         <th>Edit</th>
                         <th>View</th>
                     </tr>
@@ -35,23 +34,22 @@ const PassContactList = ({ passages }) => {
                 <tbody>
                     {passages.length === 0 ? (
                         <tr className="pl-muted">
-                            No Pass contacts
+                            <td colSpan={8}>No Pass contacts</td>
                         </tr>
                     ) : (
                         [...passages].map((r, i) => (
                             <tr key={i}>
-                                <td className="pl-mono"> {r?.satelliteID}</td>
-                                <td className="pl-mono"> {r?.groundStationID}</td>
-                                <td className="pl-mono"> {r?.passageID}</td>
-                                <td className="pl-mono"> {r?.passageStatus}</td>
-                                <td className="pl-mono"> {r?.AOS}</td>
-                                <td className="pl-mono"> {r?.LOS}</td>
-                                {/* <td className="pl-mono"> {r?.source}</td> */}
+                                <td className="pl-mono">{r?.satelliteName || r?.satelliteID}</td>
+                                <td className="pl-mono">{r?.groundStationName || r?.groundStationID}</td>
+                                <td className="pl-mono">{r?.passageID}</td>
+                                <td className="pl-mono">{r?.passageStatus}</td>
+                                <td className="pl-mono">{r?.AOS}</td>
+                                <td className="pl-mono">{r?.LOS}</td>
                                 <td>
-                                    <button className="edit-btn" onClick={() => handleEditPassage(r)} >edit</button>
+                                    <button className="edit-btn" onClick={() => handleEditPassage(r)}>edit</button>
                                 </td>
                                 <td>
-                                    <button className="view-btn" onClick={() => handleViewPassage(r)} >view</button>
+                                    <button className="view-btn" onClick={() => handleViewPassage(r)}>view</button>
                                 </td>
                             </tr>
                         ))

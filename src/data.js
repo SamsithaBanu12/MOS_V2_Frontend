@@ -370,3 +370,39 @@ export const PassageStatusTypes = [
     label: 'Executing'
   }
 ]
+export const PassFilterTypes = [
+  {
+    value: 0,
+    label: "All Passages",
+    status: 'all',
+  },
+  {
+    value: 1,
+    label: "Satellite Names",
+    status: 'satellite',
+  },
+  {
+    value: 2,
+    label: "GS Names",
+    status: 'groundStation',
+  },
+  {
+    value: 3,
+    label: 'Passage Status',
+    status: 'passageStatus'
+  },
+  {
+    value: 4,
+    label: 'Time',
+    status: 'Time'
+  }
+]
+
+export const PassTimeFilterOptions = [
+  { value: 'today', label: 'Today' },
+  { value: '2_days_ago', label: '2 Days Ago' },
+  { value: '1_week_ago', label: '1 Week Ago' },
+  { value: '1_month_ago', label: '1 Month Ago' },
+  { value: '2_days_after', label: '2 Days After' },
+  { value: '1_week_after', label: '1 Week After' },
+];
