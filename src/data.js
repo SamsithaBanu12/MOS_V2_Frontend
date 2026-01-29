@@ -349,3 +349,24 @@ export const policyTypes = [
     label: "onDemand48h",
   },
 ];
+
+export const editPassParameters = ['passageID', 'satelliteID', 'groundStationID', 'AOS', 'LOS', 'policyType'];
+
+export const PassageStatusTypes = [
+  {
+    value: 1,
+    label: 'Scheduled'
+  },
+  {
+    value: 2,
+    label: 'Failed'
+  },
+  {
+    value: 3,
+    label: 'Complete'
+  },
+  {
+    value: 4,
+    label: 'Executing'
+  }
+]

@@ -18,12 +18,12 @@ const commandSelectStyles = {
   singleValue: (base) => ({
     ...base,
     color: "#fff",
-    fontSize: 14,
+    fontSize: 13,
   }),
   input: (base) => ({
     ...base,
     color: "#fff",
-    fontSize: 14,
+    fontSize: 13,
   }),
   placeholder: (base) => ({
     ...base,

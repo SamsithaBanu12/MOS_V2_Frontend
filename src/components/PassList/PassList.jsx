@@ -3,27 +3,13 @@ import { useSidebar } from "../../context/SidebarContext";
 import './PassList.css'
 import PassContactList from "./PassContactList";
 import PassType from "./PassType";
-import PassBookContactForm from "./PassBookContactForm";
+import PassRightSidebar from "./PassRightsidebar.jsx";
 
 const PassList = ({ passages }) => {
     const { collapsed } = useSidebar();
     const [addContactClicked, setAddContactClicked] = useState(false);
     const [filter, setFilter] = useState("");
     const [passFilterType, setPassFilterType] = useState("list");
-    const [payload, setPayload] = useState(
-        {
-            "e918a6b4f71961df50db0bfb2e6153d2": {
-                "policyType": "onDemand15min",
-                "start": "2023-09-26T15:41:01Z",
-                "end": "2023-09-26T15:51:11Z"
-            },
-            "5c94bbdcf623b35120d9018d17a28e26": {
-                "policyType": "onDemand48h",
-                "start": "2023-09-26T15:41:01Z",
-                "end": "2023-09-26T15:51:11Z"
-            }
-        }
-    )
     const [lengthData, setLengthData] = useState({
         Contacts: 0,
         Scheduled: 0,
@@ -121,7 +107,7 @@ const PassList = ({ passages }) => {
                     />
                 </div>
             </div>
-            {addContactClicked && <PassBookContactForm payload={payload} setPayload={setPayload} addContactClicked={addContactClicked} setAddContactClicked={setAddContactClicked} />}
+            {addContactClicked && <PassRightSidebar addContactClicked={addContactClicked} setAddContactClicked={setAddContactClicked} title={"Book Pass Contact"} isForAddContact />}
         </div>
     );
 };

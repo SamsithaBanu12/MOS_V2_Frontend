@@ -229,15 +229,20 @@ export const getAllPassages = async () => {
 };
 
 export const bookPassages = async (payload) => {
-  const response = await fetch('http://localhost:8024/passages/candidates/book?allow_overlap=false', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(payload)
-  });
+  try {
+    const response = await fetch('http://localhost:8024/passages/candidates/book?allow_overlap=false', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload)
+    });
 
-  const data = await response.json();
-  console.log("Booking Response:", data);
-  return data;
+    const data = await response.json();
+    console.log("Booking Response:", data);
+    return data;
+  }
+  catch (error) {
+    console.log(error);
+  }
 };

@@ -438,12 +438,13 @@
     height: 96.5vh;
     margin-top: 20px;
     background: var(--compo-bg);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+        0 10px 22px rgba(21, 46, 66, 0.3),
+        0 1px 0 rgba(44, 25, 25, 0.08) inset;
     border-radius: 8px;
-    box-shadow: var(--card-shadow);
-    display: grid;
-    grid-template-rows: auto 1fr;
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
     animation: slideInRight 0.3s ease-out;
 }
 
@@ -458,6 +459,7 @@
 .pl-book-modal-title {
     font-weight: 700;
     letter-spacing: .3px;
+    color: var(--title-color);
 }
 
 .pl-book-modal-body {
@@ -495,32 +497,56 @@
     flex-direction: column;
     border-radius: 8px;
     gap: 7px;
+    padding: 10px;
     margin-top: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    margin: 10px;
+    max-height: 45vh;
+    min-height: 45vh;
+}
+
+.pass-book-input-wrapper1 {
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    gap: 7px;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    margin: 10px;
+    max-height: 58vh;
+    min-height: 58vh;
 }
 
 .pass-book-param-row {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
-    align-items: center;
-    background-color: transparent;
-    border: 1px solid var(--highlight-bg2);
     border-radius: 8px;
     padding: 8px;
+    padding-bottom: 10px;
 }
 
-input[type="number"] {
-    width: 100px;
+.pass-book-param-row span {
+    font-size: 13.4px;
+    font-weight: 600;
+    margin-bottom: 7px;
+}
+
+input[type="text"] {
     background-color: var(--highlight-bg);
-    padding: 5px 10px;
+    padding: 10px 10px;
     border: 1px solid var(--highlight-bg2);
+    color: white;
+    border-radius: 8px;
+    letter-spacing: 0.5px;
 }
 
 .pass-book-row-input {
     background: #305869;
     border: 1px solid rgba(90, 150, 255, 0.4);
     border-radius: 8px;
-    padding: 3px 10px;
+    padding: 10px 10px;
     font-size: 13px;
 }
 
@@ -528,7 +554,7 @@ input[type="number"] {
     width: 320px;
     border: 1px solid var(--highlight-bg2);
     border-radius: 6px;
-    padding: 8px 10px;
+    padding: 10px 10px;
     background-color: var(--highlight-bg) !important;
     color: #dbe9ff;
     transition: all 0.2s ease;
@@ -538,4 +564,156 @@ input[type="number"] {
 .pass-book-select:focus {
     outline: none;
     border: 1px solid var(--select-focus);
+}
+
+/* DateTime Custom styles */
+
+.pb-datetime-input-wrapper {
+    display: flex;
+    align-items: stretch;
+    border-radius: 8px;
+    border: 1px solid var(--highlight-bg2);
+    background: var(--highlight-bg);
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.pb-datetime-input-wrapper input[type="datetime-local"] {
+    border: none;
+    flex: 1;
+    border-radius: 0;
+    padding: 10px 10px;
+    background: transparent;
+    color: var(--text-main);
+    font-size: 12px;
+    font-family: var(--font);
+}
+
+.pb-datetime-input-wrapper input[type="datetime-local"]:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.pb-datetime-input-wrapper input[type="datetime-local"]::placeholder {
+    color: rgba(255, 255, 255, 1);
+    background: black;
+}
+
+/* Calendar icon (WebKit: Chrome, Edge, etc.) */
+.pb-datetime-input-wrapper input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    opacity: 1;
+    filter: invert(1);
+    /* make it white-ish */
+    margin-left: 4px;
+}
+
+/* On hover over icon */
+.pb-datetime-input-wrapper input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
+}
+
+input[type="number"] {
+    background-color: var(--highlight-bg);
+    border-radius: 8px;
+}
+
+.pl-add-btn-wrapper {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.pl-add-btn {
+    border-radius: 8px;
+    border: 1px solid #10344eff;
+    padding: 9px 14px;
+    color: var(--title-color);
+    cursor: pointer;
+    transition: 0.2s all;
+    font-size: 14px;
+    width: 120px;
+    background: rgba(50, 90, 96, 0.35);
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 14px;
+    font-weight: 600;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow:
+        0 10px 22px rgba(0, 0, 0, 0.30),
+        0 1px 0 rgba(255, 255, 255, 0.08) inset;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.pl-book-btn-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 5px;
+    margin-right: 10px;
+}
+
+.pl-book-btn {
+    border-radius: 8px;
+    border: 1px solid #10344eff;
+    padding: 9px 14px;
+    color: var(--title-color);
+    cursor: pointer;
+    transition: 0.2s all;
+    font-size: 14px;
+    width: 120px;
+    background: rgba(50, 90, 96, 0.35);
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 14px;
+    font-weight: 600;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow:
+        0 10px 22px rgba(0, 0, 0, 0.30),
+        0 1px 0 rgba(255, 255, 255, 0.08) inset;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.pl-book-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.selected-pass-details {
+    margin: 10px 5px;
+}
+
+.pl-item-row1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    margin: 12px 7px 3px 7px;
+    background-color: var(--highlight-bg2);
+}
+
+.pl-small1 {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.pl-item-name,
+.pl-item-value {
+    flex: 1;
+}
+
+.pl-item-value {
+    text-align: right;
+}
+
+.pl-chip1 {
+    display: inline-block;
+    border-radius: 6px;
+    padding: 3px 8px;
+    color: #fff;
+    font-size: 13px;
+    border: 1px solid var(--highlight-bg2);
+    background-color: var(--highlight-bg);
 }
