@@ -86,24 +86,24 @@ const CesiumMap = forwardRef(({ data, isFollowing = false, visibleOrbits, simula
                 baseLayer.contrast = 1.1;
                 baseLayer.saturation = 1.0;
 
-                // 2. Geographic Labels (Middle Layer - Index 1)
-                const labelProvider = await Cesium.ArcGisMapServerImageryProvider.fromUrl(
-                    "https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer",
-                    { enablePickFeatures: false }
-                );
-                if (viewer.isDestroyed()) return;
-                const labelLayer = viewer.imageryLayers.addImageryProvider(labelProvider, 1);
-                labelLayer.alpha = 1.0;
-                labelLayer.brightness = 1.2;
+                // 2. Geographic Labels - REMOVED for cleaner look
+                // const labelProvider = await Cesium.ArcGisMapServerImageryProvider.fromUrl(
+                //     "https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer",
+                //     { enablePickFeatures: false }
+                // );
+                // if (viewer.isDestroyed()) return;
+                // const labelLayer = viewer.imageryLayers.addImageryProvider(labelProvider, 1);
+                // labelLayer.alpha = 1.0;
+                // labelLayer.brightness = 1.2;
 
-                // 3. Transportation/Roads (Top Layer - Index 2)
-                const transProvider = await Cesium.ArcGisMapServerImageryProvider.fromUrl(
-                    "https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer",
-                    { enablePickFeatures: false }
-                );
-                if (viewer.isDestroyed()) return;
-                const transLayer = viewer.imageryLayers.addImageryProvider(transProvider, 2);
-                transLayer.alpha = 0.5;
+                // 3. Transportation/Roads - ALSO REMOVED for pure mission look
+                // const transProvider = await Cesium.ArcGisMapServerImageryProvider.fromUrl(
+                //     "https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer",
+                //     { enablePickFeatures: false }
+                // );
+                // if (viewer.isDestroyed()) return;
+                // const transLayer = viewer.imageryLayers.addImageryProvider(transProvider, 2);
+                // transLayer.alpha = 0.5;
 
                 // 4. Subtle Technical Grid (Topmost for feel)
                 const gridLayer = viewer.imageryLayers.addImageryProvider(new Cesium.GridImageryProvider({}), 3);
@@ -116,11 +116,14 @@ const CesiumMap = forwardRef(({ data, isFollowing = false, visibleOrbits, simula
 
         initImagery();
 
-        // Environmental
-        viewer.scene.backgroundColor = Cesium.Color.fromCssColorString("#05070a");
-        if (viewer.scene.skyAtmosphere) viewer.scene.skyAtmosphere.show = false;
-        if (viewer.scene.sun) viewer.scene.sun.show = false;
-        if (viewer.scene.moon) viewer.scene.moon.show = false;
+        // Environmental - ENABLING Technical Day/Night Lighting
+        viewer.scene.globe.enableLighting = true;
+        viewer.scene.globe.showGroundAtmosphere = true;
+        viewer.scene.globe.dynamicAtmosphereLighting = true;
+
+        if (viewer.scene.skyAtmosphere) viewer.scene.skyAtmosphere.show = true;
+        if (viewer.scene.sun) viewer.scene.sun.show = true;
+        if (viewer.scene.moon) viewer.scene.moon.show = true;
 
         const controller = viewer.scene.screenSpaceCameraController;
         controller.enableRotate = false;
@@ -155,7 +158,8 @@ const CesiumMap = forwardRef(({ data, isFollowing = false, visibleOrbits, simula
                 if (i > 0) {
                     const prev = data.positions[i - 1];
                     if (prev.latitude <= 0 && pos.latitude > 0) {
-                        orbits.push([]);
+                        // FIX: Add the crossing point to the beginning of the next orbit to avoid gaps
+                        orbits.push([pos]);
                     }
                 }
             }
@@ -183,27 +187,25 @@ const CesiumMap = forwardRef(({ data, isFollowing = false, visibleOrbits, simula
                 let width = 1.0;
 
                 if (index < currentOrbitIndex) {
-                    // Past Orbit: Very subtle ghost trail
+                    // Past Orbit: White Dotted
                     material = new Cesium.PolylineDashMaterialProperty({
-                        color: Cesium.Color.DARKGRAY.withAlpha(0.2),
-                        dashLength: 16
+                        color: Cesium.Color.WHITE.withAlpha(0.6),
+                        dashLength: 16,
+                        gapColor: Cesium.Color.TRANSPARENT
                     });
                     width = 1.0;
                 } else if (index === currentOrbitIndex) {
-                    // Current Orbit: Bold, high-glow neon
-                    material = new Cesium.PolylineGlowMaterialProperty({
-                        glowPower: 0.3,
-                        color: Cesium.Color.CYAN
-                    });
-                    width = 3.0;
+                    // Current Orbit: Solid Green
+                    material = Cesium.Color.LIME;
+                    width = 1.5;
                 } else {
-                    // Future Orbit: Distinctive dotted projection
+                    // Future Orbit: Cyan Dotted
                     material = new Cesium.PolylineDashMaterialProperty({
-                        color: Cesium.Color.CYAN.withAlpha(0.4),
-                        dashLength: 8,
+                        color: Cesium.Color.CYAN.withAlpha(0.7),
+                        dashLength: 12,
                         gapColor: Cesium.Color.TRANSPARENT
                     });
-                    width = 1.5;
+                    width = 2.0;
                 }
 
                 viewer.entities.add({
@@ -253,12 +255,18 @@ const CesiumMap = forwardRef(({ data, isFollowing = false, visibleOrbits, simula
             name: "Coverage Footprint",
             position: Cesium.Cartesian3.fromDegrees(currentSatPos.longitude, currentSatPos.latitude, 0),
             ellipse: {
-                semiMajorAxis: footprintRadius * 1000, // Convert km to meters
+                semiMajorAxis: footprintRadius * 1000,
                 semiMinorAxis: footprintRadius * 1000,
-                material: Cesium.Color.CYAN.withAlpha(0.08),
+                // Radar-style technical scanning material (Green to match active)
+                material: new Cesium.GridMaterialProperty({
+                    color: Cesium.Color.LIME.withAlpha(0.12),
+                    cellAlpha: 0.0,
+                    lineCount: new Cesium.Cartesian2(8, 8),
+                    thickness: 0.8
+                }),
                 outline: true,
-                outlineColor: Cesium.Color.CYAN.withAlpha(0.3),
-                outlineWidth: 1,
+                outlineColor: Cesium.Color.LIME.withAlpha(0.5),
+                outlineWidth: 2,
                 height: 0
             }
         });
@@ -310,23 +318,35 @@ const CesiumMap = forwardRef(({ data, isFollowing = false, visibleOrbits, simula
         viewer.entities.add({
             name: data.satellite_name,
             position: property,
+            point: {
+                pixelSize: 40,
+                color: Cesium.Color.LIME.withAlpha(0.2),
+                outlineColor: Cesium.Color.LIME.withAlpha(0.4),
+                outlineWidth: 2,
+                disableDepthTestDistance: Number.POSITIVE_INFINITY
+            },
             billboard: {
                 image: satelliteIcon,
-                width: 32,
-                height: 32,
-                color: Cesium.Color.CYAN,
-                verticalOrigin: Cesium.VerticalOrigin.CENTER
+                width: 38,
+                height: 38,
+                color: Cesium.Color.LIME,
+                verticalOrigin: Cesium.VerticalOrigin.CENTER,
+                disableDepthTestDistance: Number.POSITIVE_INFINITY
             },
             label: {
                 text: data.satellite_name,
-                font: "12px Orbitron, sans-serif",
-                fillColor: Cesium.Color.CYAN,
+                font: "bold 14px 'JetBrains Mono', monospace",
+                fillColor: Cesium.Color.LIME,
                 outlineColor: Cesium.Color.BLACK,
-                outlineWidth: 2,
+                outlineWidth: 4,
                 style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-                pixelOffset: new Cesium.Cartesian2(20, 0),
+                pixelOffset: new Cesium.Cartesian2(24, 0),
                 horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
-                verticalOrigin: Cesium.VerticalOrigin.CENTER
+                verticalOrigin: Cesium.VerticalOrigin.CENTER,
+                backgroundColor: Cesium.Color.BLACK.withAlpha(0.7),
+                showBackground: true,
+                backgroundPadding: new Cesium.Cartesian2(8, 4),
+                disableDepthTestDistance: Number.POSITIVE_INFINITY // Keep label above everything
             }
         });
 
