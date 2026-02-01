@@ -71,7 +71,20 @@ function ScheduleUploadList() {
       setIsEditing(false);
       setGeneratedEntries([]);
       setGeneratedFilename("");
-      setDelays(new Array(entries.length).fill(0));
+
+      // Extract or calculate delays
+      const initialDelays = entries.map((e, i) => {
+        if (i === 0) return 0;
+        if (e.Delay !== undefined && e.Delay !== null) {
+          return parseInt(e.Delay, 10) || 0;
+        }
+        // Fallback: calculate from timestamps
+        const prevTs = parseInt(entries[i - 1].Timestamp, 10) || 0;
+        const currTs = parseInt(e.Timestamp, 10) || 0;
+        return Math.max(0, currTs - prevTs);
+      });
+      setDelays(initialDelays);
+
       const now = new Date();
       const iso = new Date(now.getTime() - now.getMilliseconds())
         .toISOString()

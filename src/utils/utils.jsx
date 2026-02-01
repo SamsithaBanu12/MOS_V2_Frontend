@@ -404,10 +404,12 @@ export function fmtBlockHex(defObj) {
 }
 
 export function getDefaultDisplay(item) {
-  const { data_type, bit_size, default: defVal } = item;
+  const dataType = (item.data_type || item.dataType || "").toUpperCase();
+  const { bit_size, default: defVal } = item;
   if (item.states) return null;
-  if (data_type === "UINT" || data_type === "FLOAT") return fmtNumHex(defVal, bit_size);
-  if (data_type === "BLOCK") return fmtBlockHex(defVal || item.id_value);
+  if (dataType === "STRING") return defVal ?? "";
+  if (dataType === "UINT" || dataType === "FLOAT") return fmtNumHex(defVal, bit_size);
+  if (dataType === "BLOCK") return fmtBlockHex(defVal || item.id_value);
   return "—";
 }
 
@@ -461,22 +463,27 @@ export const payloadForTemplate = (payloadItems, payload) => {
 };
 
 export function normalizeToHex(input) {
-  if (!input) return "";
+  if (input === null || input === undefined) return "";
+  const str = String(input).trim();
+  if (!str) return "";
 
-  input = input.trim();
-
-  // Already hex
-  if (input.startsWith("0x") || input.startsWith("0X")) {
-    return "0x" + input.slice(2).toUpperCase();
+  // If already prefixed with 0x (case insensitive)
+  if (/^0x/i.test(str)) {
+    // If it's just "0x" or "0X", keep it as is (don't force to uppercase yet)
+    // to allow further typing if we just returned "0x"
+    if (str.length <= 2) return str;
+    return "0x" + str.slice(2).toUpperCase();
   }
 
-  // Decimal → Hex
-  if (/^\d+$/.test(input)) {
-    const hex = Number(input).toString(16).toUpperCase();
+  // If numeric decimal, convert to hex
+  if (/^\d+$/.test(str)) {
+    const hex = Number(str).toString(16).toUpperCase();
     return "0x" + hex;
   }
 
-  return "";
+  // Otherwise keep it as is (could be a partial hex like "A5")
+  // The UI will handle displaying it via displayValue
+  return str;
 }
 
 export function formatForDisplay(raw, isHex) {
@@ -492,23 +499,25 @@ export function formatForDisplay(raw, isHex) {
 }
 // Convert internal hex → readable format for UI
 export function displayValue(hex, isHex) {
-  if (!hex || typeof hex !== "string") return "—";
+  if (hex === null || hex === undefined) return "";
+  const str = String(hex).trim();
+  if (!str) return "";
 
-  hex = hex.trim();
-  if (!hex) return "—";
-
-  if (!hex.startsWith("0x") && !hex.startsWith("0X")) return "—";
-
-  if (isHex) {
-    return hex.toUpperCase(); // show hex as-is
+  // If it's a hex string
+  if (/^0x/i.test(str)) {
+    if (isHex) {
+      return str.toUpperCase();
+    }
+    // Convert to decimal
+    const n = parseInt(str, 16);
+    if (Number.isFinite(n)) return String(n);
+    return str; // return partial hex if not valid yet
   }
 
-  // Convert HEX -> Decimal
-  const n = parseInt(hex, 16);
-
-  if (Number.isFinite(n)) return String(n);
-
-  return "—";
+  // If not hex-prefixed and we are in Hex mode, return as-is
+  // (the user might be typing a decimal number that normalizeToHex will convert,
+  // or they might be typing "0x" shortly)
+  return str;
 }
 
 export function toUTCYmdHmsnn(input) {

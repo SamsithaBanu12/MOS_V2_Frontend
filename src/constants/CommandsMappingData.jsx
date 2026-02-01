@@ -637,4 +637,20 @@ export const commandStateMapping = [
       },
     ],
   },
+  {
+    command: "ADCS_142_TC_GET_ADCS_RW_MAGMTR",
+    telemetry: "ADCS_142_TM_GET_ADCS_RW_MAGMTR",
+    states: [
+      {
+        parameter: "Magnetometer_instance_ID",
+        states: {
+          0: 'ALL_Magnetometer',
+          1: "Magnetometer_1",
+          2: 'Magnetometer_2',
+          3: 'Magnetometer_3',
+          4: 'Magnetometer_4'
+        },
+      },
+    ],
+  },
 ];
