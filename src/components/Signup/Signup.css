@@ -92,6 +92,28 @@
     color: var(--text-primary);
     font-size: 14px;
     transition: all 0.2s ease;
+    width: 100%;
+}
+
+.password-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.signup-icon {
+    position: absolute;
+    right: 12px;
+    cursor: pointer;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+}
+
+.signup-icon:hover {
+    color: var(--text-primary);
 }
 
 .signup-input.invalid {

@@ -6,6 +6,7 @@ import scheduleToast from "./ScheduleToast";
 import ScheduleBuilder from "./ScheduleBuilder";
 import ScheduleRunSheet from "./ScheduleRunSheet";
 import ScheduleTelemetry from "./ScheduleTelemetry";
+import { apiClient } from "../../utils/api";
 
 function ScheduleUploadList() {
   const [scheduleOptions, setScheduleOptions] = useState([]);
@@ -36,7 +37,7 @@ function ScheduleUploadList() {
   useEffect(() => {
     const fetchSchedules = async () => {
       try {
-        const res = await fetch(`${API_BASE}/schedules`);
+        const res = await apiClient(`${API_BASE}/schedules`);
         if (!res.ok) throw new Error("Failed to load schedules");
         const data = await res.json();
         setScheduleOptions(data);
@@ -61,7 +62,7 @@ function ScheduleUploadList() {
 
   const fetchScheduleEntries = async (filename) => {
     try {
-      const res = await fetch(
+      const res = await apiClient(
         `${API_BASE}/schedules/${encodeURIComponent(filename)}`
       );
       if (!res.ok) throw new Error("Failed to load schedule");
@@ -132,7 +133,7 @@ function ScheduleUploadList() {
             : new Array(baseEntries.length).fill(0),
       };
 
-      const res = await fetch(`${API_BASE}/schedules/generate`, {
+      const res = await apiClient(`${API_BASE}/schedules/generate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -160,7 +161,7 @@ function ScheduleUploadList() {
     }
     setLoadingUpload(true);
     try {
-      const res = await fetch(`${API_BASE}/schedules/upload`, {
+      const res = await apiClient(`${API_BASE}/schedules/upload`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ generated_filename: generatedFilename }),
@@ -211,7 +212,7 @@ function ScheduleUploadList() {
     let cancelled = false;
     const tick = async () => {
       try {
-        const res = await fetch(`${API_BASE}/runs/${runId}`);
+        const res = await apiClient(`${API_BASE}/runs/${runId}`);
         if (res.status === 404) {
           if (!cancelled) {
             localStorage.removeItem("lastRunId");

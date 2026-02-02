@@ -19,9 +19,9 @@ function PayloadRow({ item, value, onHexChange, onStateLabelChange, isHex }) {
 
   const stateOptions = statesInfo
     ? statesInfo.options.map((opt) => ({
-        value: opt.label,
-        label: opt.label,
-      }))
+      value: opt.label,
+      label: opt.label,
+    }))
     : [];
 
   const selectedStateOption =

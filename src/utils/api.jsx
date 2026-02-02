@@ -9,8 +9,17 @@ import {
   SCOPE,
   AUTH_API_BASE,
   LEAFSPACE_PASSAGE_ENDPOINT,
+  BASE,
 } from "../constants/contants";
-import { httpPost } from "./utils";
+
+export async function httpPost(path, payload) {
+  const res = await apiClient(`${BASE}${path}`, {
+    method: "POST",
+    body: payload === undefined ? undefined : JSON.stringify(payload),
+  });
+  if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+  return res.text();
+}
 
 export const registerUser = async (userData) => {
   try {
@@ -54,15 +63,74 @@ export const loginUser = async (credentials) => {
   }
 };
 
+export const refreshAccessToken = async () => {
+  const refreshToken = localStorage.getItem('refresh-token');
+  if (!refreshToken) throw new Error("No refresh token available");
+
+  try {
+    const res = await fetch(`${AUTH_API_BASE}/auth/refresh`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ refresh_token: refreshToken }),
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      localStorage.setItem('access-token', data.access_token);
+      localStorage.setItem('refresh-token', data.refresh_token);
+      return data.access_token;
+    } else {
+      throw new Error("Failed to refresh token");
+    }
+  } catch (error) {
+    console.error("Token refresh error:", error);
+    logoutUser();
+    throw error;
+  }
+};
+
+export const apiClient = async (url, options = {}) => {
+  let accessToken = localStorage.getItem('access-token');
+
+  const defaultHeaders = {
+    "Content-Type": "application/json",
+    ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+  };
+
+  const finalOptions = {
+    ...options,
+    headers: { ...defaultHeaders, ...options.headers },
+  };
+
+  let res = await fetch(url, finalOptions);
+
+  if (res.status === 401) {
+    // Attempt to refresh
+    try {
+      const newToken = await refreshAccessToken();
+      // Retry original request with new token
+      finalOptions.headers["Authorization"] = `Bearer ${newToken}`;
+      res = await fetch(url, finalOptions);
+    } catch (refreshError) {
+      // Refresh failed, user logged out by refreshAccessToken
+      // window.location.href = "/login";
+      return Promise.reject(refreshError);
+    }
+  }
+
+  return res;
+};
+
 export const logoutUser = () => {
-  localStorage.removeItem('token');
+  localStorage.removeItem('access-token');
+  localStorage.removeItem('refresh-token');
   localStorage.removeItem('user');
+  window.location.href = "/login";
 };
 
 export const getAllCommands = async () => {
   const res = await fetch(`${backend_api}/api`, {
-    method: method_types["POST"],
-    headers: headers,
+    method: "POST",
     body: JSON.stringify({
       jsonrpc: "2.0",
       method: method_name["GET_ALL_COMMANDS"],
@@ -78,8 +146,7 @@ export const getAllCommands = async () => {
 
 export const getTlmPacket = async ({ tlmName }) => {
   const res = await fetch(`${backend_api}/api`, {
-    method: method_types["POST"],
-    headers: headers,
+    method: "POST",
     body: JSON.stringify({
       jsonrpc: "2.0",
       method: method_name["SEND_COMMAND"],
@@ -96,8 +163,7 @@ export const getTlmPacket = async ({ tlmName }) => {
 export const sendEditedCommand = async (command) => {
   try {
     const res = await fetch(`${backend_api}/api`, {
-      method: method_types["POST"],
-      headers: headers,
+      method: "POST",
       body: JSON.stringify({
         jsonrpc: "2.0",
         method: method_name["COMMAND"],
@@ -108,12 +174,7 @@ export const sendEditedCommand = async (command) => {
         }
       })
     });
-    if (res.ok) {
-      const data = await res.json();
-      return data;
-    } else {
-      return await res.json();
-    }
+    return await res.json();
   } catch (error) {
     console.error("Error sending command:", error);
     return error;
@@ -123,12 +184,10 @@ export const sendEditedCommand = async (command) => {
 export const storeEditedCommand = async (editedCommands) => {
   try {
     const res = await fetch('http://100.71.21.42:8004/edit-commands/', {
-      method: method_types["POST"],
-      headers: headers,
+      method: "POST",
       body: JSON.stringify(editedCommands)
     });
-    const data = await res.json();
-    return data;
+    return await res.json();
   } catch (error) {
     console.error("Error storing edited command:", error);
     return error;
@@ -138,11 +197,9 @@ export const storeEditedCommand = async (editedCommands) => {
 export const getStoredEditedCommands = async () => {
   try {
     const res = await fetch('http://100.71.21.42:8004/edit-commands/', {
-      method: method_types["GET"],
-      headers: headers,
+      method: "GET",
     });
-    const data = await res.json();
-    return data;
+    return await res.json();
   } catch (error) {
     console.error("Error fetching stored edited commands:", error);
     return error;
@@ -159,7 +216,6 @@ export const fetchBeacon = async () => {
   };
   const res = await fetch(OC3.ENDPOINT, {
     method: "POST",
-    headers: { "Content-Type": "application/json", Authorization: OC3.AUTH },
     body: JSON.stringify(body),
   });
   if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
@@ -262,9 +318,6 @@ export const bookPassages = async (payload) => {
   try {
     const response = await fetch('http://localhost:8024/passages/candidates/book?allow_overlap=false', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
       body: JSON.stringify(payload)
     });
 

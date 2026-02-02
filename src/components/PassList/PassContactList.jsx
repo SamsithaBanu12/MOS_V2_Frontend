@@ -23,7 +23,6 @@ const PassContactList = ({ passages }) => {
                     <tr>
                         <th>Satelite</th>
                         <th>GS Name</th>
-                        <th>Passage Id</th>
                         <th>Status</th>
                         <th>AOS</th>
                         <th>LOS</th>
@@ -41,7 +40,6 @@ const PassContactList = ({ passages }) => {
                             <tr key={i}>
                                 <td className="pl-mono">{r?.satelliteName || r?.satelliteID}</td>
                                 <td className="pl-mono">{r?.groundStationName || r?.groundStationID}</td>
-                                <td className="pl-mono">{r?.passageID}</td>
                                 <td className="pl-mono">{r?.passageStatus}</td>
                                 <td className="pl-mono">{r?.AOS}</td>
                                 <td className="pl-mono">{r?.LOS}</td>

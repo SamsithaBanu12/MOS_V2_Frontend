@@ -3,6 +3,8 @@ import { getHistoryMock } from "./FileUploadData.jsx";
 import "./FileUpload.space.css";
 import { MdOutlineFileUpload } from "react-icons/md";
 import { useSidebar } from "../../context/SidebarContext.jsx";
+import { API_BASE } from "../../constants/contants.jsx";
+import { apiClient } from "../../utils/api.jsx";
 
 export default function FileUploadGUI() {
   const [file, setFile] = useState(null);
@@ -120,7 +122,7 @@ export default function FileUploadGUI() {
     formData.append("ack", ack);
 
     try {
-      const uploadRes = await fetch("http://localhost:8080/upload-stream", {
+      const uploadRes = await apiClient(`${API_BASE}/fileupload/upload`, {
         method: "POST",
         body: formData,
       });

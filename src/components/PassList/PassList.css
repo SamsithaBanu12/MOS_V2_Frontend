@@ -555,7 +555,7 @@
     margin-bottom: 7px;
 }
 
-input[type="text"] {
+.pass-book-param-row-input {
     background-color: var(--highlight-bg);
     padding: 10px 10px;
     border: 1px solid var(--highlight-bg2);

@@ -1,9 +1,47 @@
 import axios from 'axios'
+import { refreshAccessToken } from '../api'
 
 export const API = axios.create({
-  baseURL: 'http://localhost:8002', // change if your backend runs elsewhere
+  baseURL: 'http://localhost:8001/api/bridge', // change if your backend runs elsewhere
   timeout: 10000,
 })
+
+// Request interceptor: add Bearer token to every request
+API.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('access-token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+// Response interceptor: handle 401 and refresh token
+API.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+
+    // If 401 and not already retried
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      try {
+        const newToken = await refreshAccessToken();
+        originalRequest.headers.Authorization = `Bearer ${newToken}`;
+        // Retry with new token
+        return API(originalRequest);
+      } catch (refreshError) {
+        // Refresh failed, let the app handle redirection if needed
+        return Promise.reject(refreshError);
+      }
+    }
+
+    return Promise.reject(error);
+  }
+);
 
 // ---------- Stations ----------
 export async function getStations() {

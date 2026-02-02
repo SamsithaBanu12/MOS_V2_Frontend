@@ -334,8 +334,18 @@ export const RoleTypes = [
   },
   {
     value: 3,
-    label: "OPERATOR",
-    status: 'operator'
+    label: "MISSION_OPERATOR",
+    status: 'mission_operator'
+  },
+  {
+    value: 4,
+    label: "USER",
+    status: "user",
+  },
+  {
+    value: 5,
+    label: "SYSTEM_ENGINEER",
+    status: "system_engineer"
   }
 ]
 

@@ -8,6 +8,8 @@ import Select from "react-select";
 import { emailRegex, nameRegex, passwordRegex } from "../../constants/contants";
 import { registerUser } from "../../utils/api";
 import toast from "react-hot-toast";
+import { AiOutlineEye } from "react-icons/ai";
+import { AiOutlineEyeInvisible } from "react-icons/ai";
 
 const Signup = () => {
     const navigate = useNavigate();
@@ -21,6 +23,7 @@ const Signup = () => {
         password: ''
     });
 
+    const [showPassword, setShowPassword] = useState(false);
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [role, setRole] = useState(RoleTypes[0]);
@@ -138,14 +141,19 @@ const Signup = () => {
                         </div>
                         <div className="signup-form-group">
                             <label htmlFor="password">Password</label>
-                            <input
-                                className={`signup-input ${errors.password ? 'invalid' : ''}`}
-                                type="password"
-                                name="password"
-                                value={formData.password}
-                                onChange={handleChange}
-                                placeholder="••••••••"
-                            />
+                            <div className="password-input-wrapper">
+                                <input
+                                    className={`signup-input ${errors.password ? 'invalid' : ''}`}
+                                    type={showPassword ? "text" : "password"}
+                                    name="password"
+                                    value={formData.password}
+                                    onChange={handleChange}
+                                    placeholder="Enter Password"
+                                />
+                                <div className="signup-icon" onClick={() => setShowPassword(!showPassword)}>
+                                    {showPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
+                                </div>
+                            </div>
                             {errors.password && <span className="error-message">{errors.password}</span>}
                         </div>
                         <div className="signup-form-group">
