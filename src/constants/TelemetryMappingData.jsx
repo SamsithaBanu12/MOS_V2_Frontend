@@ -2017,4 +2017,306 @@ export const telemetryStateMapping = [
             },
         ],
     },
+    {
+        command: "OBC_524_TC_SET_TEMP_SNS_CFG",
+        telemetry: "OBC_524_TM_SET_TEMP_SNS_CFG",
+        states: [
+            {
+                parameter: "EXECUTION_STATUS",
+                states: {
+                    0: "SUCCESS",
+                    1: "FAILED",
+                },
+            },
+        ],
+    },
+    {
+        command: "OBC_534_TC_SET_PWR_MON_CFG",
+        telemetry: "OBC_534_TM_SET_PWR_MON_CFG",
+        states: [
+            {
+                parameter: "EXECUTION_STATUS",
+                states: {
+                    0: "SUCCESS",
+                    1: "FAILED",
+                },
+            },
+        ],
+    },
+    {
+        command: "OBC_927_TC_GET_DATA_LOGGER_INFO",
+        telemetry: "OBC_927_TM_GET_DATA_LOGGER_INFO",
+        states: [
+            {
+                parameter: "EXECUTION_STATUS",
+                states: {
+                    0: "SINGLE_CHANNEL_SUCCESS",
+                    2: "ALL_CHANNELS_SUCCESS",
+                },
+            },
+        ],
+    },
+    {
+        command: "OBC_950_TC_GPS_GET_LOCATION_INFO",
+        telemetry: "OBC_950_TM_GPS_GET_LOCATION_INFO",
+        states: [
+            {
+                parameter: "GNSS_SOLUTION_STATUS",
+                states: {
+                    0: "SOLUTION_COMPUTED",
+                    1: "INSUFFICIENT_OBSERVATIONS",
+                    2: "NO_CONVERGENCE",
+                    3: "SINGULARITY",
+                    4: "COVARIANCE_EXCEEDED",
+                    5: "TEST_DISTANCE_EXCEEDED",
+                    6: "NOT_ENOUGH_OBSERVATIONS",
+                    7: "VELOCITY_HEIGHT_LIMIT_EXCEEDED",
+                    8: "RESIDUAL_VARIANCE_EXCEEDED",
+                    9: "RESIDUALS_TOO_LARGE",
+                    13: "LARGE_RESIDUALS_CORRUPTED",
+                    18: "SOLUTION_PENDING",
+                    19: "INVALID_FIX",
+                    20: "UNAUTHORIZED_USE",
+                },
+            },
+            {
+                parameter: "GNSS_POSITION_TYPE",
+                states: {
+                    0: "NO_SOLUTION",
+                    1: "POSITION_FIXED",
+                    2: "HEIGHT_FIXED",
+                    8: "VELOCITY_DOPPLER_ONLY",
+                    16: "SINGLE_POINT_POSITION",
+                    17: "PSR_DIFFERENTIAL",
+                    18: "WAAS",
+                    19: "KALMAN_PROPAGATED",
+                    20: "OMNISTAR_VBS",
+                    32: "FLOAT_RTK_L1",
+                    33: "FLOAT_RTK_IONO_FREE",
+                    34: "FLOAT_RTK_NARROW",
+                    48: "INTEGER_RTK_L1",
+                    49: "INTEGER_RTK_WIDE",
+                    50: "INTEGER_RTK_NARROW",
+                    51: "RTK_INS",
+                    64: "INS_ONLY",
+                    65: "INS_PSR",
+                    66: "INS_PSR_DIFF",
+                    67: "INS_RTK_FLOAT",
+                    68: "INS_RTK_FIXED",
+                    69: "OMNISTAR_HP",
+                    70: "OMNISTAR_XP",
+                    71: "CANADIAN_DGPS",
+                    72: "INS_OMNISTAR",
+                    73: "INS_OMNISTAR_HP",
+                    74: "INS_OMNISTAR_XP",
+                    75: "PPP_CONVERGING",
+                    76: "PPP_CONVERGED",
+                    77: "INS_PPP_CONVERGING",
+                    78: "INS_PPP_CONVERGED",
+                },
+            },
+            {
+                parameter: "DATUM_ID",
+                states: {
+                    61: "WGS84",
+                    63: "USER_DEFINED",
+                },
+            },
+        ],
+    },
+    {
+        command: "OBC_953_TC_GPS_GET_VELOCITY",
+        telemetry: "OBC_953_TM_GPS_GET_VELOCITY",
+        states: [
+            {
+                parameter: "GNSS_SOLUTION_STATUS",
+                states: {
+                    0: "SOLUTION_COMPUTED",
+                    1: "INSUFFICIENT_OBSERVATIONS",
+                    2: "NO_CONVERGENCE",
+                    3: "SINGULARITY",
+                    4: "COVARIANCE_EXCEEDED",
+                    5: "TEST_DISTANCE_EXCEEDED",
+                    6: "NOT_ENOUGH_OBSERVATIONS",
+                    7: "VELOCITY_HEIGHT_LIMIT_EXCEEDED",
+                    8: "RESIDUAL_VARIANCE_EXCEEDED",
+                    9: "RESIDUALS_TOO_LARGE",
+                    13: "LARGE_RESIDUALS_CORRUPTED",
+                    18: "SOLUTION_PENDING",
+                    19: "INVALID_FIX",
+                    20: "UNAUTHORIZED_USE",
+                },
+            },
+            {
+                parameter: "GNSS_VELOCITY_TYPE",
+                states: {
+                    0: "NO_SOLUTION",
+                    8: "VELOCITY_DOPPLER_ONLY",
+                    16: "SINGLE_POINT_POSITION",
+                    17: "PSR_DIFFERENTIAL",
+                    18: "WAAS",
+                    19: "KALMAN_PROPAGATED",
+                    20: "OMNISTAR_VBS",
+                    32: "FLOAT_RTK_L1",
+                    33: "FLOAT_RTK_IONO_FREE",
+                    34: "FLOAT_RTK_NARROW",
+                    48: "INTEGER_RTK_L1",
+                    49: "INTEGER_RTK_WIDE",
+                    50: "INTEGER_RTK_NARROW",
+                    51: "RTK_INS",
+                    64: "INS_ONLY",
+                    65: "INS_PSR",
+                    66: "INS_PSR_DIFF",
+                    67: "INS_RTK_FLOAT",
+                    68: "INS_RTK_FIXED",
+                    69: "OMNISTAR_HP",
+                    70: "OMNISTAR_XP",
+                    71: "CANADIAN_DGPS",
+                    72: "INS_OMNISTAR",
+                    73: "INS_OMNISTAR_HP",
+                    74: "INS_OMNISTAR_XP",
+                    75: "PPP_CONVERGING",
+                    76: "PPP_CONVERGED",
+                    77: "INS_PPP_CONVERGING",
+                    78: "INS_PPP_CONVERGED",
+                },
+            },
+        ],
+    },
+    {
+        command: "OBC_952_TC_GPS_GET_GPS_TIME_INFO",
+        telemetry: "OBC_952_TM_GPS_GET_GPS_TIME_INFO",
+        states: [
+            {
+                parameter: "CLOCK_STATUS",
+                states: {
+                    0: "VALID",
+                    1: "NEAR_VALID",
+                    2: "ITERATING",
+                    3: "NOT_VALID",
+                },
+            },
+            {
+                parameter: "UTC_STATUS",
+                states: {
+                    0: "INVALID",
+                    1: "VALID",
+                    2: "WARNING1",
+                },
+            },
+        ],
+    },
+    {
+        command: "OBC_552_TC_OTSU_GET_VERSION",
+        telemetry: "OBC_552_TM_OTSU_GET_VERSION",
+        states: [
+            {
+                parameter: "FW_INTEGRITY_STATUS",
+                states: {
+                    0: "FAIL",
+                    1: "PASS",
+                },
+            },
+            {
+                parameter: "FW_STORAGE_LOCATION",
+                states: {
+                    1: "CURRENT_FW",
+                    2: "BACKUP_FW",
+                    3: "DOWNLOADED_FW",
+                    4: "FACTORY_DEFAULT_FW",
+                },
+            }
+        ],
+    },
+    {
+        command: "OBC_626_TC_OTSU_CURRENT_STATUS",
+        telemetry: "OBC_626_TM_OTSU_CURRENT_STATUS",
+        states: [
+            {
+                parameter: "OTSU_STATUS",
+                states: {
+                    0: "IDLE",
+                    4: "GS_CONTACT_ESTABLISHED",
+                    7: "FW_DOWNLOADED",
+                    17: "FW_TRIGGER_ACCEPTED",
+                    28: "WAITING_GS_CONTACT",
+                    31: "WAITING_EPS_ACK",
+                    37: "FIRST_BOOT_COMPLETED",
+                    40: "UPDATE_CANCEL_VERSION_MISMATCH",
+                    41: "UPDATE_CANCEL_FW_INTEGRITY_FAIL",
+                    42: "UPDATE_CANCEL_NVM_INTEGRITY_FAIL",
+                },
+            },
+            {
+                parameter: "BOOTLOADER_LAST_OP_STATUS",
+                states: {
+                    0: "NEW_FW_BOOT_SUCCESS",
+                    1: "NORMAL_RESET_BOOT_SUCCESS",
+                    2: "FALLBACK_PREVIOUS_FW",
+                    3: "FALLBACK_FACTORY_FW",
+                },
+            }
+        ],
+    },
+    {
+        command: "OBC_627_TC_OTSU_SEND_FW_UPDATE_BOOT_CFG",
+        telemetry: "OBC_627_TM_OTSU_SEND_FW_UPDATE_BOOT_CFG",
+        states: [
+            {
+                parameter: "FW_UPDATE_STATUS",
+                states: {
+                    0: "ACK_SUCCESS",
+                    1: "FW_INTEGRITY_FAIL",
+                    2: "FW_VERSION_MISMATCH",
+                    3: "NVM_INTEGRITY_FAIL",
+                    4: "FW_ALREADY_UP_TO_DATE",
+                },
+            },
+        ],
+    },
+    {
+        command: "OBC_630_TC_OTSU_GET_BOOT_CFG_INFO",
+        telemetry: "OBC_630_TM_OTSU_GET_BOOT_CFG_INFO",
+        states: [
+            {
+                parameter: "BOOT_ACTIVATION_STATUS",
+                states: {
+                    1: "FW_ACTIVATION_ACCEPTED",
+                    4: "FW_VERSION_MISMATCH",
+                    5: "FW_INTEGRITY_FAILED",
+                    7: "WAITING_FOR_GS_CONTACT",
+                    8: "GS_CONTACT_ESTABLISHED",
+                    9: "FALLBACK_TO_PREVIOUS_FW",
+                    10: "FW_DOWNLOADED",
+                    11: "NVM_INTEGRITY_FAILED",
+                },
+            },
+        ],
+    },
+    {
+        command: "OBC_635_TC_OTSU_GET_NVM_FW_VERSION",
+        telemetry: "OBC_635_TM_OTSU_GET_NVM_FW_VERSION",
+        states: [
+            {
+                parameter: "NVM_INTEGRITY_STATUS",
+                states: {
+                    0: "INTEGRITY_PASS",
+                    1: "INTEGRITY_FAIL",
+                },
+            },
+        ],
+    },
+    {
+        command: "OBC_906_TC_GET_FDIR_EEPROM_INFO",
+        telemetry: "OBC_906_TM_GET_FDIR_EEPROM_INFO",
+        states: [
+            {
+                parameter: "EEPROM_ACTIVE_ID",
+                states: {
+                    1: "EEPROM1",
+                    2: "EEPROM2",
+                },
+            },
+        ],
+    },
 ];

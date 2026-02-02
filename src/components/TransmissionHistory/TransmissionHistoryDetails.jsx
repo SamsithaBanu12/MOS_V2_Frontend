@@ -10,6 +10,42 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import { commandTelemetryEmulator } from "../../constants/commandsData";
 import { useSidebar } from "../../context/SidebarContext";
+import { telemetryStateMapping } from "../../constants/TelemetryMappingData";
+
+const transformTelemetryMapping = (filteredTelemetry, packetName) => {
+  if (!filteredTelemetry) return {};
+  const packetNameUpdated = getCommandName(packetName);
+  const mapping = telemetryStateMapping.find(
+    (m) => m.telemetry === packetNameUpdated
+  );
+  if (!mapping) return filteredTelemetry;
+
+  const transformed = { ...filteredTelemetry };
+
+  mapping.states.forEach(({ parameter, states }) => {
+    // Find matching key in filteredTelemetry (case-insensitive)
+    const telemetryKey = Object.keys(transformed).find(
+      (key) => key.toLowerCase() === parameter.toLowerCase()
+    );
+
+    if (telemetryKey) {
+      let rawValue = transformed[telemetryKey];
+
+      // Handle potential object wrappers (like { raw: ... })
+      if (typeof rawValue === "object" && rawValue !== null) {
+        rawValue = rawValue.raw ?? rawValue;
+      }
+
+      // Look up state name
+      const stateName = states[rawValue] ?? states[String(rawValue)];
+      if (stateName !== undefined) {
+        transformed[telemetryKey] = stateName;
+      }
+    }
+  });
+
+  return transformed;
+};
 
 const TransmissionHistoryDetails = ({
   isRowSelected,
@@ -114,6 +150,13 @@ const TransmissionHistoryDetails = ({
     [filteredCommands, commandTelemetryMap]
   );
 
+  const processedTelemetry = useMemo(
+    () => transformTelemetryMapping(filteredTelemetry, commandData?.__packet),
+    [filteredTelemetry, commandData]
+  );
+
+  console.log('process', processedCommands)
+
   return (
     <div>
       {activeTab === "CMD" ? (
@@ -178,7 +221,7 @@ const TransmissionHistoryDetails = ({
               )}
               <div className="scrollable2">
                 {findHealthCommand(commandData?.__packet) !== "Health" &&
-                  Object.entries(filteredTelemetry || {}).map(
+                  Object.entries(processedTelemetry || {}).map(
                     ([key, value]) => (
                       <div className="th-item-row" key={key}>
                         <div className="th-item-name2">

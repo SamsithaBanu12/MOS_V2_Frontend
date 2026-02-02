@@ -943,7 +943,7 @@ export const getStateParameterValue = (commandTelemetryMap, key, value) => {
   );
   if (filterStateParameter) {
     return (
-      filterStateParameter?.states?.find((item) => item?.parameter === key)
+      filterStateParameter?.states?.find((item) => item?.parameter?.toLowerCase() === key?.toLowerCase())
         ?.states?.[value] ?? value
     );
   }
