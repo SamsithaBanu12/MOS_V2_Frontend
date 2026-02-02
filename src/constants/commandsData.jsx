@@ -940,9 +940,9 @@ export const commandTelemetryEmulator = [
   {
     id: 54,
     command: "OBC_505_TC_GET_AUTO_LEOPS_STATE",
-    telemetry: "OBC_505_TC_GET_AUTO_LEOPS_STATE",
+    telemetry: "OBC_505_TM_GET_AUTO_LEOPS_STATE",
     target: "EMULATOR",
-    parameters: ["Satellite_Body_Axis_1"],
+    parameters: ["SATELLITE_BODY_AXIS", "LEOP_STATUS"],
     commandParams: [],
   },
   {
