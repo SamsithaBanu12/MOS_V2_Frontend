@@ -904,7 +904,7 @@ export const commandTelemetryEmulator = [
     command: "OBC_545_TC_PLD_VM_PWR_ON",
     telemetry: "OBC_545_TM_PLD_VM_PWR_ON",
     target: "EMULATOR",
-    parameters: ["STATUS"],
+    parameters: ["APP_ID"],
     commandParams: ["VIRTUAL_MACHINE_ID"],
   },
   {
@@ -912,7 +912,7 @@ export const commandTelemetryEmulator = [
     command: "OBC_546_TC_PLD_VM_PWR_OFF",
     telemetry: "OBC_546_TM_PLD_VM_PWR_OFF",
     target: "EMULATOR",
-    parameters: ["STATUS"],
+    parameters: ["APP_ID"],
     commandParams: [
       "VIRTUAL_MACHINE_ID",
       "SHUTDOWN_TIME_MIN",
