@@ -9,6 +9,14 @@ import antennaIcon from "../../assets/satellite-dish.png";
 const MIN_ELEVATION = 5; // degrees
 const MAX_ELEVATION = 45; // degrees for "optimal" contact
 
+// Initialize Cesium Token globally
+const CESIUM_TOKEN = import.meta.env.VITE_CESIUM_TOKEN;
+if (CESIUM_TOKEN) {
+    Cesium.Ion.defaultAccessToken = CESIUM_TOKEN;
+} else {
+    console.warn("VITE_CESIUM_TOKEN is not defined in environment variables. Cesium imagery may fail to load.");
+}
+
 const CesiumMap = forwardRef(({ data, isFollowing = false, visibleOrbits, simulatedTime, onContactUpdate }, ref) => {
     const containerRef = useRef(null);
     const viewerRef = useRef(null);
@@ -60,6 +68,8 @@ const CesiumMap = forwardRef(({ data, isFollowing = false, visibleOrbits, simula
             fullscreenButton: false,
             infoBox: false,
             selectionIndicator: false,
+            // Disable default imagery to avoid unauthorized calls before we set our custom ones
+            imageryProvider: false,
             contextOptions: {
                 webgl: {
                     failIfMajorPerformanceCaveat: false,
@@ -72,12 +82,14 @@ const CesiumMap = forwardRef(({ data, isFollowing = false, visibleOrbits, simula
         });
 
         // --- MISSION-CRITICAL IMAGERY INITIALIZATION (ORDERED) ---
-        Cesium.Ion.defaultAccessToken = import.meta.env.VITE_CESIUM_TOKEN || "";
-
         viewer.imageryLayers.removeAll();
 
         const initImagery = async () => {
             try {
+                if (!CESIUM_TOKEN) {
+                    throw new Error("No Cesium access token found. Please check your .env file.");
+                }
+
                 // 1. Base Satellite Imagery (Bottom Layer - Index 0)
                 const baseProvider = await Cesium.IonImageryProvider.fromAssetId(2);
                 if (viewer.isDestroyed()) return;
