@@ -6,6 +6,7 @@ import {
   useCallback,
 } from "react";
 import { getStatus } from "../utils/api/api";
+import { useLocation } from "react-router-dom";
 
 const StationContext = createContext(null);
 
@@ -37,8 +38,13 @@ export function StationProvider({ children }) {
     }
   }, [stationId, stationMeta]);
 
+  const location = useLocation();
+  const isAuthPage = location.pathname === "/login" || location.pathname === "/signup";
+
   useEffect(() => {
-    if (!stationId) {
+    const token = localStorage.getItem("access-token");
+
+    if (!stationId || isAuthPage || !token) {
       setConnected(false);
       setStatus({ a_connected: false, b_connected: false, counters: {} });
       return;
@@ -62,10 +68,11 @@ export function StationProvider({ children }) {
     return () => {
       if (intervalId) clearInterval(intervalId);
     };
-  }, [stationId]);
+  }, [stationId, isAuthPage]);
 
   const refreshStatus = useCallback(async () => {
-    if (!stationId) return;
+    const token = localStorage.getItem("access-token");
+    if (!stationId || isAuthPage || !token) return;
     try {
       const s = await getStatus(stationId);
       setStatus(s);
@@ -73,7 +80,7 @@ export function StationProvider({ children }) {
     } catch {
       setConnected(false);
     }
-  }, [stationId]);
+  }, [stationId, isAuthPage]);
 
   return (
     <StationContext.Provider

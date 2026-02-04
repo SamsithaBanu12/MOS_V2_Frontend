@@ -93,12 +93,15 @@
     font-size: 14px;
     transition: all 0.2s ease;
     width: 100%;
+    box-sizing: border-box;
 }
 
 .password-input-wrapper {
     position: relative;
     display: flex;
     align-items: center;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .signup-icon {
@@ -154,6 +157,8 @@
     cursor: pointer;
     margin-top: 10px;
     transition: transform 0.1s active;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .signup-button:hover {

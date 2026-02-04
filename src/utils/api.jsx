@@ -63,6 +63,36 @@ export const loginUser = async (credentials) => {
   }
 };
 
+export const updateUserRole = async (credentials) => {
+  try {
+    const res = await apiClient(`${AUTH_API_BASE}/auth/update-role`, {
+      method: "POST",
+      body: JSON.stringify(credentials),
+    });
+    if (res.ok) {
+      return await res.json();
+    } else {
+      const errorData = await res.json();
+      throw new Error(errorData.message || "Updating role failed!");
+    }
+  } catch (error) {
+    console.error("Error updating role:", error);
+    throw error;
+  }
+};
+
+export const getAllUsers = async () => {
+  try {
+    const response = await apiClient(`${AUTH_API_BASE}/auth/users`, {
+      method: "GET",
+    });
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    throw error;
+  }
+};
+
 export const refreshAccessToken = async () => {
   const refreshToken = localStorage.getItem('refresh-token');
   if (!refreshToken) throw new Error("No refresh token available");
@@ -125,7 +155,7 @@ export const logoutUser = () => {
   localStorage.removeItem('access-token');
   localStorage.removeItem('refresh-token');
   localStorage.removeItem('user');
-  window.location.href = "/login";
+  // window.location.href = "/login";
 };
 
 export const getAllCommands = async () => {
@@ -276,7 +306,6 @@ export const getAllPassages = async () => {
     }
 
     const data = await response.json();
-    console.log("Passages from DB:", data);
     return data;
   } catch (error) {
     console.error("Could not fetch passages:", error);
@@ -322,7 +351,6 @@ export const bookPassages = async (payload) => {
     });
 
     const data = await response.json();
-    console.log("Booking Response:", data);
     return data;
   }
   catch (error) {

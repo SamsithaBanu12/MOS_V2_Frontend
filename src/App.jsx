@@ -30,78 +30,84 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import PassListingPage from "./pages/PassListingPage";
 import ConnectionSetup from "./pages/ConnectionSetup";
-// import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+import { StationProvider } from "./context/StationContext";
+import { SidebarProvider } from "./context/SidebarContext";
+import AdminPage from "./pages/AdminPage";
 
 export default function App() {
   return (
-    <>
-      <Routes>
-        {/* <Route element={<ProtectedRoute />}> */}
-        <Route element={<DashboardLayout />}>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/c2" element={<CommandControlPage />} />
-          <Route path="/c2/command-sender" element={<CommandSenderPage />} />
-          <Route path="/c2/connection" element={<ConnectionPage />} />
-          <Route path="/c2/upload" element={<UploadPage />}>
-            <Route index element={<Navigate to="schedule-upload" replace />} />
-            <Route path="schedule-upload" element={<ScheduleUploadPage />} />
-            <Route path="file-upload" element={<FileUploadPage />} />
+    <SidebarProvider>
+      <StationProvider>
+        <Routes>
+          <Route element={<ProtectedRoute />}>
+            <Route element={<DashboardLayout />}>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/admin" element={<AdminPage />} />
+              <Route path="/c2" element={<CommandControlPage />} />
+              <Route path="/c2/command-sender" element={<CommandSenderPage />} />
+              <Route path="/c2/connection" element={<ConnectionPage />} />
+              <Route path="/c2/upload" element={<UploadPage />}>
+                <Route index element={<Navigate to="schedule-upload" replace />} />
+                <Route path="schedule-upload" element={<ScheduleUploadPage />} />
+                <Route path="file-upload" element={<FileUploadPage />} />
+              </Route>
+              <Route path="/c2/connection-setup" element={<ConnectionSetup />}>
+                <Route index element={<Navigate to="connection" replace />} />
+                <Route path="pass-listing" element={<PassListingPage />} />
+                <Route path="connection" element={<ConnectionPage />} />
+              </Route>
+              <Route path="/c2/connection-setup" element={<Navigate to="/c2/connection-setup" replace />} />
+              <Route path="/c2/pass-listing" element={<Navigate to="/c2/pass-listing" replace />} />
+              <Route
+                path="/c2/schedule-upload"
+                element={<Navigate to="/c2/upload/schedule-upload" replace />}
+              />
+              <Route
+                path="/c2/file-upload"
+                element={<Navigate to="/c2/upload/file-upload" replace />}
+              />
+              <Route path="/c2/procedures" element={<ProceduresPage />} />
+              <Route
+                path="/c2/transmission-history"
+                element={<TranmissionHistoryPage />}
+              />
+              <Route path="/kalpass" element={<KalpassPage />} />
+              <Route path="/kalpass/order" element={<OrderPage />} />
+              <Route path="/kalpass/staging" element={<StagingArea />} />
+              <Route path="/kalpass/board" element={<OnboardPage />} />
+              <Route path="/kalpass/master-timeline" element={<MasterTimeline />} />
+              <Route path="/netra" element={<NetraPage />} />
+              <Route path="/netra/telemetry-screen" element={<TelemetryScreen />}>
+                <Route index element={<Navigate to="eps" replace />} />
+                <Route path="eps" element={<EpsMapPage />} />
+                <Route path="obc" element={<ObcMapPage />} />
+                <Route path="thruster" element={<ThrusterPage />} />
+              </Route>
+              <Route
+                path="/netra/eps"
+                element={<Navigate to="/netra/eps" replace />}
+              />
+              <Route
+                path="/netra/obc"
+                element={<Navigate to="/netra/obc" replace />}
+              />
+              <Route
+                path="/netra/thruster"
+                element={<Navigate to="/netra/thruster" replace />}
+              />
+              <Route path="/netra/eps" element={<EpsMapPage />} />
+              <Route path="/netra/obc" element={<ObcMapPage />} />
+              <Route path="/netra/thruster" element={<ThrusterPage />} />
+              <Route path="/netra/ground-track" element={<GroundTrackPage />} />
+              <Route path="/netra/alerts" element={<AlertsPage />} />
+            </Route>
           </Route>
-          <Route path="/c2/connection-setup" element={<ConnectionSetup />}>
-            <Route index element={<Navigate to="connection" replace />} />
-            <Route path="pass-listing" element={<PassListingPage />} />
-            <Route path="connection" element={<ConnectionPage />} />
-          </Route>
-          <Route path="/c2/connection-setup" element={<Navigate to="/c2/connection-setup" replace />} />
-          <Route path="/c2/pass-listing" element={<Navigate to="/c2/pass-listing" replace />} />
-          <Route
-            path="/c2/schedule-upload"
-            element={<Navigate to="/c2/upload/schedule-upload" replace />}
-          />
-          <Route
-            path="/c2/file-upload"
-            element={<Navigate to="/c2/upload/file-upload" replace />}
-          />
-          <Route path="/c2/procedures" element={<ProceduresPage />} />
-          <Route
-            path="/c2/transmission-history"
-            element={<TranmissionHistoryPage />}
-          />
-          <Route path="/kalpass" element={<KalpassPage />} />
-          <Route path="/kalpass/order" element={<OrderPage />} />
-          <Route path="/kalpass/staging" element={<StagingArea />} />
-          <Route path="/kalpass/board" element={<OnboardPage />} />
-          <Route path="/kalpass/master-timeline" element={<MasterTimeline />} />
-          <Route path="/netra" element={<NetraPage />} />
-          <Route path="/netra/telemetry-screen" element={<TelemetryScreen />}>
-            <Route index element={<Navigate to="eps" replace />} />
-            <Route path="eps" element={<EpsMapPage />} />
-            <Route path="obc" element={<ObcMapPage />} />
-            <Route path="thruster" element={<ThrusterPage />} />
-          </Route>
-          <Route
-            path="/netra/eps"
-            element={<Navigate to="/netra/eps" replace />}
-          />
-          <Route
-            path="/netra/obc"
-            element={<Navigate to="/netra/obc" replace />}
-          />
-          <Route
-            path="/netra/thruster"
-            element={<Navigate to="/netra/thruster" replace />}
-          />
-          <Route path="/netra/eps" element={<EpsMapPage />} />
-          <Route path="/netra/obc" element={<ObcMapPage />} />
-          <Route path="/netra/thruster" element={<ThrusterPage />} />
-          <Route path="/netra/ground-track" element={<GroundTrackPage />} />
-          <Route path="/netra/alerts" element={<AlertsPage />} />
-          {/* </Route> */}
-        </Route>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignupPage />} />
-      </Routes>
-      <Toaster position="top-right" reverseOrder={false} />
-    </>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+        </Routes>
+        <Toaster position="top-right" reverseOrder={false} />
+      </StationProvider>
+    </SidebarProvider>
   );
 }

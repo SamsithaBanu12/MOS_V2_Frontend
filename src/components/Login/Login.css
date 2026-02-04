@@ -21,6 +21,18 @@
     font-family: 'Inter', sans-serif;
 }
 
+.lg-icon {
+    position: absolute;
+    right: 12px;
+    top: 42px;
+    cursor: pointer;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+}
+
 .lg-left-wrapper {
     display: flex;
     flex-direction: column;

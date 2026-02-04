@@ -374,7 +374,7 @@ export const allDTCFiles = [
 
 // command sender
 
-export const API_URL = "http://localhost:2900/openc3-api/api";
+export const API_URL = "http://localhost:8001/api/openc3-api/api";
 export const AUTH = "mos12345";
 
 export const DERIVED_HIDE = new Set([

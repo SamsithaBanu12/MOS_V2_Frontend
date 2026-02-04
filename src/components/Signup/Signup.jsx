@@ -28,7 +28,6 @@ const Signup = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [role, setRole] = useState(RoleTypes[0]);
 
-    console.log('role', role)
     const roleTypeOption = useMemo(() => {
         return RoleTypes.find((opt) => opt?.label === roleType) || null;
     }, [roleType]);
@@ -89,13 +88,10 @@ const Signup = () => {
                     password: formData.password,
                     role: role.label,
                 };
-                console.log('userdata', userData);
                 const response = await registerUser(userData);
-                console.log('Registration Successful', response);
                 toast.success("Successfully registered!");
                 navigate('/login');
             } catch (error) {
-                console.error('Registration Error', error);
                 toast.error(error.message || "Registration failed. Please try again.");
             } finally {
                 setIsSubmitting(false);
@@ -166,7 +162,36 @@ const Signup = () => {
                                     setRole(option);
                                 }}
                                 isSearchable
-                                styles={timelineSelectStyles}
+                                styles={{
+                                    ...timelineSelectStyles,
+                                    container: (base) => ({
+                                        ...base,
+                                        width: '100%',
+                                    }),
+                                    control: (base, state) => ({
+                                        ...timelineSelectStyles.control(base, state),
+                                        height: '48px',
+                                        borderRadius: '12px',
+                                        backgroundColor: 'var(--input-bg)',
+                                        border: '1px solid rgba(255, 255, 255, 0.08)',
+                                    }),
+                                    singleValue: (base) => ({
+                                        ...timelineSelectStyles.singleValue(base),
+                                        fontSize: '14px',
+                                        marginLeft: '8px',
+                                    }),
+                                    placeholder: (base) => ({
+                                        ...timelineSelectStyles.placeholder(base),
+                                        fontSize: '14px',
+                                        marginLeft: '8px',
+                                    }),
+                                    valueContainer: (base) => ({
+                                        ...base,
+                                        padding: '0 16px',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                    })
+                                }}
                             />
                         </div>
                         <div className="signup-form-group">

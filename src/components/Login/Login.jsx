@@ -4,11 +4,13 @@ import "./Login.css";
 import { useEffect, useState } from "react";
 import { loginUser } from "../../utils/api";
 import toast from "react-hot-toast";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const Login = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [activeDot, setActiveDot] = useState('login');
+    const [showPassword, setShowPassword] = useState(false);
 
     const [formData, setFormData] = useState({
         email: '',
@@ -55,7 +57,6 @@ const Login = () => {
             setIsSubmitting(true);
             try {
                 const response = await loginUser(formData);
-                console.log('Login Successful', response);
 
                 // Store token and user data
                 localStorage.setItem('access-token', response.access_token);
@@ -106,12 +107,15 @@ const Login = () => {
                             <label htmlFor="password">Password</label>
                             <input
                                 className={`lg-input ${errors.password ? 'invalid' : ''}`}
-                                type="password"
+                                type={showPassword ? "text" : "password"}
                                 name="password"
                                 value={formData.password}
                                 onChange={handleChange}
-                                placeholder="••••••••"
+                                placeholder="Enter Password"
                             />
+                            <div className="lg-icon" onClick={() => setShowPassword(!showPassword)}>
+                                {showPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
+                            </div>
                             {errors.password && <span className="error-message">{errors.password}</span>}
                         </div>
                         <div className="lg-form-group">

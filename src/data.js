@@ -324,29 +324,35 @@ export const FilterTypes = [
 export const RoleTypes = [
   {
     value: 1,
+    label: "ALL",
+    status: 'all',
+  },
+  {
+    value: 2,
     label: "ADMIN",
     status: 'admin',
   },
   {
-    value: 2,
+    value: 3,
     label: "SUPER_ADMIN",
     status: 'super_admin'
   },
   {
-    value: 3,
+    value: 4,
     label: "MISSION_OPERATOR",
     status: 'mission_operator'
   },
   {
-    value: 4,
+    value: 5,
     label: "USER",
     status: "user",
   },
   {
-    value: 5,
+    value: 6,
     label: "SYSTEM_ENGINEER",
     status: "system_engineer"
-  }
+  },
+
 ]
 
 export const policyTypes = [

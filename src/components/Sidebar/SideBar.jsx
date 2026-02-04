@@ -10,10 +10,13 @@ import { FaBars, FaEye, FaSatelliteDish } from "react-icons/fa6";
 import { TiHome } from "react-icons/ti";
 import NavSubItem from "./NavSubItem";
 import { useSidebar } from "../../context/SidebarContext";
+import { LuUserRound } from "react-icons/lu";
 
 export default function Sidebar() {
   const location = useLocation();
   const navigate = useNavigate();
+  const userDetails = localStorage.getItem('user');
+  const user = JSON.parse(userDetails);
 
   const commandOpenByRoute = useMemo(
     () => location.pathname.startsWith("/c2/"),
@@ -29,12 +32,18 @@ export default function Sidebar() {
     () => location.pathname.startsWith("/netra/"),
     [location.pathname]
   );
+
+  const adminOpenByRoute = useMemo(
+    () => location.pathname.startsWith("/admin"),
+    [location.pathname]
+  );
   const { collapsed, setCollapsed } = useSidebar();
   const [commandOpen, setCommandOpen] = useState(commandOpenByRoute);
   const [kalpassOpen, setKalpassOpen] = useState(kalpassOpenByRoute);
   const [netraOpen, setNetraOpen] = useState(netraOpenByRoute);
 
   const [isHomeActive, setIsHomeActive] = useState(true);
+  const [isAdminTabActive, setIsAdminTabActive] = useState(false);
 
   const closeAllMenus = () => {
     setCommandOpen(false);
@@ -46,15 +55,37 @@ export default function Sidebar() {
     const isC2 = commandOpenByRoute;
     const isKalpass = kalpassOpenByRoute;
     const isNetra = netraOpenByRoute;
+    const isAdmin = adminOpenByRoute;
 
-    setIsHomeActive(!(isC2 || isKalpass || isNetra));
+    setIsHomeActive(!(isC2 || isKalpass || isNetra || isAdmin));
+    setIsAdminTabActive(isAdmin);
 
     if (!collapsed) {
-      if (isC2) setCommandOpen(true);
-      if (isKalpass) setKalpassOpen(true);
-      if (isNetra) setNetraOpen(true);
+      if (isC2) {
+        setCommandOpen(true);
+        setKalpassOpen(false);
+        setNetraOpen(false);
+      } else if (isKalpass) {
+        setKalpassOpen(true);
+        setCommandOpen(false);
+        setNetraOpen(false);
+      } else if (isNetra) {
+        setNetraOpen(true);
+        setCommandOpen(false);
+        setKalpassOpen(false);
+      } else {
+        setCommandOpen(false);
+        setKalpassOpen(false);
+        setNetraOpen(false);
+      }
     }
-  }, [commandOpenByRoute, kalpassOpenByRoute, netraOpenByRoute, collapsed]);
+  }, [
+    commandOpenByRoute,
+    kalpassOpenByRoute,
+    netraOpenByRoute,
+    adminOpenByRoute,
+    collapsed,
+  ]);
 
   return (
     <>
@@ -101,6 +132,7 @@ export default function Sidebar() {
                   setKalpassOpen(false);
                   setNetraOpen(false);
                   setIsHomeActive(false);
+                  setIsAdminTabActive(false);
                 }}
                 aria-expanded={commandOpen}
                 type="button"
@@ -147,6 +179,7 @@ export default function Sidebar() {
                   setCommandOpen(false);
                   setKalpassOpen(false);
                   setIsHomeActive(false);
+                  setIsAdminTabActive(false);
                 }}
                 aria-expanded={netraOpen}
                 type="button"
@@ -183,6 +216,7 @@ export default function Sidebar() {
                   setCommandOpen(false);
                   setNetraOpen(false);
                   setIsHomeActive(false);
+                  setIsAdminTabActive(false);
                 }}
                 aria-expanded={kalpassOpen}
                 type="button"
@@ -219,6 +253,24 @@ export default function Sidebar() {
                 />
               </div>
             </div>
+            {user?.role === "ADMIN" && <div className={`group ${isAdminTabActive ? "open" : ""}`}>
+              <button
+                className="groupTrigger-small"
+                type="button"
+                onClick={() => {
+                  navigate("/admin");
+                  setIsAdminTabActive(true);
+                  setIsHomeActive(false);
+                  closeAllMenus();
+                }}
+              >
+                <div className="left-d-flex">
+                  <span className="navIcon">
+                    <LuUserRound size={29} />
+                  </span>
+                </div>
+              </button>
+            </div>}
           </nav>
         </aside>
       ) : (
@@ -271,7 +323,10 @@ export default function Sidebar() {
                 className="groupTrigger"
                 onClick={() => {
                   setCommandOpen((v) => !v);
+                  setKalpassOpen(false);
+                  setNetraOpen(false);
                   setIsHomeActive(false);
+                  setIsAdminTabActive(false);
                 }}
                 aria-expanded={commandOpen}
                 type="button"
@@ -310,7 +365,10 @@ export default function Sidebar() {
                 className="groupTrigger"
                 onClick={() => {
                   setNetraOpen((v) => !v);
+                  setCommandOpen(false);
+                  setKalpassOpen(false);
                   setIsHomeActive(false);
+                  setIsAdminTabActive(false);
                 }}
                 aria-expanded={netraOpen}
                 type="button"
@@ -341,7 +399,10 @@ export default function Sidebar() {
                 className="groupTrigger"
                 onClick={() => {
                   setKalpassOpen((v) => !v);
+                  setCommandOpen(false);
+                  setNetraOpen(false);
                   setIsHomeActive(false);
+                  setIsAdminTabActive(false);
                 }}
                 aria-expanded={kalpassOpen}
                 type="button"
@@ -373,6 +434,27 @@ export default function Sidebar() {
                 />
               </div>
             </div>
+            {user?.role === "ADMIN" && <div className={`group ${isAdminTabActive ? "open" : ""}`}>
+              <button
+                className="groupTrigger"
+                type="button"
+                onClick={() => {
+                  navigate("/admin");
+                  setIsAdminTabActive(true);
+                  setIsHomeActive(false);
+                  setCommandOpen(false);
+                  setKalpassOpen(false);
+                  setNetraOpen(false);
+                }}
+              >
+                <div className="left-d-flex">
+                  <span className="navIcon">
+                    <LuUserRound size={21} />
+                  </span>
+                  <span className="navLabel">Admin</span>
+                </div>
+              </button>
+            </div>}
           </nav>
         </aside>
       )}

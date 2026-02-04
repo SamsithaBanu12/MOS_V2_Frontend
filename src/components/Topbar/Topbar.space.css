@@ -1,36 +1,57 @@
-.topbar-wrapper{
+.topbar-wrapper {
     display: flex;
+    position: relative;
     flex-direction: row;
     align-items: center;
     justify-content: flex-end;
-    gap:10px;
+    gap: 10px;
 }
-.utc-time-wrapper{
+
+.utc-time-wrapper {
     display: flex;
     flex-direction: row;
-    gap:8px;
+    gap: 8px;
     align-items: center;
-    padding:10px 20px;
+    padding: 10px 20px;
     border-radius: 25px;
-    background-color:  var(--compo-bg);
+    background-color: var(--compo-bg);
 }
-.utc-time{
+
+.utc-time {
     font-size: 18px;
 }
-.ground-station-icon{
-    padding:12px 12px 7px;
+
+.ground-station-icon {
+    padding: 12px 12px 7px;
     border-radius: 25px;
-    background-color:  var(--compo-bg);
+    background-color: var(--compo-bg);
 }
-.sign-up img{
+
+.sign-up img {
     width: 55px;
     height: 55px;
     border-radius: 50%;
-    /* border:3px solid white; */
-    background-color:  var(--compo-bg);
-    object-fit:fill;
+    background-color: var(--compo-bg);
+    object-fit: fill;
 }
-.sign-up{
-    width:55px;
+
+.sign-up {
+    width: 55px;
     height: 55px;
+    cursor: pointer;
+}
+
+.user-menu {
+    position: absolute;
+    top: 60px;
+    right: 0px;
+    background-color: var(--highlight-bg);
+    border-radius: 10px;
+    padding: 7px 20px;
+    font-weight: 600;
+    box-shadow: 0 0px 10px rgba(255, 255, 255, 0.025);
+}
+
+.user-menu-item {
+    cursor: pointer;
 }
