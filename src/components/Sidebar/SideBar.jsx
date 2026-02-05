@@ -208,7 +208,7 @@ export default function Sidebar() {
             </div>
 
             {/* KALPASS */}
-            <div className={`group ${kalpassOpen ? "open" : ""}`}>
+            {/* <div className={`group ${kalpassOpen ? "open" : ""}`}>
               <button
                 className="groupTrigger-small"
                 onClick={() => {
@@ -252,7 +252,7 @@ export default function Sidebar() {
                   onClick={closeAllMenus}
                 />
               </div>
-            </div>
+            </div> */}
             {user?.role === "ADMIN" && <div className={`group ${isAdminTabActive ? "open" : ""}`}>
               <button
                 className="groupTrigger-small"
@@ -394,7 +394,7 @@ export default function Sidebar() {
             </div>
 
             {/* KALPASS */}
-            <div className={`group ${kalpassOpen ? "open" : ""}`}>
+            {/* <div className={`group ${kalpassOpen ? "open" : ""}`}>
               <button
                 className="groupTrigger"
                 onClick={() => {
@@ -433,7 +433,7 @@ export default function Sidebar() {
                   label="Master Timeline"
                 />
               </div>
-            </div>
+            </div> */}
             {user?.role === "ADMIN" && <div className={`group ${isAdminTabActive ? "open" : ""}`}>
               <button
                 className="groupTrigger"

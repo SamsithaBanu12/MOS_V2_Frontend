@@ -1,7 +1,7 @@
 // Network send + the single universal template live here.
 
 const API_URL = import.meta.env.VITE_OPENC3_API_URL;
-const AUTH = "mos12345";
+const AUTH = `Bearer ${localStorage.getItem("access-token")}`;
 
 /**
  * Build the param string using the universal template:
@@ -34,12 +34,13 @@ export async function sendCommand(paramString) {
       id: 9,
       keyword_params: { scope: "DEFAULT" },
     };
+    const accessToken = localStorage.getItem("access-token");
 
     const res = await fetch(API_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: AUTH,
+        Authorization: `Bearer ${accessToken}`
       },
       body: JSON.stringify(body),
     });

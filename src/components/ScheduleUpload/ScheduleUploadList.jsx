@@ -1,7 +1,7 @@
 // src/App.jsx
 import React, { useEffect, useState } from "react";
 import { API_BASE } from "../../constants/contants";
-import { isoFromLocalDatetime } from "../../utils/utils";
+import { isoFromLocalDatetime, isUserAccessible } from "../../utils/utils";
 import scheduleToast from "./ScheduleToast";
 import ScheduleBuilder from "./ScheduleBuilder";
 import ScheduleRunSheet from "./ScheduleRunSheet";
@@ -307,9 +307,10 @@ function ScheduleUploadList() {
           <div className="su-header">Execution status</div>
           {executionBanner === "COMPLETED" && rightTableRows.length > 0 && (
             <button
-              className="su-btn su-btn-ghost su-btn-small"
+              className={`su-btn ${!isUserAccessible() ? "su-btn-small-disabled" : "su-btn-small"}`}
               type="button"
               onClick={handleClearExecution}
+              disabled={!isUserAccessible()}
             >
               Clear session
             </button>

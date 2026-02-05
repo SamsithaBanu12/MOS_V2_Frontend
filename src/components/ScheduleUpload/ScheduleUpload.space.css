@@ -216,6 +216,26 @@ input[type="number"] {
   cursor: pointer;
 }
 
+.su-btn-primary-disabled {
+  border-radius: 8px;
+  border: 1px solid #10344eff;
+  padding: 7px 8px;
+  background: #fff;
+  color: var(--title-color);
+  cursor: pointer;
+  transition: 0.2s all;
+  font-size: 14px;
+  width: 200px;
+  background: rgba(50, 90, 96, 0.35);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 13px;
+  font-weight: 500;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.30), 0 1px 0 rgba(255, 255, 255, 0.08) inset;
+  cursor: pointer;
+}
+
 .su-btn-primary:active {
   transform: scale(0.97);
   background: #234150;
@@ -283,7 +303,18 @@ input[type="number"] {
   border: 1px solid #30586b;
   background-color: transparent;
   border-radius: 8px;
-  color: var(--title-color)
+  color: var(--title-color);
+  cursor: pointer;
+}
+
+.su-btn-small-disabled {
+  padding: 4px 10px;
+  font-size: 13px;
+  border: 1px solid #30586b;
+  background-color: transparent;
+  border-radius: 8px;
+  color: var(--title-color);
+  cursor: not-allowed;
 }
 
 .su-btn:disabled {
@@ -583,13 +614,15 @@ input[type="number"] {
   border-radius: 8px;
   transition: background 0.2s ease, transform 0.1s ease;
 }
+
 .su-table tbody tr td {
- min-width: 18vw;
- max-width:18vw;
- overflow-x: scroll;
- border-bottom: 1px solid var(--highlight-bg);
+  min-width: 18vw;
+  max-width: 18vw;
+  overflow-x: scroll;
+  border-bottom: 1px solid var(--highlight-bg);
 }
-.su-table tbody tr td::-webkit-scrollbar{
+
+.su-table tbody tr td::-webkit-scrollbar {
   display: none;
 }
 
@@ -598,7 +631,7 @@ input[type="number"] {
   vertical-align: middle;
 }
 
-.su-table  thead th:first-child {
+.su-table thead th:first-child {
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
 }

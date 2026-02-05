@@ -131,6 +131,13 @@ select:focus {
   cursor: pointer;
 }
 
+.fu-upload-btn:disabled,
+.fu-upload-icon-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(1);
+}
+
 .fu-upload-btnn {
   display: flex;
   flex-direction: row;

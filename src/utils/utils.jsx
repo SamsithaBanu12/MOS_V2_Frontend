@@ -1028,3 +1028,13 @@ export function filterCommand(packet, commandDefinitions, comm) {
     ...filteredParams,
   };
 }
+
+export const isUserAccessible = () => {
+  try {
+    const user = localStorage.getItem("user");
+    const role = user ? JSON.parse(user)?.role : null;
+    return ["ADMIN", "SUPER_ADMIN", "MISSION_OPERATOR"].includes(role);
+  } catch {
+    return false;
+  }
+};

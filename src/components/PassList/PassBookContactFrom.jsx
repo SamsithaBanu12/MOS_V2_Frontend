@@ -44,7 +44,10 @@ const PassBookContactFrom = ({ setAddContactClicked }) => {
             setAddContactClicked(false);
             setPayload({});
         } else {
-            toast.error('Passage Booking Failed')
+            toast.error('Passage Booking Failed');
+            setIsAddCTAClicked(false);
+            setAddContactClicked(false);
+            setPayload({});
         }
     }
     return (

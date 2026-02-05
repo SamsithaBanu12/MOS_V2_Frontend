@@ -1,14 +1,10 @@
-import toast from "react-hot-toast";
 import {
-  method_types,
   backend_api,
-  headers,
   method_name,
   target_name,
   OC3,
   SCOPE,
   AUTH_API_BASE,
-  LEAFSPACE_PASSAGE_ENDPOINT,
   BASE,
 } from "../constants/contants";
 
@@ -123,7 +119,7 @@ export const apiClient = async (url, options = {}) => {
   let accessToken = localStorage.getItem('access-token');
 
   const defaultHeaders = {
-    "Content-Type": "application/json",
+    ...(options.body instanceof FormData ? {} : { "Content-Type": "application/json" }),
     ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
   };
 
@@ -159,8 +155,13 @@ export const logoutUser = () => {
 };
 
 export const getAllCommands = async () => {
+  const accessToken = localStorage.getItem("access-token");
   const res = await fetch(`${backend_api}/api`, {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`
+    },
     body: JSON.stringify({
       jsonrpc: "2.0",
       method: method_name["GET_ALL_COMMANDS"],
@@ -175,8 +176,13 @@ export const getAllCommands = async () => {
 };
 
 export const getTlmPacket = async ({ tlmName }) => {
+  const accessToken = localStorage.getItem("access-token");
   const res = await fetch(`${backend_api}/api`, {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`
+    },
     body: JSON.stringify({
       jsonrpc: "2.0",
       method: method_name["SEND_COMMAND"],
@@ -189,52 +195,6 @@ export const getTlmPacket = async ({ tlmName }) => {
   const data = await res.json();
   return data;
 }
-
-export const sendEditedCommand = async (command) => {
-  try {
-    const res = await fetch(`${backend_api}/api`, {
-      method: "POST",
-      body: JSON.stringify({
-        jsonrpc: "2.0",
-        method: method_name["COMMAND"],
-        params: command,
-        id: 9,
-        keyword_params: {
-          scope: "DEFAULT"
-        }
-      })
-    });
-    return await res.json();
-  } catch (error) {
-    console.error("Error sending command:", error);
-    return error;
-  }
-};
-
-export const storeEditedCommand = async (editedCommands) => {
-  try {
-    const res = await fetch('http://100.71.21.42:8004/edit-commands/', {
-      method: "POST",
-      body: JSON.stringify(editedCommands)
-    });
-    return await res.json();
-  } catch (error) {
-    console.error("Error storing edited command:", error);
-    return error;
-  }
-}
-
-export const getStoredEditedCommands = async () => {
-  try {
-    const res = await fetch('http://100.71.21.42:8004/edit-commands/', {
-      method: "GET",
-    });
-    return await res.json();
-  } catch (error) {
-    console.error("Error fetching stored edited commands:", error);
-    return error;
-  }
-};
 
 export const fetchBeacon = async () => {
   const body = {
@@ -313,40 +273,13 @@ export const getAllPassages = async () => {
   }
 };
 
-export const getAllGroundstations = async () => {
-  try {
-    const response = await fetch('http://localhost:8024/groundstations');
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`)
-    }
-
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-export const getAllSatellites = async () => {
-  try {
-    const response = await fetch('http://localhost:8024/satellites');
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`)
-    }
-
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.log(error)
-  }
-}
-
 export const bookPassages = async (payload) => {
   try {
-    const response = await fetch('http://localhost:8024/passages/candidates/book?allow_overlap=false', {
+    const response = await apiClient('http://localhost:8024/passages/candidates/book?allow_overlap=false', {
       method: 'POST',
+      headers: {
+        'Accept': 'application/json'
+      },
       body: JSON.stringify(payload)
     });
 
@@ -354,6 +287,7 @@ export const bookPassages = async (payload) => {
     return data;
   }
   catch (error) {
-    console.log(error);
+    console.error("Booking Error:", error);
+    throw error;
   }
 };

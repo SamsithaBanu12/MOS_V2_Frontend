@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import './ConnectionPanel.css';
 import { GoDotFill } from "react-icons/go";
+import { isUserAccessible } from '../../utils/utils';
 
 export default function ConnectionPanel({ status, stationId, stationMeta, onConnect, onDisconnect }) {
   const [showDetails, setShowDetails] = useState(false)
@@ -57,8 +58,8 @@ export default function ConnectionPanel({ status, stationId, stationMeta, onConn
         <div className="row footer-row">
           <div />
           <div className="actions">
-            <button className="btn btn-primary btn-connect" onClick={onConnect} disabled={!stationId}>Connect</button>
-            <button className="btn btn-ghost" onClick={onDisconnect} disabled={!stationId}>Disconnect</button>
+            <button className={`btn btn-connect ${!stationId || !isUserAccessible() ? 'btn-primary-disabled' : 'btn-primary'}`} onClick={onConnect} disabled={!stationId || !isUserAccessible()}>Connect</button>
+            <button className={`btn ${!stationId || !isUserAccessible() ? 'btn-ghost-disabled' : 'btn-ghost'}`} onClick={onDisconnect} disabled={!stationId || !isUserAccessible()}>Disconnect</button>
           </div>
         </div>
       </section>

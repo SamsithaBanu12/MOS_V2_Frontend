@@ -85,16 +85,17 @@
   align-items: center;
   min-width: 0;
 }
+
 .kv .k {
-  color:white;
+  color: white;
   font-weight: 600;
-  min-width:200px !important;
+  min-width: 200px !important;
 }
 
 .k {
   color: white;
   font-size: 12px;
-  min-width:250px;
+  min-width: 250px;
 }
 
 .k+input {
@@ -105,7 +106,8 @@
   color: var(--fg);
   min-width: 400px;
 }
-.value-seg{
+
+.value-seg {
   /* background: var(--highlight-bg2); */
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 8px;
@@ -116,9 +118,11 @@
   max-width: 80px;
   overflow-x: scroll;
 }
-.value-seg::-webkit-scrollbar{
+
+.value-seg::-webkit-scrollbar {
   display: none;
 }
+
 /* Collapsible block (indented look) */
 .collapsible {
   background: rgba(255, 255, 255, 0.04);
@@ -152,11 +156,25 @@
   color: var(--title-color);
   cursor: pointer;
 }
-.btn-primary:active {
-  transform: scale(0.97);        
-  background: #234150;           
-  box-shadow: 0 0 0 2px rgba(255,255,255,0.15);
+
+.btn-primary-disabled {
+  background: transparent;
+  color: var(--title-color);
+  cursor: not-allowed;
 }
+
+.btn-ghost-disabled {
+  color: var(--fg);
+  cursor: not-allowed;
+  background-color: transparent;
+}
+
+.btn-primary:active {
+  transform: scale(0.97);
+  background: #234150;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.15);
+}
+
 .btn-primary:focus-visible {
   outline: 2px solid #66ccff;
   outline-offset: 2px;
@@ -167,10 +185,11 @@
   cursor: pointer;
   background-color: transparent;
 }
+
 .btn-ghost:active {
-  transform: scale(0.97);        
-  background: #234150;           
-  box-shadow: 0 0 0 2px rgba(255,255,255,0.15);
+  transform: scale(0.97);
+  background: #234150;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.15);
 }
 
 /* --- Modal (scoped to ConnectionPanel) --- */

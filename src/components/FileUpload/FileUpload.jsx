@@ -5,6 +5,7 @@ import { MdOutlineFileUpload } from "react-icons/md";
 import { useSidebar } from "../../context/SidebarContext.jsx";
 import { API_BASE } from "../../constants/contants.jsx";
 import { apiClient } from "../../utils/api.jsx";
+import { isUserAccessible } from "../../utils/utils.jsx";
 
 export default function FileUploadGUI() {
   const [file, setFile] = useState(null);
@@ -122,7 +123,7 @@ export default function FileUploadGUI() {
     formData.append("ack", ack);
 
     try {
-      const uploadRes = await apiClient(`${API_BASE}/fileupload/upload`, {
+      const uploadRes = await apiClient(`${API_BASE}/fileupload/upload-stream`, {
         method: "POST",
         body: formData,
       });
@@ -130,7 +131,6 @@ export default function FileUploadGUI() {
       if (!uploadRes.ok) {
         throw new Error(`HTTP error! status: ${uploadRes.status}`);
       }
-
       const reader = uploadRes.body.getReader();
       const decoder = new TextDecoder();
 
@@ -221,6 +221,7 @@ export default function FileUploadGUI() {
               className="fu-upload-icon-btn"
               type="button"
               onClick={openFileDialog}
+              disabled={!isUserAccessible()}
             >
               <MdOutlineFileUpload size={20} />
             </button>
@@ -272,7 +273,7 @@ export default function FileUploadGUI() {
               className="fu-upload-btn"
               type="button"
               onClick={handleSubmit}
-              disabled={isStreaming}
+              disabled={isStreaming || !isUserAccessible()}
             >
               {isStreaming ? "Uploading..." : "Upload"}
             </button>

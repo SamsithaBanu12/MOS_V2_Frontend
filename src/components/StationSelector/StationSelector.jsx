@@ -3,6 +3,7 @@ import './StationSelector.css'
 import { getStations } from '../../utils/api/api'
 import { FaChevronDown } from "react-icons/fa6";
 import { FaChevronUp } from "react-icons/fa";
+import { isUserAccessible } from '../../utils/utils';
 
 const KEY = 'bridge.currentStation'
 
@@ -141,17 +142,18 @@ export default function StationSelector({ value, onChange, connected = false }) 
       <label className="label">Target</label>
 
       <div
-        className={`custom-select ${open ? 'open' : ''} ${loading ? 'is-loading' : ''}`}
+        className={`custom-select ${open ? 'open' : ''} ${loading ? 'is-loading' : ''} ${!isUserAccessible() ? 'readonly' : ''}`}
         ref={wrapRef}
       >
         <button
           type="button"
           className="select-btn"
-          onClick={() => (open ? closeMenu() : openMenu())}
-          onKeyDown={onKeyDown}
+          onClick={() => isUserAccessible() && (open ? closeMenu() : openMenu())}
+          onKeyDown={isUserAccessible() ? onKeyDown : undefined}
           ref={btnRef}
           aria-haspopup="listbox"
           aria-expanded={open}
+          style={!isUserAccessible() ? { cursor: 'not-allowed' } : {}}
         >
           {/* dot reflects CONNECTION state, not selection */}
           <span
@@ -161,7 +163,11 @@ export default function StationSelector({ value, onChange, connected = false }) 
           <span className="sel-text">
             {loading ? 'Loading…' : (current ? current.name : 'Choose a station…')}
           </span>
-          <span className="chev" aria-hidden>{!open ? <FaChevronDown size={12} /> : <FaChevronUp size={12} />}</span>
+          {isUserAccessible() && (
+            <span className="chev" aria-hidden>
+              {!open ? <FaChevronDown size={12} /> : <FaChevronUp size={12} />}
+            </span>
+          )}
         </button>
       </div>
 

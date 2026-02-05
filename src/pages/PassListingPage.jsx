@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import { getAllGroundstations, getAllPassages, getAllSatellites } from "../utils/api";
+import { getAllPassages } from "../utils/api";
 import ErrorBoundary from "../common/ErrorBoundary";
 import PassList from "../components/PassList/PassList";
 import '../components/PassList/PassList.css';
+import { GroundStations, Satellites } from "../utils/passData/data";
 
 const PassListingPage = () => {
     const [passages, setPassages] = useState([]);
-    const [groundstations, setGroundstations] = useState([]);
-    const [satellites, setSatellites] = useState([]);
+    const [groundstations, setGroundstations] = useState(GroundStations);
+    const [satellites, setSatellites] = useState(Satellites);
     const [gsMappingData, setGsMappingData] = useState([]);
     const [satelliteMappingData, setSatelliteMappingData] = useState([]);
     const [enrichedPassages, setEnrichedPassages] = useState([]);
@@ -22,16 +23,11 @@ const PassListingPage = () => {
                 setError(null);
 
                 // Fetch everything concurrently for better performance and consistent state
-                const [passagesData, gsData, satData] = await Promise.all([
+                const [passagesData] = await Promise.all([
                     getAllPassages(),
-                    getAllGroundstations(),
-                    getAllSatellites()
                 ]);
 
                 setPassages(Array.isArray(passagesData) ? passagesData : []);
-                setGroundstations(Array.isArray(gsData?.response) ? gsData?.response : []);
-                setSatellites(Array.isArray(satData?.response) ? satData?.response : []);
-
             } catch (err) {
                 console.error("Error fetching pass listing data:", err);
                 setError("Failed to load dashboard data. Please try again later.");

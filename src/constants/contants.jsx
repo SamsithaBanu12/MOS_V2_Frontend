@@ -10,7 +10,7 @@ export const method_types = {
 };
 export const headers = {
   "Content-Type": "application/json",
-  Authorization: "mos12345",
+  Authorization: localStorage.getItem("access-token"),
 };
 export const method_name = {
   GET_ALL_COMMANDS: "get_all_cmds",
@@ -171,11 +171,11 @@ export const channelStateOptions = [
 
 export const OC3 = {
   ENDPOINT: import.meta.env.VITE_OPENC3_API_URL,
-  AUTH: "mos12345",
+  AUTH: `Bearer ${localStorage.getItem("access-token")}`,
   METHOD: "get_tlm_packet",
   TARGET: "EMULATOR",
   SCOPE: "DEFAULT",
-  PACKET: "HEALTH_II_411_BEACON_DATA",
+  PACKET: "OBC_581_TC_GET_CUR_TIME",
 };
 
 export const Parameters = [
@@ -375,7 +375,7 @@ export const allDTCFiles = [
 // command sender
 
 export const API_URL = "http://localhost:8001/api/openc3-api/api";
-export const AUTH = "mos12345";
+export const AUTH = localStorage.getItem("access-token");
 
 export const DERIVED_HIDE = new Set([
   "PACKET_TIMESECONDS",

@@ -1,5 +1,5 @@
+import { useState } from "react";
 import ScheduleUpload from "../components/ScheduleUpload/ScheduleUpload";
-import UploadPage from "./UploadPage";
 
 const ScheduleUploadPage = () => {
     return (
